@@ -11,6 +11,7 @@
     "start:backend": "nodemon --exec babel-node src/backend/index.js"
   },
   "dependencies": {
+    "apollo-boost": "^0.3.1",
     "apollo-server": "^2.4.8",
     "apollo-server-express": "^2.4.8",
     "axios": "^0.18.0",
@@ -34,6 +35,7 @@
     "sequelize": "^5.1.0",
     "then-jsonp": "^1.0.3",
     "vue": "^2.6.6",
+    "vue-apollo": "^3.0.0-beta.28",
     "vue-cli-plugin-s3-deploy": "^3.0.0",
     "vue-router": "^3.0.1",
     "vuetify": "^1.5.5",
