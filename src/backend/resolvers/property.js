@@ -59,6 +59,7 @@ export default {
   },
 
   Property: {
-
+    streetPlusZip: (property) => `${property.streetAddress}, ${property.zipcode}`,
+    fullAddress: (property) => `${property.streetAddress}, ${property.city}, ${property.state} ${property.zipcode}`,
   },
 };

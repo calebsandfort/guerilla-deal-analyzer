@@ -24,6 +24,46 @@ const property = (sequelize, DataTypes) => {
                 notEmpty: true,
             },
         },
+        zillow_imageUrl: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            length: 100,
+            validate: {
+                notEmpty: true,
+            },
+        },
+        streetAddress: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            length: 50,
+            validate: {
+                notEmpty: true,
+            },
+        },
+        city: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            length: 50,
+            validate: {
+                notEmpty: true,
+            },
+        },
+        state: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            length: 10,
+            validate: {
+                notEmpty: true,
+            },
+        },
+        zipcode: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            length: 10,
+            validate: {
+                notEmpty: true,
+            },
+        },
         price: {
             type: DataTypes.FLOAT,
             allowNull: false,
@@ -55,7 +95,6 @@ const property = (sequelize, DataTypes) => {
         description: {
             type: DataTypes.STRING,
             allowNull: false,
-            length: 100,
             validate: {
                 notEmpty: true,
             },

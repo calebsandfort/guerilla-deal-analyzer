@@ -54,7 +54,7 @@ const getExpectedProperty = () => {
         // zillow_listingId: 0,
         zillow_path: "/homedetails/7416-N-Seneca-St-Portland-OR-97203/53854858_zpid/",
         zillow_url: "https://www.zillow.com/homedetails/7416-N-Seneca-St-Portland-OR-97203/53854858_zpid/?fullpage=true",
-        // zillow_imageUrl: "",
+        zillow_imageUrl: "https://photos.zillowstatic.com/p_d/IS2naalpbd56r71000000000.jpg",
         address: "7416 N Seneca St Portland, OR 97203",
         price : 175000,
         // propertyTaxesAnnually: 0,

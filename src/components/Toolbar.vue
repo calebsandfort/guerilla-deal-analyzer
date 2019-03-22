@@ -4,9 +4,14 @@
             <v-btn v-if="showBackButton" v-on:click.stop="goBack" icon class="hidden-xs-only">
                 <v-icon>arrow_back</v-icon>
             </v-btn>
-            <span>GUERILLA</span>
+            <span>GUERILLA </span>
             <span class="font-weight-light">DEAL TOOLS</span>
         </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-items class="hidden-sm-and-down">
+            <v-btn flat :to="'/lead-finder'">Lead Finder</v-btn>
+            <v-btn flat :to="'/deal-calculator'">Deal Calculator</v-btn>
+        </v-toolbar-items>
     </v-toolbar>
 </template>
 
