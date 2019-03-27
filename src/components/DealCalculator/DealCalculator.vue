@@ -43,6 +43,16 @@
                   ></v-text-field>
                 </v-flex>
               </v-layout>
+              <v-layout row wrap>
+                <v-flex xs12 sm6 md3 class="px-2">
+                  <v-text-field
+                    name="holdPeriod"
+                    label="Hold Period"
+                    suffix="months"
+                    v-model.number="holdPeriod"
+                  ></v-text-field>
+                </v-flex>
+              </v-layout>
               <v-expansion-panel expand>
                 <v-expansion-panel-content>
                   <template v-slot:header
@@ -72,11 +82,13 @@
                         </v-flex>
                         <v-flex xs12 sm4 md3 class="px-2">
                           <v-text-field
-                            name="holdingCosts.propertyTaxesMonthly"
+                            name="holdingCostsComputed.propertyTaxesMonthly"
                             label="Monthly"
                             prefix="$"
                             readonly
-                            v-model.number="holdingCosts.propertyTaxesMonthly"
+                            v-model.number="
+                              holdingCostsComputed.propertyTaxesMonthly
+                            "
                           ></v-text-field>
                         </v-flex>
                       </v-layout>
@@ -102,11 +114,13 @@
                         </v-flex>
                         <v-flex xs12 sm4 md3 class="px-2">
                           <v-text-field
-                            name="holdingCosts.insuranceMonthly"
+                            name="holdingCostsComputed.insuranceMonthly"
                             label="Monthly"
                             prefix="$"
                             readonly
-                            v-model.number="holdingCosts.insuranceMonthly"
+                            v-model.number="
+                              holdingCostsComputed.insuranceMonthly
+                            "
                           ></v-text-field>
                         </v-flex>
                       </v-layout>
@@ -132,11 +146,70 @@
                         </v-flex>
                         <v-flex xs12 sm4 md3 class="px-2">
                           <v-text-field
-                            name="holdingCosts.hoaMonthly"
+                            name="holdingCostsComputed.hoaMonthly"
                             label="Monthly"
                             prefix="$"
                             readonly
-                            v-model.number="holdingCosts.hoaMonthly"
+                            v-model.number="holdingCostsComputed.hoaMonthly"
+                          ></v-text-field>
+                        </v-flex>
+                      </v-layout>
+                      <v-layout row wrap>
+                        <v-flex
+                          xs12
+                          sm4
+                          md6
+                          align-self-center
+                          class="pr-2 pl-4"
+                        >
+                          <h4>
+                            Utilities
+                          </h4>
+                        </v-flex>
+                        <v-flex xs12 sm4 offset-sm4 md3 offset-md3 class="px-2">
+                          <v-text-field
+                            name="holdingCosts.utilitiesMonthly"
+                            label="Monthly"
+                            prefix="$"
+                            v-model.number="holdingCosts.utilitiesMonthly"
+                          ></v-text-field>
+                        </v-flex>
+                      </v-layout>
+                      <v-layout row wrap>
+                        <v-flex
+                          xs12
+                          sm4
+                          md6
+                          align-self-center
+                          class="pr-2 pl-4"
+                        >
+                          <h4>
+                            Misc
+                          </h4>
+                        </v-flex>
+                        <v-flex xs12 sm4 offset-sm4 md3 offset-md3 class="px-2">
+                          <v-text-field
+                            name="holdingCosts.miscMonthly"
+                            label="Monthly"
+                            prefix="$"
+                            v-model.number="holdingCosts.miscMonthly"
+                          ></v-text-field>
+                        </v-flex>
+                      </v-layout>
+                      <v-layout row wrap>
+                        <v-flex xs12>
+                          <v-divider></v-divider>
+                        </v-flex>
+                      </v-layout>
+                      <v-layout row wrap>
+                        <v-flex xs12 sm4 offset-sm8 md3 offset-md9 class="px-2">
+                          <v-text-field
+                            name="holdingCostsComputed.total"
+                            label="Total"
+                            prefix="$"
+                            suffix="Monthly"
+                            readonly
+                            v-model.number="holdingCostsComputed.total"
                           ></v-text-field>
                         </v-flex>
                       </v-layout>
@@ -191,6 +264,7 @@ export default {
       rehabBudget: 60000,
       arv: 400000,
       roi: 15,
+      holdPeriod: 6,
       holdingCosts: {
         propertyTaxesAnnually: 3600,
         propertyTaxesMonthly: 300,
@@ -198,25 +272,45 @@ export default {
         insuranceMonthly: 100,
         hoaAnnually: 1200,
         hoaMonthly: 100,
-        utilitiesMonthly: 200
+        utilitiesMonthly: 300,
+        miscMonthly: 0
       }
     };
   },
-  watch: {
-    "holdingCosts.propertyTaxesAnnually": function(newVal, oldVal) {
-      this.holdingCosts.propertyTaxesMonthly = (newVal / 12).toFixed(0);
-    },
-    "holdingCosts.insuranceAnnually": function(newVal, oldVal) {
-      this.holdingCosts.insuranceMonthly = (newVal / 12).toFixed(0);
-    },
-    "holdingCosts.hoaAnnually": function(newVal, oldVal) {
-      this.holdingCosts.hoaMonthly = (newVal / 12).toFixed(0);
-    }
-  },
+  // watch: {
+  //   "holdingCosts.propertyTaxesAnnually": function(newVal, oldVal) {
+  //     this.holdingCosts.propertyTaxesMonthly = (newVal / 12).toFixed(0);
+  //   },
+  //   "holdingCosts.insuranceAnnually": function(newVal, oldVal) {
+  //     this.holdingCosts.insuranceMonthly = (newVal / 12).toFixed(0);
+  //   },
+  //   "holdingCosts.hoaAnnually": function(newVal, oldVal) {
+  //     this.holdingCosts.hoaMonthly = (newVal / 12).toFixed(0);
+  //   }
+  // },
   computed: {
     ...mapState({
       //leadFinderStore: state => state.leadFinder
-    })
+    }),
+    holdingCostsComputed: function() {
+      const obj = {
+        propertyTaxesMonthly: Math.round(
+          this.holdingCosts.propertyTaxesAnnually / 12
+        ),
+        insuranceMonthly: Math.round(this.holdingCosts.insuranceAnnually / 12),
+        hoaMonthly: Math.round(this.holdingCosts.hoaAnnually / 12),
+        total: 0
+      };
+
+      obj.total =
+        obj.propertyTaxesMonthly +
+        obj.insuranceMonthly +
+        obj.hoaMonthly +
+        this.holdingCosts.utilitiesMonthly +
+        this.holdingCosts.miscMonthly;
+
+      return obj;
+    }
   },
   methods: {
     ...mapActions({

@@ -1,11 +1,11 @@
-import './config';
+import "./config";
 
-import cors from 'cors';
-import express from 'express';
-import { ApolloServer, gql } from 'apollo-server-express';
-import schema from './schema';
-import resolvers from './resolvers';
-import models, { sequelize } from './models';
+import cors from "cors";
+import express from "express";
+import { ApolloServer, gql } from "apollo-server-express";
+import schema from "./schema";
+import resolvers from "./resolvers";
+import models, { sequelize } from "./models";
 // import DataLoader from 'dataloader';
 // import loaders from './loaders';
 
@@ -20,7 +20,7 @@ const server = new ApolloServer({
   context: async ({ req, connection }) => {
     if (connection) {
       return {
-        models,
+        models
         // loaders: {
         //   team: new DataLoader(keys =>
         //     loaders.team.batchTeams(keys, models),
@@ -31,7 +31,7 @@ const server = new ApolloServer({
 
     if (req) {
       return {
-        models,
+        models
         // loaders: {
         //   team: new DataLoader(keys =>
         //     loaders.team.batchTeams(keys, models),
@@ -44,12 +44,12 @@ const server = new ApolloServer({
     // remove the internal sequelize error message
     // leave only the important validation error
     const message = error.message
-      .replace('SequelizeValidationError: ', '')
-      .replace('Validation error: ', '');
+      .replace("SequelizeValidationError: ", "")
+      .replace("Validation error: ", "");
 
     return {
       ...error,
-      message,
+      message
     };
   },
   formatResponse: response => {
@@ -58,18 +58,17 @@ const server = new ApolloServer({
   }
 });
 
-server.applyMiddleware({ app, path: '/graphql' });
+server.applyMiddleware({ app, path: "/graphql" });
 
 const eraseDatabaseOnSync = false;
 
-sequelize.sync({force: eraseDatabaseOnSync}).then(async () => {
-
+sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
   if (eraseDatabaseOnSync) {
     //seedTeams();
   }
 
   app.listen({ port: 5050 }, () => {
-    console.log('Apollo Server on http://localhost:5050/graphql');
+    console.log("Apollo Server on http://localhost:5050/graphql");
   });
 });
 

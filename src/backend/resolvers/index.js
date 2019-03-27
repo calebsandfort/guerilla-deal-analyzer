@@ -1,10 +1,10 @@
-import { GraphQLDateTime } from 'graphql-iso-date';
+import { GraphQLDateTime } from "graphql-iso-date";
 
-import propertyResolvers from './property';
+import propertyResolvers from "./property";
 // import {scalarResolverMap} from './scalars'
 
 const customScalarResolver = {
-  Date: GraphQLDateTime,
+  Date: GraphQLDateTime
 };
 
 export default [

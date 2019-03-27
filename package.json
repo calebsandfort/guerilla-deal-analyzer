@@ -11,12 +11,15 @@
     "start:backend": "nodemon --exec babel-node src/backend/index.js"
   },
   "dependencies": {
+    "accounting-js": "^1.1.1",
     "apollo-boost": "^0.3.1",
     "apollo-server": "^2.4.8",
     "apollo-server-express": "^2.4.8",
     "axios": "^0.18.0",
+    "big-integer": "^1.6.43",
     "cheerio": "^1.0.0-rc.2",
     "cors": "^2.8.5",
+    "cross-fetch": "^3.0.1",
     "dataloader": "^1.4.0",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
@@ -34,6 +37,7 @@
     "roboto-fontface": "*",
     "sequelize": "^5.1.0",
     "then-jsonp": "^1.0.3",
+    "v-debounce": "^0.1.2",
     "vue": "^2.6.6",
     "vue-apollo": "^3.0.0-beta.28",
     "vue-cli-plugin-s3-deploy": "^3.0.0",

@@ -1,24 +1,30 @@
-import Sequelize from 'sequelize';
-import * as entityQuery from '../utilities/entityQuery';
+import Sequelize from "sequelize";
+import * as entityQuery from "../utilities/entityQuery";
 import * as zillowScraper from "../services/scrape/zillow-scraper";
+import _ from "lodash";
+import moment from "moment";
 
 export default {
   Query: {
-    properties: async (parent, { offset = 0, limit = 0, order =  'id DESC'}, { models }) => {
+    properties: async (
+      parent,
+      { offset = 0, limit = 0, order = "id DESC" },
+      { models }
+    ) => {
       const params = {};
 
-      if(limit > 0){
+      if (limit > 0) {
         params.offset = offset;
         params.limit = limit;
       }
 
-      if(order != ''){
+      if (order != "") {
         params.order = Sequelize.literal(order);
       }
 
       return await models.Property.findAll(params);
     },
-    propertiesQueryable: async (parent, {query}, { models }) => {
+    propertiesQueryable: async (parent, { query }, { models }) => {
       const params = entityQuery.entityQueryToSequelize(query);
       return await models.Property.findAll(params);
     },
@@ -26,22 +32,47 @@ export default {
       return await models.Property.findById(id);
     },
     findProperty: async (parent, { term }, { models }) => {
-      return await zillowScraper.findProperty(term);
+      let property = await models.Property.findOne({
+        where: { zillow_path: term }
+      });
+      if (property == null) {
+        const scrapedProperty = await zillowScraper.findProperty(term);
+        if (scrapedProperty) {
+          property = await models.Property.create(scrapedProperty);
+        } else {
+          return null;
+        }
+      }
+
+      return property;
     },
     findProperties: async (parent, { terms }, { models }) => {
-      return await zillowScraper.findProperties(terms);
-    },
+      const properties = [];
+
+      for (let i = 0; i < terms.length; i++) {
+        const term = terms[i];
+        let property = await models.Property.findOne({
+          where: { zillow_path: term }
+        });
+        if (property == null) {
+          const scrapedProperty = await zillowScraper.findProperty(term);
+          if (scrapedProperty) {
+            property = await models.Property.create(scrapedProperty);
+          }
+        }
+
+        properties.push(property);
+      }
+
+      return properties;
+    }
   },
 
   Mutation: {
-    createProperty: async (
-      parent,
-      { input },
-      { models },
-    ) => {
+    createProperty: async (parent, { input }, { models }) => {
       const property = await models.Property.create(input);
 
-      const collectionPromises = []
+      const collectionPromises = [];
 
       return property;
     },
@@ -53,13 +84,39 @@ export default {
 
     deleteProperty: async (parent, { id }, { models }) => {
       return await models.Property.destroy({
-        where: { id },
+        where: { id }
       });
-    },
+    }
   },
 
   Property: {
-    streetPlusZip: (property) => `${property.streetAddress}, ${property.zipcode}`,
-    fullAddress: (property) => `${property.streetAddress}, ${property.city}, ${property.state} ${property.zipcode}`,
-  },
+    streetPlusZip: property => `${property.streetAddress}, ${property.zipcode}`,
+    fullAddress: property =>
+      `${property.streetAddress}, ${property.city}, ${property.state} ${
+        property.zipcode
+      }`,
+    keywords: (property, { search_keywords }, { models }) => {
+      const lowerCaseDescription = property.description.toLowerCase();
+      return _.filter(search_keywords, function(skw) {
+        return lowerCaseDescription.indexOf(skw.toLowerCase()) > -1;
+      });
+    },
+    keywords_count: (property, { search_keywords }, { models }) => {
+      const lowerCaseDescription = property.description.toLowerCase();
+      return _.filter(search_keywords, function(skw) {
+        return lowerCaseDescription.indexOf(skw.toLowerCase()) > -1;
+      }).length;
+    },
+    days_listed: property => {
+      // console.log(
+      //   `*****************${moment(
+      //     new Date(property.date_listed)
+      //   ).format()}***************${moment().diff(
+      //     moment(new Date(property.date_listed)).format(),
+      //     "days"
+      //   )}**********`
+      // );
+      return moment().diff(moment(property.date_listed, "x"), "days");
+    }
+  }
 };
