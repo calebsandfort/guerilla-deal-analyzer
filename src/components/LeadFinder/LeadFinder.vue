@@ -2,8 +2,23 @@
   <v-container fluid class="px-0 pt-0">
     <Toolbar back-path="/"></Toolbar>
     <v-content>
+      <v-container fluid v-if="leadFinderStore.finding">
+        <v-layout text-xs-center wrap>
+          <v-flex xs12>
+            <v-progress-circular
+              :width="7"
+              :size="70"
+              color="green"
+              indeterminate
+            ></v-progress-circular>
+          </v-flex>
+        </v-layout>
+      </v-container>
+      <v-alert v-model="denied" dismissible type="error">
+        Denied by Zillow:(
+      </v-alert>
       <v-container fluid class="pb-0">
-        <v-expansion-panel expand>
+        <v-expansion-panel expand v-model="panelsExpanded">
           <v-expansion-panel-content>
             <template v-slot:header
               ><h3>URLs</h3>
@@ -55,134 +70,155 @@
             </template>
             <v-card>
               <v-card-text>
-                <v-layout row>
-                  <v-flex xs2 align-self-center class="pr-2 pl-4">
-                    <h4>
-                      Beds
-                    </h4>
-                  </v-flex>
-                  <v-flex xs2 class="px-2">
-                    <v-select
-                      :items="filterData.listItems.amenityCount"
-                      v-model="filterData.values.beds.min"
-                      label="Min"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs2 class="px-2">
-                    <v-select
-                      :items="filterData.listItems.amenityCount"
-                      v-model="filterData.values.beds.max"
-                      label="Max"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs2 align-self-center class="pr-2 pl-4">
-                    <h4>
-                      Baths
-                    </h4>
-                  </v-flex>
-                  <v-flex xs2 class="px-2">
-                    <v-select
-                      :items="filterData.listItems.amenityCount"
-                      v-model="filterData.values.baths.min"
-                      label="Min"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs2 class="px-2">
-                    <v-select
-                      :items="filterData.listItems.amenityCount"
-                      v-model="filterData.values.baths.max"
-                      label="Max"
-                    ></v-select>
-                  </v-flex>
-                </v-layout>
-                <v-layout row>
-                  <v-flex xs2 align-self-center class="pr-2 pl-4">
-                    <h4>
-                      SqFt
-                    </h4>
-                  </v-flex>
-                  <v-flex xs2 class="px-2">
-                    <v-text-field
-                      label="Min"
-                      v-model.number="filterData.values.sqft.min"
-                    ></v-text-field>
-                  </v-flex>
-                  <v-flex xs2 class="px-2">
-                    <v-text-field
-                      label="Max"
-                      v-model.number="filterData.values.sqft.max"
-                    ></v-text-field>
-                  </v-flex>
-                  <v-flex xs2 align-self-center class="pr-2 pl-4">
-                    <h4>
-                      Built
-                    </h4>
-                  </v-flex>
-                  <v-flex xs2 class="px-2">
-                    <v-text-field
-                      label="Min"
-                      v-model.number="filterData.values.year_built.min"
-                    ></v-text-field>
-                  </v-flex>
-                  <v-flex xs2 class="px-2">
-                    <v-text-field
-                      label="Max"
-                      v-model.number="filterData.values.year_built.max"
-                    ></v-text-field>
-                  </v-flex>
-                </v-layout>
-                <v-layout row>
-                  <v-flex xs2 align-self-center class="pr-2 pl-4">
-                    <h4>
-                      Days Listed
-                    </h4>
-                  </v-flex>
-                  <v-flex xs2 class="px-2">
-                    <v-text-field
-                      label="Min"
-                      v-model.number="filterData.values.days_listed.min"
-                    ></v-text-field>
-                  </v-flex>
-                  <v-flex xs2 class="px-2">
-                    <v-text-field
-                      label="Max"
-                      v-model.number="filterData.values.days_listed.max"
-                    ></v-text-field>
-                  </v-flex>
-                </v-layout>
-                <v-layout row>
-                  <v-flex xs2 align-self-center class="pr-2 pl-4">
-                    <h4>
-                      Ratio
-                    </h4>
-                  </v-flex>
-                  <v-flex xs4 class="px-2">
-                    <v-slider
-                      v-model="filterData.values.price_to_zestimate.threshold"
-                      :min="filterData.values.price_to_zestimate.min"
-                      :max="filterData.values.price_to_zestimate.max"
-                      :step="filterData.values.price_to_zestimate.step"
-                      thumb-color="red"
-                      thumb-label="always"
-                      :thumb-size="24"
-                    ></v-slider>
-                  </v-flex>
-                  <v-flex xs2 align-self-center class="pr-2 pl-4">
-                    <h4>
-                      Keywords
-                    </h4>
-                  </v-flex>
-                  <v-flex xs4 class="px-2">
-                    <v-slider
-                      v-model="filterData.values.keywords_count.threshold"
-                      :min="filterData.values.keywords_count.min"
-                      :max="filterData.values.keywords_count.max"
-                      thumb-color="red"
-                      thumb-label="always"
-                      :thumb-size="24"
-                    ></v-slider>
-                  </v-flex>
-                </v-layout>
+                <v-container fluid grid-list-lg class="py-0">
+                  <v-layout row>
+                    <v-flex xs2 align-self-center>
+                      <h4 class="text-xs-right pr-2">
+                        Beds
+                      </h4>
+                    </v-flex>
+                    <v-flex xs2>
+                      <v-select
+                        :items="filterData.listItems.amenityCount"
+                        v-model="filterData.values.beds.min"
+                        label="Min"
+                      ></v-select>
+                    </v-flex>
+                    <v-flex xs2>
+                      <v-select
+                        :items="filterData.listItems.amenityCount"
+                        v-model="filterData.values.beds.max"
+                        label="Max"
+                      ></v-select>
+                    </v-flex>
+                    <v-flex xs2 align-self-center>
+                      <h4 class="text-xs-right pr-2">
+                        Baths
+                      </h4>
+                    </v-flex>
+                    <v-flex xs2>
+                      <v-select
+                        :items="filterData.listItems.amenityCount"
+                        v-model="filterData.values.baths.min"
+                        label="Min"
+                      ></v-select>
+                    </v-flex>
+                    <v-flex xs2>
+                      <v-select
+                        :items="filterData.listItems.amenityCount"
+                        v-model="filterData.values.baths.max"
+                        label="Max"
+                      ></v-select>
+                    </v-flex>
+                  </v-layout>
+                  <v-layout row>
+                    <v-flex xs2 align-self-center>
+                      <h4 class="text-xs-right pr-2">
+                        SqFt
+                      </h4>
+                    </v-flex>
+                    <v-flex xs2>
+                      <v-text-field
+                        label="Min"
+                        v-model.number="filterData.values.sqft.min"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs2>
+                      <v-text-field
+                        label="Max"
+                        v-model.number="filterData.values.sqft.max"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs2 align-self-center>
+                      <h4 class="text-xs-right pr-2">
+                        Built
+                      </h4>
+                    </v-flex>
+                    <v-flex xs2>
+                      <v-text-field
+                        label="Min"
+                        v-model.number="filterData.values.year_built.min"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs2>
+                      <v-text-field
+                        label="Max"
+                        v-model.number="filterData.values.year_built.max"
+                      ></v-text-field>
+                    </v-flex>
+                  </v-layout>
+                  <v-layout row>
+                    <v-flex xs2 align-self-center>
+                      <h4 class="text-xs-right pr-2">
+                        Days Listed
+                      </h4>
+                    </v-flex>
+                    <v-flex xs2>
+                      <v-text-field
+                        label="Min"
+                        v-model.number="filterData.values.days_listed.min"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs2>
+                      <v-text-field
+                        label="Max"
+                        v-model.number="filterData.values.days_listed.max"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs2 align-self-center>
+                      <h4 class="text-xs-right pr-2">
+                        Moods
+                      </h4>
+                    </v-flex>
+                    <v-flex xs4>
+                      <v-select
+                        v-model="filterData.values.moods"
+                        :items="filterData.listItems.moods"
+                        item-text="display"
+                        item-value="value"
+                        label="Select"
+                        return-object
+                        single-line
+                        attach
+                        chips
+                        multiple
+                      ></v-select>
+                    </v-flex>
+                  </v-layout>
+                  <v-layout row>
+                    <v-flex xs2>
+                      <h4 class="text-xs-right pr-2">
+                        Ratio
+                      </h4>
+                    </v-flex>
+                    <v-flex xs4>
+                      <v-slider
+                        v-model="filterData.values.price_to_zestimate.threshold"
+                        :min="filterData.values.price_to_zestimate.min"
+                        :max="filterData.values.price_to_zestimate.max"
+                        :step="filterData.values.price_to_zestimate.step"
+                        thumb-color="red"
+                        thumb-label="always"
+                        :thumb-size="24"
+                      ></v-slider>
+                    </v-flex>
+                    <v-flex xs2>
+                      <h4 class="text-xs-right pr-2">
+                        Keywords
+                      </h4>
+                    </v-flex>
+                    <v-flex xs4>
+                      <v-slider
+                        v-model="filterData.values.keywords_count.threshold"
+                        :min="filterData.values.keywords_count.min"
+                        :max="filterData.values.keywords_count.max"
+                        thumb-color="red"
+                        thumb-label="always"
+                        :thumb-size="24"
+                      ></v-slider>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
               </v-card-text>
             </v-card>
           </v-expansion-panel-content>
@@ -193,35 +229,48 @@
           :headers="headers"
           :pagination.sync="pagination"
           mustSort
+          :expand="expand"
           :loading="loading"
           :items="filteredProperties"
           class="elevation-1"
+          item-key="zillow_propertyId"
         >
           <template v-slot:items="props">
-            <td>
-              <a :href="props.item.zillow_url" target="_blank">{{
-                props.item.streetPlusZip
-              }}</a>
-            </td>
-            <td class="text-xs-right">{{ props.item.beds }}</td>
-            <td class="text-xs-right">{{ props.item.baths }}</td>
-            <td class="text-xs-right">
-              {{ formatNumber(props.item.sqft, { precision: 0 }) }}
-            </td>
-            <td class="text-xs-right">{{ props.item.year_built }}</td>
-            <td class="text-xs-right">
-              {{ formatMoney(props.item.price, { precision: 0 }) }}
-            </td>
-            <td class="text-xs-right">
-              {{ formatMoney(props.item.zestimate, { precision: 0 }) }}
-            </td>
-            <td class="text-xs-right">
-              {{
-                formatNumber(props.item.price_to_zestimate, { precision: 2 })
-              }}
-            </td>
-            <td class="text-xs-right">{{ props.item.keywords.join(", ") }}</td>
-            <td class="text-xs-right">{{ props.item.days_listed }}</td>
+            <tr @click="props.expanded = !props.expanded">
+              <td>
+                <a :href="props.item.zillow_url" target="_blank">{{
+                  props.item.streetPlusZip
+                }}</a>
+              </td>
+              <td class="text-xs-right">{{ props.item.beds }}</td>
+              <td class="text-xs-right">{{ props.item.baths }}</td>
+              <td class="text-xs-right">
+                {{ formatNumber(props.item.sqft, { precision: 0 }) }}
+              </td>
+              <td class="text-xs-right">{{ props.item.year_built }}</td>
+              <td class="text-xs-right">
+                {{ formatMoney(props.item.price, { precision: 0 }) }}
+              </td>
+              <td class="text-xs-right">
+                {{ formatMoney(props.item.zestimate, { precision: 0 }) }}
+              </td>
+              <td class="text-xs-right">
+                {{
+                  formatNumber(props.item.price_to_zestimate, { precision: 2 })
+                }}
+              </td>
+              <td class="text-xs-right">
+                {{ props.item.keywords.join(", ") }}
+              </td>
+              <td class="text-xs-right">{{ props.item.days_listed }}</td>
+              <td class="text-xs-right">{{ props.item.mood_display }}</td>
+            </tr>
+          </template>
+          <template v-slot:expand="props">
+            <ExpandoProperty
+              :property="props.item"
+              v-on:expando-update="expandoUpdateTriggered"
+            ></ExpandoProperty>
           </template>
         </v-data-table>
       </v-container>
@@ -233,24 +282,27 @@
 import _ from "lodash";
 import { mapState, mapActions } from "vuex";
 import Toolbar from "../Toolbar";
+import ExpandoProperty from "../Property/ExpandoProperty";
 import { getRequestVariables as propertyRequest } from "../../api/property";
 import formatMoney from "accounting-js/lib/formatMoney";
 import formatNumber from "accounting-js/lib/formatNumber";
-import debounce from "v-debounce";
+// import * as entityQuery from "../../backend/utilities/entityQuery";
+import * as moods from "../../common/enums/moods";
 
 export default {
   name: "LeadFinder",
   components: {
-    Toolbar
-  },
-  directives: {
-    debounce
+    Toolbar,
+    ExpandoProperty
   },
   data() {
     return {
       urls: "",
       loading: false,
+      denied: false,
+      expand: false,
       delay: 500,
+      panelsExpanded: [true, false],
       search_keywords: [
         "invest",
         "sweat",
@@ -274,7 +326,8 @@ export default {
         "manufactured home",
         "mobile home",
         "double wide",
-        "remodeled"
+        "remodeled",
+        "new construction"
       ],
       headers: [
         {
@@ -291,7 +344,8 @@ export default {
         { text: "Zesitmate", value: "zestimate" },
         { text: "Ratio", value: "price_to_zestimate" },
         { text: "Keywords", value: "keywords_count" },
-        { text: "Days Listed", value: "days_listed" }
+        { text: "Days Listed", value: "days_listed" },
+        { text: "Mood", value: "mood" }
       ],
       pagination: {
         sortBy: "keywords_count",
@@ -300,7 +354,8 @@ export default {
       },
       filterData: {
         listItems: {
-          amenityCount: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+          amenityCount: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+          moods: moods.array()
         },
         values: {
           beds: {
@@ -325,6 +380,7 @@ export default {
             max: 2,
             step: 0.05
           },
+          moods: [moods.moods.ACTIVE, moods.moods.EXPLORE],
           keywords_count: {
             threshold: 2,
             min: 0,
@@ -341,8 +397,14 @@ export default {
   watch: {
     "leadFinderStore.list": function() {
       this.loading = false;
+    },
+    "leadFinderStore.denied": function() {
+      this.denied = this.leadFinderStore.denied;
     }
   },
+  // created: function() {
+  //   this.loadExistingClick();
+  // },
   computed: {
     ...mapState({
       leadFinderStore: state => state.leadFinder
@@ -363,14 +425,14 @@ export default {
         return item.price > 0 && item.price_to_zestimate < 1000;
       });
 
-      for (let i = 0; i < this.unwanted_keywords; i++) {
-        filteredList = _.filter(filteredList, function(item) {
-          return (
-            item.description.toLowerCase().indexOf(this.unwanted_keywords[i]) ==
-            -1
-          );
-        });
-      }
+      // for (let i = 0; i < this.unwanted_keywords; i++) {
+      //   filteredList = _.filter(filteredList, function(item) {
+      //     return (
+      //       item.description.toLowerCase().indexOf(this.unwanted_keywords[i]) ==
+      //       -1
+      //     );
+      //   });
+      // }
 
       //beds
       filteredList = _.filter(filteredList, function(item) {
@@ -412,6 +474,15 @@ export default {
         );
       });
 
+      //moods
+      filteredList = _.filter(filteredList, function(item) {
+        return (
+          _.findIndex(that.filterData.values.moods, function(mood) {
+            return item.mood == mood.value;
+          }) > -1
+        );
+      });
+
       //investor filters
       filteredList = _.filter(filteredList, function(item) {
         return (
@@ -428,11 +499,13 @@ export default {
     ...mapActions({
       findProperties: "leadFinder/findProperties",
       findPropertiesIncrementally: "leadFinder/findPropertiesIncrementally",
-      fetchProperties: "leadFinder/fetchList"
+      fetchProperties: "leadFinder/fetchList",
+      expandoUpdate: "leadFinder/expandoUpdate"
     }),
     formatMoney: formatMoney,
     formatNumber: formatNumber,
     findClick: function() {
+      this.panelsExpanded = [false, false];
       this.loading = true;
 
       const request = propertyRequest();
@@ -444,10 +517,14 @@ export default {
       this.urls = "";
     },
     loadExistingClick: function() {
+      this.panelsExpanded = [false, false];
       this.loading = true;
 
       const request = propertyRequest();
       request.search_keywords = this.search_keywords;
+
+      //const query = entityQuery.entityQueryCtor(true, false, 0, 0, 'Date ASC');
+      // query.searchFilters.push(entityQuery.searchFilterCtor(false, false, 'seasonMonthId', entityQuery.SearchFilterCondition.Is, parseInt(seasonMonthId), null, null));
 
       this.fetchProperties(request);
     },
@@ -464,6 +541,13 @@ export default {
       index = (index + 1) % this.headers.length;
       index = index === 0 ? index + 1 : index;
       this.pagination.sortBy = this.headers[index].value;
+    },
+    expandoUpdateTriggered: function(item) {
+      const request = propertyRequest();
+      request.id = item.id;
+      request.input = item;
+      request.search_keywords = this.search_keywords;
+      this.expandoUpdate(request);
     }
   }
 };

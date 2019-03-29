@@ -19,7 +19,6 @@ export const fragments = {
       beds
       baths
       description
-      zillow_imageUrl
       zestimate
       price_to_zestimate
       keywords(search_keywords: $search_keywords)
@@ -27,6 +26,14 @@ export const fragments = {
       date_listed
       days_listed
       year_built
+      date_sold
+      latitude
+      longitude
+      days_since_sold
+      image_urls_list
+      mood
+      mood_display
+      notes
     }
   `
 };
@@ -43,6 +50,15 @@ const GET = gql`
 const GET_ALL = gql`
   query($search_keywords: [String]) {
     properties {
+      ...SimpleProperty
+    }
+  }
+  ${fragments.simple}
+`;
+
+const GET_ALL_QUERYABLE = gql`
+  query($search_keywords: [String], $query: EntityQuery) {
+    propertiesQueryable(query: $query) {
       ...SimpleProperty
     }
   }
@@ -85,6 +101,15 @@ const UPDATE = gql`
   ${fragments.simple}
 `;
 
+const EXPANDO_UPDATE = gql`
+  mutation($id: ID!, $input: ExpandoPropertyUpdateInput!) {
+    expandoPropertyUpdate(id: $id, input: $input) {
+      ...SimpleProperty
+    }
+  }
+  ${fragments.simple}
+`;
+
 const DELETE = gql`
   mutation($id: ID!) {
     deleteProperty(id: $id)
@@ -96,7 +121,9 @@ export const getRequestVariables = () => {
     id: 0,
     term: "",
     terms: "",
-    search_keywords: []
+    search_keywords: [],
+    query: null,
+    input: {}
   };
 };
 
@@ -112,6 +139,14 @@ export const getAll = async (client, variables) =>
   client
     .query({
       query: GET_ALL,
+      variables: variables
+    })
+    .catch(errorHandler);
+
+export const getAllQueryable = async (client, variables) =>
+  client
+    .query({
+      query: GET_ALL_QUERYABLE,
       variables: variables
     })
     .catch(errorHandler);
@@ -144,6 +179,14 @@ export const update = async (client, variables) =>
   client
     .mutate({
       mutation: UPDATE,
+      variables: variables
+    })
+    .catch(errorHandler);
+
+export const expandoUpdate = async (client, variables) =>
+  client
+    .mutate({
+      mutation: EXPANDO_UPDATE,
       variables: variables
     })
     .catch(errorHandler);

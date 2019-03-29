@@ -11,6 +11,10 @@ export default gql`
   extend type Mutation {
     createProperty(input: PropertyInput!): Property!
     updateProperty(id: ID!, input: PropertyInput!): Property!
+    expandoPropertyUpdate(
+      id: ID!
+      input: ExpandoPropertyUpdateInput!
+    ): Property!
     deleteProperty(id: ID!): Boolean!
   }
   type Property {
@@ -18,7 +22,6 @@ export default gql`
     zillow_propertyId: Int!
     zillow_path: String!
     zillow_url: String!
-    zillow_imageUrl: String!
     streetAddress: String!
     city: String!
     state: String!
@@ -38,12 +41,20 @@ export default gql`
     streetPlusZip: String!
     keywords(search_keywords: [String]): [String]
     keywords_count(search_keywords: [String]): Int
+    image_urls: String!
+    date_sold: String!
+    latitude: Float!
+    longitude: Float!
+    days_since_sold: Int!
+    image_urls_list: [String]
+    notes: String
+    mood: Int!
+    mood_display: String
   }
   input PropertyInput {
     zillow_propertyId: Int!
     zillow_path: String!
     zillow_url: String!
-    zillow_imageUrl: String!
     streetAddress: String!
     city: String!
     state: String!
@@ -58,5 +69,15 @@ export default gql`
     date_listed: Int!
     year_built: Int!
     zillow_status: String!
+    image_urls: String!
+    date_sold: String!
+    latitude: Float!
+    longitude: Float!
+    notes: String
+    mood: Int!
+  }
+  input ExpandoPropertyUpdateInput {
+    notes: String
+    mood: Int!
   }
 `;

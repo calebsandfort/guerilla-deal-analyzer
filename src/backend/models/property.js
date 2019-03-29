@@ -1,3 +1,5 @@
+import { moods } from "../../common/enums/moods";
+
 const property = (sequelize, DataTypes) => {
   const property = sequelize.define(
     "property",
@@ -25,11 +27,6 @@ const property = (sequelize, DataTypes) => {
         validate: {
           notEmpty: true
         }
-      },
-      zillow_imageUrl: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        length: 100
       },
       streetAddress: {
         type: DataTypes.STRING,
@@ -133,6 +130,39 @@ const property = (sequelize, DataTypes) => {
         validate: {
           notEmpty: true
         }
+      },
+      image_urls: {
+        type: DataTypes.TEXT,
+        allowNull: false
+      },
+      date_sold: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+        validate: {
+          notEmpty: true
+        }
+      },
+      latitude: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+        validate: {
+          notEmpty: true
+        }
+      },
+      longitude: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+        validate: {
+          notEmpty: true
+        }
+      },
+      notes: {
+        type: DataTypes.TEXT
+      },
+      mood: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: moods.ACTIVE.value
       }
     },
     {

@@ -3,6 +3,7 @@ import * as entityQuery from "../utilities/entityQuery";
 import * as zillowScraper from "../services/scrape/zillow-scraper";
 import _ from "lodash";
 import moment from "moment";
+import * as moods from "../../common/enums/moods";
 
 export default {
   Query: {
@@ -82,6 +83,11 @@ export default {
       return await property.update(input);
     },
 
+    expandoPropertyUpdate: async (parent, { id, input }, { models }) => {
+      const property = await models.Property.findById(id);
+      return await property.update(input);
+    },
+
     deleteProperty: async (parent, { id }, { models }) => {
       return await models.Property.destroy({
         where: { id }
@@ -108,15 +114,22 @@ export default {
       }).length;
     },
     days_listed: property => {
-      // console.log(
-      //   `*****************${moment(
-      //     new Date(property.date_listed)
-      //   ).format()}***************${moment().diff(
-      //     moment(new Date(property.date_listed)).format(),
-      //     "days"
-      //   )}**********`
-      // );
       return moment().diff(moment(property.date_listed, "x"), "days");
+    },
+    days_since_sold: property => {
+      return property.date_sold > 0
+        ? moment().diff(moment(property.date_sold, "x"), "days")
+        : -1;
+    },
+    image_urls_list: property => {
+      if (property.image_urls) {
+        return property.image_urls.split(",");
+      }
+
+      return [];
+    },
+    mood_display: property => {
+      return moods.getDisplayForValue(property.mood);
     }
   }
 };

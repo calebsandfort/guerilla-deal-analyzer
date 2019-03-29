@@ -27,7 +27,7 @@ describe("zillow-scraper", () => {
 
     return zillowScraper
       .findProperty(
-        "/homedetails/9513-NE-169th-Ave-Vancouver-WA-98682/250945515_zpid/"
+        "/homedetails/3906-NE-Killingsworth-St-Portland-OR-97211/53894544_zpid/"
       )
       .then(function(response) {
         expect(response)

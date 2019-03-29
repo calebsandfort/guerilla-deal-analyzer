@@ -3,6 +3,7 @@ import $ from "cheerio";
 import * as utilities from "../../../utilities/utilities";
 import _ from "lodash";
 import moment from "moment";
+import { moods } from "../../../common/enums/moods";
 
 const FILE_PATH = "src/backend/services/scrape/files/";
 
@@ -17,21 +18,27 @@ export const findProperty = async term => {
     city: "",
     state: "",
     zipcode: "",
-    price: 0,
+    price: -1,
     // propertyTaxesAnnually: 0,
     // propertyTaxesMonthly: 0,
     // insuranceAnnually: 0,
     // insuranceMonthly: 0,
-    sqft: 0,
+    sqft: -1,
     //listingPriceSqft: 0,
-    beds: 0,
-    baths: 0,
+    beds: -1,
+    baths: -1,
     description: "",
-    zestimate: 0,
-    price_to_zestimate: 0,
-    date_listed: 0,
+    zestimate: -1,
+    price_to_zestimate: -1,
+    date_listed: -1,
     zillow_status: "",
-    year_built: 0
+    year_built: -1,
+    image_urls: "",
+    date_sold: -1,
+    latitude: -1,
+    longitude: -1,
+    notes: "",
+    mood: moods.ACTIVE.value
   };
 
   let url = term;
@@ -56,6 +63,7 @@ export const findProperty = async term => {
 
   let zillowData = null;
   let success = false;
+  let html = "";
 
   for (let i = 0; i < 3; i++) {
     if (!success) {
@@ -69,6 +77,10 @@ export const findProperty = async term => {
             .html()
         );
 
+        if (zillowData == null) {
+          throw "Null zillowData";
+        }
+
         // utilities.writeFile(
         //   FILE_PATH + "zillowData.json",
         //   JSON.stringify(zillowData)
@@ -76,11 +88,14 @@ export const findProperty = async term => {
 
         zillowData = zillowData[Object.keys(zillowData)[0]].property;
         success = true;
-      } catch (e) {}
+      } catch (e) {
+        //await new Promise(r => setTimeout(r, 5000));
+      }
     }
   }
 
-  if (zillowData.zpid == null) {
+  if (zillowData == null || zillowData.zpid == null) {
+    console.log(`****************Returning Null******************`);
     return null;
   }
 
@@ -89,34 +104,25 @@ export const findProperty = async term => {
   property.zillow_url =
     "https://www.zillow.com" + property.zillow_path + "?fullpage=true";
 
-  if (
-    property.zillow_imageUrl === "" &&
-    _.get(zillowData, "small", []).length > 0
-  ) {
-    property.zillow_imageUrl = zillowData.small[0].url;
-  }
-
-  if (property.zillow_imageUrl === "") {
-    property.zillow_imageUrl = _.get(zillowData, "mediumImageLink", "");
-  }
-
   property.streetAddress = zillowData.streetAddress;
   property.city = zillowData.city;
   property.state = zillowData.state;
   property.zipcode = zillowData.zipcode;
   utilities.setPropertyFromObject(
     zillowData,
-    "sqft",
-    property,
     "livingArea",
+    property,
+    "sqft",
     -1
   );
-  utilities.setPropertyFromObject(zillowData, "beds", property, "bedrooms", -1);
+
+  utilities.setPropertyFromObject(zillowData, "price", property, "price", -1);
+  utilities.setPropertyFromObject(zillowData, "bedrooms", property, "beds", -1);
   utilities.setPropertyFromObject(
     zillowData,
-    "baths",
-    property,
     "bathrooms",
+    property,
+    "baths",
     -1
   );
   utilities.setPropertyFromObject(
@@ -164,6 +170,55 @@ export const findProperty = async term => {
   if (isNaN(property.year_built)) {
     property.year_built = 1850;
   }
+
+  if (
+    zillowData.responsivePhotos != null &&
+    zillowData.responsivePhotos.length > 0
+  ) {
+    property.image_urls = _.map(zillowData.responsivePhotos, function(item) {
+      return item.mixedSources.jpeg[1].url;
+    }).join(",");
+  } else if (zillowData.small != null && zillowData.small.length > 0) {
+    property.image_urls = _.map(zillowData.small, function(item) {
+      return item.url;
+    }).join(",");
+  } else {
+    // utilities.writeFile(
+    //   FILE_PATH + "zillowData.json",
+    //   JSON.stringify(zillowData)
+    // );
+    property.image_urls = "";
+  }
+
+  // console.log(
+  //   `****************${zillowData.photoCount}, ${
+  //     zillowData.small.length
+  //   }, ${property.image_urls == ""}******************`
+  // );
+
+  utilities.setPropertyFromObject(
+    zillowData,
+    "dateSold",
+    property,
+    "date_sold",
+    -1
+  );
+
+  utilities.setPropertyFromObject(
+    zillowData,
+    "latitude",
+    property,
+    "latitude",
+    -1
+  );
+
+  utilities.setPropertyFromObject(
+    zillowData,
+    "longitude",
+    property,
+    "longitude",
+    -1
+  );
 
   return property;
 };
