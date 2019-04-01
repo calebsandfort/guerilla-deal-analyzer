@@ -30,9 +30,9 @@ export default {
       return await models.Property.findAll(params);
     },
     property: async (parent, { id }, { models }) => {
-      return await models.Property.findById(id);
+      return await models.Property.findByPk(id);
     },
-    findProperty: async (parent, { term }, { models }) => {
+    findProperty: async (parent, { term, tag }, { models }) => {
       let property = await models.Property.findOne({
         where: { zillow_path: term }
       });
@@ -40,6 +40,7 @@ export default {
         const scrapedProperty = await zillowScraper.findProperty(term);
         if (scrapedProperty) {
           property = await models.Property.create(scrapedProperty);
+          property.tag = tag;
         } else {
           return null;
         }
@@ -47,7 +48,7 @@ export default {
 
       return property;
     },
-    findProperties: async (parent, { terms }, { models }) => {
+    findProperties: async (parent, { terms, tag }, { models }) => {
       const properties = [];
 
       for (let i = 0; i < terms.length; i++) {
@@ -59,6 +60,7 @@ export default {
           const scrapedProperty = await zillowScraper.findProperty(term);
           if (scrapedProperty) {
             property = await models.Property.create(scrapedProperty);
+            property.tag = tag;
           }
         }
 
@@ -79,12 +81,12 @@ export default {
     },
 
     updateProperty: async (parent, { id, input }, { models }) => {
-      const property = await models.Property.findById(id);
+      const property = await models.Property.findByPk(id);
       return await property.update(input);
     },
 
     expandoPropertyUpdate: async (parent, { id, input }, { models }) => {
-      const property = await models.Property.findById(id);
+      const property = await models.Property.findByPk(id);
       return await property.update(input);
     },
 
@@ -101,17 +103,14 @@ export default {
       `${property.streetAddress}, ${property.city}, ${property.state} ${
         property.zipcode
       }`,
-    keywords: (property, { search_keywords }, { models }) => {
-      const lowerCaseDescription = property.description.toLowerCase();
-      return _.filter(search_keywords, function(skw) {
-        return lowerCaseDescription.indexOf(skw.toLowerCase()) > -1;
-      });
+    keywords: property => {
+      return [];
     },
-    keywords_count: (property, { search_keywords }, { models }) => {
-      const lowerCaseDescription = property.description.toLowerCase();
-      return _.filter(search_keywords, function(skw) {
-        return lowerCaseDescription.indexOf(skw.toLowerCase()) > -1;
-      }).length;
+    keywords_count: property => {
+      return 0;
+    },
+    keywords_set: property => {
+      return false;
     },
     days_listed: property => {
       return moment().diff(moment(property.date_listed, "x"), "days");

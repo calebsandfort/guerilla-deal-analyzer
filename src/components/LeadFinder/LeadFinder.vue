@@ -21,46 +21,57 @@
         <v-expansion-panel expand v-model="panelsExpanded">
           <v-expansion-panel-content>
             <template v-slot:header
-              ><h3>URLs</h3>
+              ><h3>Load Properties</h3>
             </template>
             <v-card>
               <v-card-text>
-                <v-layout row>
-                  <v-flex xs10 class="pr-2">
-                    <v-textarea
-                      outline
-                      name="urls"
-                      label="URLs"
-                      v-model="urls"
-                      rows="4"
-                    ></v-textarea>
-                  </v-flex>
-                  <v-flex xs2 class="pl-2">
-                    <v-btn
-                      block
-                      small
-                      color="success"
-                      v-on:click="findClick"
-                      :disabled="urls.length == 0"
-                      >Find</v-btn
-                    >
-                    <v-btn
-                      block
-                      small
-                      color="info"
-                      v-on:click="loadExistingClick"
-                      >Load Existing</v-btn
-                    >
-                    <v-btn
-                      block
-                      small
-                      color="error"
-                      v-on:click="clearClick"
-                      :disabled="urls.length > 0"
-                      >Clear</v-btn
-                    >
-                  </v-flex>
-                </v-layout>
+                <v-container fluid grid-list-lg class="pa-0">
+                  <v-layout row>
+                    <v-flex xs10>
+                      <v-textarea
+                        outline
+                        name="urls"
+                        label="URLs"
+                        v-model="urls"
+                        rows="2"
+                      ></v-textarea>
+                    </v-flex>
+                    <v-flex xs2>
+                      <v-btn
+                        block
+                        small
+                        color="success"
+                        v-on:click="findClick"
+                        :disabled="urls.length == 0"
+                        >Find
+                      </v-btn>
+                      <v-btn
+                        block
+                        small
+                        color="info"
+                        v-on:click="loadExistingClick"
+                        >Load Existing
+                      </v-btn>
+                      <v-btn
+                        block
+                        small
+                        color="error"
+                        v-on:click="clearClick"
+                        :disabled="urls.length > 0"
+                        >Clear
+                      </v-btn>
+                    </v-flex>
+                  </v-layout>
+                  <v-layout row>
+                    <v-flex xs10 class="pt-0">
+                      <v-text-field
+                        label="Tag"
+                        v-model="tag"
+                        class="pt-0"
+                      ></v-text-field>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
               </v-card-text>
             </v-card>
           </v-expansion-panel-content>
@@ -236,7 +247,10 @@
           item-key="zillow_propertyId"
         >
           <template v-slot:items="props">
-            <tr @click="props.expanded = !props.expanded">
+            <tr
+              @click="props.expanded = !props.expanded"
+              v-bind:class="{ yellow: props.item.mood == 2 }"
+            >
               <td>
                 <a :href="props.item.zillow_url" target="_blank">{{
                   props.item.streetPlusZip
@@ -288,6 +302,7 @@ import formatMoney from "accounting-js/lib/formatMoney";
 import formatNumber from "accounting-js/lib/formatNumber";
 // import * as entityQuery from "../../backend/utilities/entityQuery";
 import * as moods from "../../common/enums/moods";
+import * as utilities from "../../utilities/utilities";
 
 export default {
   name: "LeadFinder",
@@ -298,6 +313,7 @@ export default {
   data() {
     return {
       urls: "",
+      tag: "",
       loading: false,
       denied: false,
       expand: false,
@@ -415,7 +431,9 @@ export default {
       });
     },
     filteredProperties: function() {
-      let filteredList = [...this.leadFinderStore.list];
+      let filteredList = _.map(this.leadFinderStore.list, function(property) {
+        return Object.assign({}, property);
+      });
 
       const that = this;
       const tempBathMin = this.filterData.values.beds.min;
@@ -483,6 +501,13 @@ export default {
         );
       });
 
+      //set keywords
+      utilities.setKeywordsForList(
+        filteredList,
+        "description",
+        this.search_keywords
+      );
+
       //investor filters
       filteredList = _.filter(filteredList, function(item) {
         return (
@@ -511,6 +536,7 @@ export default {
       const request = propertyRequest();
       request.terms = this.url_array;
       request.search_keywords = this.search_keywords;
+      request.tag = this.tag;
 
       this.findPropertiesIncrementally(request);
 
@@ -542,9 +568,9 @@ export default {
       index = index === 0 ? index + 1 : index;
       this.pagination.sortBy = this.headers[index].value;
     },
-    expandoUpdateTriggered: function(item) {
+    expandoUpdateTriggered: function(id, item) {
       const request = propertyRequest();
-      request.id = item.id;
+      request.id = id;
       request.input = item;
       request.search_keywords = this.search_keywords;
       this.expandoUpdate(request);

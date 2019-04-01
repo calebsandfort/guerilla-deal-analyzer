@@ -5,8 +5,8 @@ export default gql`
     properties(offset: Int, limit: Int, order: String): [Property!]
     propertiesQueryable(query: EntityQuery): [Property!]
     property(id: ID!): Property
-    findProperty(term: String!): Property
-    findProperties(terms: [String!]!): [Property]
+    findProperty(term: String!, tag: String!): Property
+    findProperties(terms: [String!]!, tag: String!): [Property]
   }
   extend type Mutation {
     createProperty(input: PropertyInput!): Property!
@@ -39,8 +39,9 @@ export default gql`
     zillow_status: String!
     fullAddress: String!
     streetPlusZip: String!
-    keywords(search_keywords: [String]): [String]
-    keywords_count(search_keywords: [String]): Int
+    keywords: [String]
+    keywords_count: Int
+    keywords_set: Boolean
     image_urls: String!
     date_sold: String!
     latitude: Float!
@@ -50,6 +51,7 @@ export default gql`
     notes: String
     mood: Int!
     mood_display: String
+    tag: String
   }
   input PropertyInput {
     zillow_propertyId: Int!

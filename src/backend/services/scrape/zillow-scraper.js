@@ -81,12 +81,13 @@ export const findProperty = async term => {
           throw "Null zillowData";
         }
 
+        zillowData = zillowData[Object.keys(zillowData)[0]].property;
+
         // utilities.writeFile(
         //   FILE_PATH + "zillowData.json",
         //   JSON.stringify(zillowData)
         // );
 
-        zillowData = zillowData[Object.keys(zillowData)[0]].property;
         success = true;
       } catch (e) {
         //await new Promise(r => setTimeout(r, 5000));
@@ -176,7 +177,7 @@ export const findProperty = async term => {
     zillowData.responsivePhotos.length > 0
   ) {
     property.image_urls = _.map(zillowData.responsivePhotos, function(item) {
-      return item.mixedSources.jpeg[1].url;
+      return item.mixedSources.jpeg[2].url;
     }).join(",");
   } else if (zillowData.small != null && zillowData.small.length > 0) {
     property.image_urls = _.map(zillowData.small, function(item) {

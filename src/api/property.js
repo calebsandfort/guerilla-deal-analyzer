@@ -21,9 +21,9 @@ export const fragments = {
       description
       zestimate
       price_to_zestimate
-      keywords(search_keywords: $search_keywords)
-      keywords_count(search_keywords: $search_keywords)
-      date_listed
+      keywords
+      keywords_count
+      keywords_set
       days_listed
       year_built
       date_sold
@@ -34,6 +34,7 @@ export const fragments = {
       mood
       mood_display
       notes
+      tag
     }
   `
 };
@@ -48,7 +49,7 @@ const GET = gql`
 `;
 
 const GET_ALL = gql`
-  query($search_keywords: [String]) {
+  query {
     properties {
       ...SimpleProperty
     }
@@ -57,7 +58,7 @@ const GET_ALL = gql`
 `;
 
 const GET_ALL_QUERYABLE = gql`
-  query($search_keywords: [String], $query: EntityQuery) {
+  query($query: EntityQuery) {
     propertiesQueryable(query: $query) {
       ...SimpleProperty
     }
@@ -66,8 +67,8 @@ const GET_ALL_QUERYABLE = gql`
 `;
 
 const FIND_PROPERTY = gql`
-  query($term: String!, $search_keywords: [String]) {
-    findProperty(term: $term) {
+  query($term: String!, $tag: String!) {
+    findProperty(term: $term, tag: $tag) {
       ...SimpleProperty
     }
   }
@@ -75,8 +76,8 @@ const FIND_PROPERTY = gql`
 `;
 
 const FIND_PROPERTIES = gql`
-  query($terms: [String!]!, $search_keywords: [String]) {
-    findProperties(terms: $terms) {
+  query($terms: [String!]!, $tag: String!) {
+    findProperties(terms: $terms, tag: $tag) {
       ...SimpleProperty
     }
   }
@@ -123,7 +124,8 @@ export const getRequestVariables = () => {
     terms: "",
     search_keywords: [],
     query: null,
-    input: {}
+    input: {},
+    tag: ""
   };
 };
 

@@ -163,6 +163,11 @@ const property = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: moods.ACTIVE.value
+      },
+      tag: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        length: 50
       }
     },
     {

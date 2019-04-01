@@ -27,7 +27,7 @@ describe("zillow-scraper", () => {
 
     return zillowScraper
       .findProperty(
-        "/homedetails/3906-NE-Killingsworth-St-Portland-OR-97211/53894544_zpid/"
+        "/homedetails/1211-NE-60th-Ave-Portland-OR-97213/53919249_zpid/"
       )
       .then(function(response) {
         expect(response)
