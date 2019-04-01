@@ -239,6 +239,7 @@
         <v-data-table
           :headers="headers"
           :pagination.sync="pagination"
+          disable-initial-sort
           mustSort
           :expand="expand"
           :loading="loading"
@@ -246,6 +247,29 @@
           class="elevation-1"
           item-key="zillow_propertyId"
         >
+          <template slot="headers" slot-scope="props">
+            <tr>
+              <th
+                v-for="header in props.headers"
+                :key="header.text"
+                :class="[
+                  'column sortable',
+                  header.descending ? 'desc' : 'asc',
+                  indexHeaderInStack(header) >= 0 ? 'active' : ''
+                ]"
+                @click="changeSort(header)"
+              >
+                {{
+                  indexHeaderInStack(header) >= 0
+                    ? indexHeaderInStack(header) + 1
+                    : ""
+                }}
+                <v-icon small>arrow_upward</v-icon>
+
+                {{ header.text }}
+              </th>
+            </tr>
+          </template>
           <template v-slot:items="props">
             <tr
               @click="props.expanded = !props.expanded"
@@ -363,9 +387,13 @@ export default {
         { text: "Days Listed", value: "days_listed" },
         { text: "Mood", value: "mood" }
       ],
+      sortStack: [
+        { text: "Keywords", value: "keywords_count", descending: true },
+        { text: "Days Listed", value: "days_listed", descending: true }
+      ],
       pagination: {
-        sortBy: "keywords_count",
-        descending: true,
+        // sortBy: "keywords_count",
+        // descending: true,
         rowsPerPage: 10
       },
       filterData: {
@@ -517,7 +545,20 @@ export default {
         );
       });
 
-      return filteredList;
+      let resultRows = filteredList;
+      let stack = this.sortStack;
+      resultRows.sort(function(a, b) {
+        for (let i in stack) {
+          let key = stack[i].value;
+          let desc = stack[i].descending;
+          if (a[key] > b[key]) return desc ? -1 : 1;
+          else if (a[key] < b[key]) return desc ? 1 : -1;
+          else continue;
+        }
+        return 0;
+      });
+
+      return resultRows;
     }
   },
   methods: {
@@ -574,6 +615,19 @@ export default {
       request.input = item;
       request.search_keywords = this.search_keywords;
       this.expandoUpdate(request);
+    },
+    changeSort(header) {
+      let indexH = this.indexHeaderInStack(header);
+      if (indexH < 0) {
+        this.$set(header, "descending", false);
+        this.sortStack.push(header);
+      } else {
+        if (!header.descending) this.$set(header, "descending", true);
+        else this.sortStack.splice(indexH, 1);
+      }
+    },
+    indexHeaderInStack(header) {
+      return this.sortStack.findIndex(h => header.value === h.value);
     }
   }
 };
