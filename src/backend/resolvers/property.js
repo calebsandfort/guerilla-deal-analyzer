@@ -3,7 +3,7 @@ import * as entityQuery from "../utilities/entityQuery";
 import * as zillowScraper from "../services/scrape/zillow-scraper";
 import _ from "lodash";
 import moment from "moment";
-import * as moods from "../../common/enums/moods";
+import * as statuses from "../../common/enums/statuses";
 
 export default {
   Query: {
@@ -127,8 +127,14 @@ export default {
 
       return [];
     },
-    mood_display: property => {
-      return moods.getDisplayForValue(property.mood);
+    status_display: property => {
+      return statuses.getDisplayForValue(property.status);
+    },
+    distance: property => {
+      return 0;
+    },
+    distance_set: property => {
+      return false;
     }
   }
 };

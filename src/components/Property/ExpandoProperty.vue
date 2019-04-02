@@ -41,6 +41,17 @@
             </v-container>
           </v-flex>
         </v-layout>
+        <v-layout row>
+          <v-flex xs3>
+            <v-btn color="yellow lighten-2" @click="exploreClick"
+              >Explore</v-btn
+            >
+            <v-btn color="grey lighten-2" @click="ignoreClick">Ignore</v-btn>
+            <v-btn color="green lighten-2" @click="openDealWizardClick"
+              >Deal Wizard</v-btn
+            >
+          </v-flex>
+        </v-layout>
       </v-container>
     </v-tab-item>
     <v-tab-item :key="2">
@@ -48,11 +59,11 @@
         <v-layout row>
           <v-flex xs3>
             <v-select
-              v-model="expandoUpdateProperty.mood"
-              :items="moodItems"
+              v-model="expandoUpdateProperty.status"
+              :items="statusItems"
               item-text="display"
               item-value="value"
-              label="Mood"
+              label="Status"
             ></v-select>
           </v-flex>
           <v-flex xs9>
@@ -82,7 +93,7 @@
 
 <script>
 import VueGallery from "vue-gallery";
-import * as moods from "../../common/enums/moods";
+import * as statuses from "../../common/enums/statuses";
 
 export default {
   name: "ExpandoProperty",
@@ -98,12 +109,12 @@ export default {
       expandoUpdateProperty: Object.assign(
         {},
         {
-          mood: this.property.mood,
+          status: this.property.status,
           notes: this.property.notes
         }
       ),
       galleryIndex: null,
-      moodItems: moods.array()
+      statusItems: statuses.array()
     };
   },
   methods: {
@@ -113,6 +124,28 @@ export default {
         this.property.id,
         this.expandoUpdateProperty
       );
+    },
+    exploreClick: function() {
+      this.expandoUpdateProperty.status = statuses.statuses.EXPLORE.value;
+      this.$emit(
+        "expando-update",
+        this.property.id,
+        this.expandoUpdateProperty
+      );
+    },
+    ignoreClick: function() {
+      this.expandoUpdateProperty.status = statuses.statuses.INGORE.value;
+      this.$emit(
+        "expando-update",
+        this.property.id,
+        this.expandoUpdateProperty
+      );
+    },
+    openDealWizardClick: function() {
+      let routeData = this.$router.resolve({
+        name: "dealWizard"
+      });
+      window.open(`${routeData.href}/${this.property.id}`, "_blank");
     }
   }
 };

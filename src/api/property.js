@@ -31,10 +31,12 @@ export const fragments = {
       longitude
       days_since_sold
       image_urls_list
-      mood
-      mood_display
+      status
+      status_display
       notes
       tag
+      distance
+      distance_set
     }
   `
 };

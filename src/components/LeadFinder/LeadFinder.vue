@@ -178,13 +178,13 @@
                     </v-flex>
                     <v-flex xs2 align-self-center>
                       <h4 class="text-xs-right pr-2">
-                        Moods
+                        Statuses
                       </h4>
                     </v-flex>
                     <v-flex xs4>
                       <v-select
-                        v-model="filterData.values.moods"
-                        :items="filterData.listItems.moods"
+                        v-model="filterData.values.statuses"
+                        :items="filterData.listItems.statuses"
                         item-text="display"
                         item-value="value"
                         label="Select"
@@ -273,7 +273,11 @@
           <template v-slot:items="props">
             <tr
               @click="props.expanded = !props.expanded"
-              v-bind:class="{ yellow: props.item.mood == 2 }"
+              v-bind:class="{
+                'yellow lighten-2': props.item.status == statuses.EXPLORE.value,
+                'light-green lighten-2':
+                  props.item.status == statuses.TARGET.value
+              }"
             >
               <td>
                 <a :href="props.item.zillow_url" target="_blank">{{
@@ -301,7 +305,7 @@
                 {{ props.item.keywords.join(", ") }}
               </td>
               <td class="text-xs-right">{{ props.item.days_listed }}</td>
-              <td class="text-xs-right">{{ props.item.mood_display }}</td>
+              <td class="text-xs-right">{{ props.item.status_display }}</td>
             </tr>
           </template>
           <template v-slot:expand="props">
@@ -325,7 +329,7 @@ import { getRequestVariables as propertyRequest } from "../../api/property";
 import formatMoney from "accounting-js/lib/formatMoney";
 import formatNumber from "accounting-js/lib/formatNumber";
 // import * as entityQuery from "../../backend/utilities/entityQuery";
-import * as moods from "../../common/enums/moods";
+import * as statuses from "../../common/enums/statuses";
 import * as utilities from "../../utilities/utilities";
 
 export default {
@@ -342,6 +346,7 @@ export default {
       denied: false,
       expand: false,
       delay: 500,
+      statuses: statuses.statuses,
       panelsExpanded: [true, false],
       search_keywords: [
         "invest",
@@ -367,7 +372,9 @@ export default {
         "mobile home",
         "double wide",
         "remodeled",
-        "new construction"
+        "new construction",
+        "auction",
+        "floating"
       ],
       headers: [
         {
@@ -385,13 +392,13 @@ export default {
         { text: "Ratio", value: "price_to_zestimate" },
         { text: "Keywords", value: "keywords_count" },
         { text: "Days Listed", value: "days_listed" },
-        { text: "Mood", value: "mood" }
+        { text: "Status", value: "status" }
       ],
-      // sortStack: [
-      //   { text: "Keywords", value: "keywords_count", descending: true },
-      //   { text: "Days Listed", value: "days_listed", descending: true }
-      // ],
-      sortStack: [{ text: "Mood", value: "mood", descending: false }],
+      sortStack: [
+        { text: "Keywords", value: "keywords_count", descending: true },
+        { text: "Days Listed", value: "days_listed", descending: true }
+      ],
+      // sortStack: [{ text: "Status", value: "status", descending: false }],
       pagination: {
         // sortBy: "keywords_count",
         // descending: true,
@@ -400,7 +407,7 @@ export default {
       filterData: {
         listItems: {
           amenityCount: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-          moods: moods.array()
+          statuses: statuses.array()
         },
         values: {
           beds: {
@@ -425,7 +432,12 @@ export default {
             max: 2,
             step: 0.05
           },
-          moods: [moods.moods.ACTIVE, moods.moods.EXPLORE],
+          statuses: [
+            statuses.statuses.NEW,
+            statuses.statuses.ACTIVE,
+            statuses.statuses.EXPLORE,
+            statuses.statuses.TARGET
+          ],
           keywords_count: {
             threshold: 1,
             min: 0,
@@ -472,14 +484,14 @@ export default {
         return item.price > 0 && item.price_to_zestimate < 1000;
       });
 
-      // for (let i = 0; i < this.unwanted_keywords; i++) {
-      //   filteredList = _.filter(filteredList, function(item) {
-      //     return (
-      //       item.description.toLowerCase().indexOf(this.unwanted_keywords[i]) ==
-      //       -1
-      //     );
-      //   });
-      // }
+      for (let i = 0; i < that.unwanted_keywords.length; i++) {
+        filteredList = _.filter(filteredList, function(item) {
+          return (
+            item.description.toLowerCase().indexOf(that.unwanted_keywords[i]) ==
+            -1
+          );
+        });
+      }
 
       //beds
       filteredList = _.filter(filteredList, function(item) {
@@ -521,11 +533,11 @@ export default {
         );
       });
 
-      //moods
+      //statuses
       filteredList = _.filter(filteredList, function(item) {
         return (
-          _.findIndex(that.filterData.values.moods, function(mood) {
-            return item.mood == mood.value;
+          _.findIndex(that.filterData.values.statuses, function(status) {
+            return item.status == status.value;
           }) > -1
         );
       });

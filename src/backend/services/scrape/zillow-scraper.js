@@ -3,7 +3,7 @@ import $ from "cheerio";
 import * as utilities from "../../../utilities/utilities";
 import _ from "lodash";
 import moment from "moment";
-import { moods } from "../../../common/enums/moods";
+import { statuses } from "../../../common/enums/statuses";
 
 const FILE_PATH = "src/backend/services/scrape/files/";
 
@@ -38,7 +38,7 @@ export const findProperty = async term => {
     latitude: -1,
     longitude: -1,
     notes: "",
-    mood: moods.ACTIVE.value
+    status: statuses.ACTIVE.value
   };
 
   let url = term;

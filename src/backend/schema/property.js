@@ -49,9 +49,11 @@ export default gql`
     days_since_sold: Int!
     image_urls_list: [String]
     notes: String
-    mood: Int!
-    mood_display: String
+    status: Int!
+    status_display: String
     tag: String
+    distance: Float
+    distance_set: Boolean
   }
   input PropertyInput {
     zillow_propertyId: Int!
@@ -76,10 +78,10 @@ export default gql`
     latitude: Float!
     longitude: Float!
     notes: String
-    mood: Int!
+    status: Int!
   }
   input ExpandoPropertyUpdateInput {
     notes: String
-    mood: Int!
+    status: Int!
   }
 `;

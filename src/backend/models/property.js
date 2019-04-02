@@ -1,4 +1,4 @@
-import { moods } from "../../common/enums/moods";
+import { statuses } from "../../common/enums/statuses";
 
 const property = (sequelize, DataTypes) => {
   const property = sequelize.define(
@@ -159,10 +159,10 @@ const property = (sequelize, DataTypes) => {
       notes: {
         type: DataTypes.TEXT
       },
-      mood: {
+      status: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: moods.ACTIVE.value
+        defaultValue: statuses.ACTIVE.value
       },
       tag: {
         type: DataTypes.STRING,

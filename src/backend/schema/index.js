@@ -1,6 +1,9 @@
 import { gql } from "apollo-server-express";
 
 import propertySchema from "./property";
+import dealAnalysisSchema from "./dealAnalysis";
+import compPackageSchema from "./compPackage";
+import compSchema from "./comp";
 import entityQuerySchema from "./entityQuery";
 
 const linkSchema = gql`
@@ -17,4 +20,11 @@ const linkSchema = gql`
   }
 `;
 
-export default [linkSchema, propertySchema, entityQuerySchema];
+export default [
+  linkSchema,
+  propertySchema,
+  dealAnalysisSchema,
+  compPackageSchema,
+  compSchema,
+  entityQuerySchema
+];

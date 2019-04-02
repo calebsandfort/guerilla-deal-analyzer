@@ -1,21 +1,24 @@
-import Sequelize from 'sequelize';
+import Sequelize from "sequelize";
 
 const sequelize = new Sequelize(
   process.env.DATABASE,
   process.env.DATABASE_USER,
   process.env.DATABASE_PASSWORD,
   {
-    dialect: 'postgres',
+    dialect: "postgres",
     host: process.env.DATABASE_HOST
-  },
+  }
 );
 
 const models = {
-  Property: sequelize.import('./property'),
+  Property: sequelize.import("./property"),
+  Comp: sequelize.import("./comp"),
+  CompPackage: sequelize.import("./compPackage"),
+  DealAnalysis: sequelize.import("./dealAnalysis")
 };
 
 Object.keys(models).forEach(key => {
-  if ('associate' in models[key]) {
+  if ("associate" in models[key]) {
     models[key].associate(models);
   }
 });
