@@ -27,7 +27,7 @@ describe("zillow-scraper", () => {
 
     return zillowScraper
       .findProperty(
-        "/homedetails/1211-NE-60th-Ave-Portland-OR-97213/53919249_zpid/"
+        "/homedetails/4944-SE-67th-Ave-Portland-OR-97206/54003518_zpid/"
       )
       .then(function(response) {
         expect(response)

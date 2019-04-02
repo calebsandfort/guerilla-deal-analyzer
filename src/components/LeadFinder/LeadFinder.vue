@@ -387,10 +387,11 @@ export default {
         { text: "Days Listed", value: "days_listed" },
         { text: "Mood", value: "mood" }
       ],
-      sortStack: [
-        { text: "Keywords", value: "keywords_count", descending: true },
-        { text: "Days Listed", value: "days_listed", descending: true }
-      ],
+      // sortStack: [
+      //   { text: "Keywords", value: "keywords_count", descending: true },
+      //   { text: "Days Listed", value: "days_listed", descending: true }
+      // ],
+      sortStack: [{ text: "Mood", value: "mood", descending: false }],
       pagination: {
         // sortBy: "keywords_count",
         // descending: true,
@@ -426,13 +427,13 @@ export default {
           },
           moods: [moods.moods.ACTIVE, moods.moods.EXPLORE],
           keywords_count: {
-            threshold: 2,
+            threshold: 1,
             min: 0,
             max: 25
           },
           days_listed: {
             min: 0,
-            max: 730
+            max: 20000
           }
         }
       }

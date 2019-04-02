@@ -146,19 +146,28 @@ export const findProperty = async term => {
       : parseFloat((property.price / property.zestimate).toFixed(2));
   property.zillow_status = zillowData.homeStatus;
 
-  property.date_listed = extractAtAGlanceValues(
+  // debugger;
+  // property.date_listed = extractAtAGlanceValues(
+  //   zillowData,
+  //   "Days on Zillow",
+  //   function(x) {
+  //     x = x.replace(" Days", "").replace(" Day", "");
+  //     x = parseInt(x);
+  //     return parseInt(
+  //       moment()
+  //         .subtract(x, "days")
+  //         .format("x")
+  //     );
+  //   },
+  //   0
+  // );
+
+  utilities.setPropertyFromObject(
     zillowData,
-    "Days on Zillow",
-    function(x) {
-      x = x.replace(" Days", "").replace(" Day", "");
-      x = parseInt(x);
-      return parseInt(
-        moment()
-          .subtract(x, "days")
-          .format("x")
-      );
-    },
-    0
+    "resoFacts.onMarketDate",
+    property,
+    "date_listed",
+    -1
   );
 
   property.year_built = extractAtAGlanceValues(
