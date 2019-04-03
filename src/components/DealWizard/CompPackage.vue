@@ -233,9 +233,16 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-container>
-    <v-alert v-model="showComputedARV" type="success">
-      Computed ARV: {{ formatMoney(arv, { precision: 0 }) }}
-    </v-alert>
+    <v-container fluid grid-list-lg class="pb-0">
+    <v-card>
+      <v-card-text>
+        <PropertyDetails :property="property" :computed-arv="arv"></PropertyDetails>
+      </v-card-text>
+    </v-card>
+    </v-container>
+    <!--<v-alert v-model="showComputedARV" type="success">-->
+      <!--Computed ARV: {{ formatMoney(arv, { precision: 0 }) }}-->
+    <!--</v-alert>-->
     <v-container fluid>
       <v-data-table
         :headers="headers"
@@ -328,11 +335,13 @@ import formatNumber from "accounting-js/lib/formatNumber";
 import * as statuses from "../../common/enums/statuses";
 import * as utilities from "../../utilities/utilities";
 import ExpandoProperty from "../Property/ExpandoProperty";
+import PropertyDetails from "../Property/PropertyDetails";
 
 export default {
   name: "CompPackage",
   components: {
-    ExpandoProperty
+    ExpandoProperty,
+    PropertyDetails
   },
   props: {
     property: Object
@@ -467,6 +476,8 @@ export default {
       // prettier-ignore
       const url = `https://www.zillow.com/homes/recently_sold/house_type/${minBeds}-_beds/${daysSinceSold}m_days/${minSqft.toFixed(0)}-${maxSqft.toFixed(0)}_size/${maxLat},${maxLong},${minLat},${minLong}_rect/14_zm/`;
       this.zillow_comp_url = url;
+
+      this.tag = `COMPS_${editProperty.zillow_propertyId}`;
     },
     "compPackageStore.list": function() {
       this.loading = false;
@@ -601,11 +612,12 @@ export default {
         return 0;
       });
 
-      const temp = Object.assign({}, this.property);
-      temp.keywords = [];
-      resultRows.push(temp);
-
-      return [...resultRows];
+      return resultRows;
+      // const temp = Object.assign({}, this.property);
+      // temp.keywords = [];
+      // resultRows.push(temp);
+      //
+      // return [...resultRows];
     }
   },
   methods: {

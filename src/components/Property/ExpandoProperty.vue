@@ -142,10 +142,11 @@ export default {
       );
     },
     openDealWizardClick: function() {
-      let routeData = this.$router.resolve({
-        name: "dealWizard"
-      });
-      window.open(`${routeData.href}/${this.property.id}`, "_blank");
+      // let routeData = this.$router.resolve({
+      //   name: "dealWizard"
+      // });
+      // window.open(`${routeData.href}/${this.property.id}`, "_blank");
+      window.open(`/deal-wizard/${this.property.id}`, "_blank");
     }
   }
 };

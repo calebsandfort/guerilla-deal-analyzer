@@ -11,7 +11,10 @@
     "start:backend": "nodemon --exec babel-node src/backend/index.js"
   },
   "nodemonConfig": {
-    "ignore": ["src/components/*", "src/store/*"]
+    "ignore": [
+      "src/components/*",
+      "src/store/*"
+    ]
   },
   "dependencies": {
     "accounting-js": "^1.1.1",
