@@ -233,15 +233,18 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-container>
-    <v-container fluid grid-list-lg class="pb-0">
-    <v-card>
-      <v-card-text>
-        <PropertyDetails :property="property" :computed-arv="arv"></PropertyDetails>
-      </v-card-text>
-    </v-card>
+    <v-container fluid grid-list-lg class="pb-0" v-if="property != null">
+      <v-card>
+        <v-card-text>
+          <PropertyDetails
+            :property="property"
+            :computed-arv="arv"
+          ></PropertyDetails>
+        </v-card-text>
+      </v-card>
     </v-container>
     <!--<v-alert v-model="showComputedARV" type="success">-->
-      <!--Computed ARV: {{ formatMoney(arv, { precision: 0 }) }}-->
+    <!--Computed ARV: {{ formatMoney(arv, { precision: 0 }) }}-->
     <!--</v-alert>-->
     <v-container fluid>
       <v-data-table
@@ -422,12 +425,7 @@ export default {
             min: 1850,
             max: 2030
           },
-          statuses: [
-            statuses.statuses.NEW,
-            statuses.statuses.ACTIVE,
-            statuses.statuses.EXPLORE,
-            statuses.statuses.TARGET
-          ],
+          statuses: [statuses.statuses.COMP],
           keywords_count: {
             threshold: 0,
             min: 0,
@@ -637,6 +635,7 @@ export default {
       request.terms = this.url_array;
       request.search_keywords = this.search_keywords;
       request.tag = this.tag;
+      request.status = statuses.statuses.COMP.value;
 
       this.findPropertiesIncrementally(request);
 

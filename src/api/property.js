@@ -1,5 +1,6 @@
 import { gql } from "apollo-boost";
 import { errorHandler } from "./index";
+import * as statuses from "../common/enums/statuses";
 
 export const fragments = {
   simple: gql`
@@ -69,8 +70,8 @@ const GET_ALL_QUERYABLE = gql`
 `;
 
 const FIND_PROPERTY = gql`
-  query($term: String!, $tag: String!) {
-    findProperty(term: $term, tag: $tag) {
+  query($term: String!, $tag: String!, $status: Int) {
+    findProperty(term: $term, tag: $tag, status: $status) {
       ...SimpleProperty
     }
   }
@@ -78,8 +79,8 @@ const FIND_PROPERTY = gql`
 `;
 
 const FIND_PROPERTIES = gql`
-  query($terms: [String!]!, $tag: String!) {
-    findProperties(terms: $terms, tag: $tag) {
+  query($terms: [String!]!, $tag: String!, $status: Int) {
+    findProperties(terms: $terms, tag: $tag, status: $status) {
       ...SimpleProperty
     }
   }
@@ -127,7 +128,8 @@ export const getRequestVariables = () => {
     search_keywords: [],
     query: null,
     input: {},
-    tag: ""
+    tag: "",
+    status: statuses.statuses.ACTIVE.value
   };
 };
 

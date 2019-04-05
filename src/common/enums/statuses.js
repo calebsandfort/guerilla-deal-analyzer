@@ -24,6 +24,10 @@ export const statuses = {
   COMP: {
     value: 5,
     display: "Comp"
+  },
+  DIRECT_MAIL: {
+    value: 6,
+    display: "Direct Mail"
   }
 };
 

@@ -2,8 +2,13 @@ import rp from "request-promise";
 import $ from "cheerio";
 import * as utilities from "../../../utilities/utilities";
 import _ from "lodash";
+import Aigle from "aigle";
 import moment from "moment";
 import { statuses } from "../../../common/enums/statuses";
+
+import seleniumPage from "./selenium-base-page";
+
+Aigle.mixin(_);
 
 const FILE_PATH = "src/backend/services/scrape/files/";
 
@@ -241,6 +246,128 @@ export const findProperties = async terms => {
   }
 
   return properties;
+};
+
+export const trialScrape = async (url, filename = "") => {
+  const options = {
+    uri: url,
+    headers: {
+      "user-agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36"
+    }
+  };
+
+  const html = await rp(options);
+
+  if (filename != "") {
+    utilities.writeFile(FILE_PATH + `${filename}.html`, html);
+  }
+
+  return [];
+};
+
+export const trialSelenium = async theUrl => {
+  const page = new seleniumPage();
+  await page.visit(theUrl);
+  await page.sleep(20000);
+
+  await page.quit();
+
+  return [];
+};
+
+export const findCompsTrulia = async theUrl => {
+  //https://www.trulia.com/sold/45.468155,45.490205,-122.585666,-122.541628_xy/2p_beds/800-1200_sqft/SINGLE-FAMILY_HOME_type/6_srl
+
+  const page = new seleniumPage();
+  await page.visit(theUrl);
+  await page.sleep(20000);
+
+  //#resultsColumn
+  await page.findElementsByCss("#resultsColumn");
+
+  //.card a.tileLink
+
+  //.paginationContainer [aria-label='Next page']
+
+  let hasNextPage = true;
+  let compUrls = [];
+
+  while (hasNextPage) {
+    console.log("scraping comp page");
+    const compLinks = await page.findElementsByCss(".card a.tileLink");
+
+    const temp = await Aigle.resolve(compLinks).map(function(compLink) {
+      return compLink.getAttribute("href");
+    });
+
+    compUrls = _.concat(compUrls, temp);
+
+    const nextButton = await page.findElementsByCssNoWait(
+      ".paginationContainer [aria-label='Next page']"
+    );
+    if (nextButton.length == 1) {
+      await page.visit(await nextButton[0].getAttribute("href"));
+      await page.sleep(20000);
+    } else {
+      hasNextPage = false;
+    }
+  }
+
+  console.log(compUrls.length);
+
+  await page.quit();
+
+  return [];
+};
+
+export const findComps = async () => {
+  let theUrl =
+    "https://www.zillow.com/homes/recently_sold/house_type/2-_beds/6m_days/1112-1504_size/45.490204999999996,-122.541628,45.468155,-122.585666_rect/14_zm/";
+
+  const page = new seleniumPage();
+  await page.visit(theUrl);
+  await page.sleep(20000);
+
+  //#list-core-content-container
+  await page.findElementsByCss(
+    "#list-core-content-container, #grid-search-results"
+  );
+
+  //#search-results .hdp-link
+
+  //#search-pagination-wrapper .zsg-pagination-next a
+
+  let hasNextPage = true;
+  let compUrls = [];
+
+  while (hasNextPage) {
+    const compLinks = await page.findElementsByCss(
+      "#search-results .hdp-link, .photo-cards a.list-card-link"
+    );
+
+    const temp = await Aigle.resolve(compLinks).map(function(compLink) {
+      return compLink.getAttribute("href");
+    });
+
+    compUrls = _.concat(compUrls, temp);
+
+    const nextButton = await page.findElementsByCssNoWait(
+      ".zsg-pagination-next a"
+    );
+    if (nextButton.length == 1) {
+      nextButton[0].click();
+      await page.sleep(20000);
+    } else {
+      hasNextPage = false;
+    }
+  }
+
+  console.log(compUrls.length);
+
+  await page.quit();
+
+  return [];
 };
 
 const setPrice = (property, zillowData) => {

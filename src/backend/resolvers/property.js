@@ -32,15 +32,20 @@ export default {
     property: async (parent, { id }, { models }) => {
       return await models.Property.findByPk(id);
     },
-    findProperty: async (parent, { term, tag }, { models }) => {
+    findProperty: async (
+      parent,
+      { term, tag, status = statuses.statuses.ACTIVE.value },
+      { models }
+    ) => {
       let property = await models.Property.findOne({
         where: { zillow_path: term }
       });
       if (property == null) {
         const scrapedProperty = await zillowScraper.findProperty(term);
         if (scrapedProperty) {
+          scrapedProperty.tag = tag;
+          scrapedProperty.status = status;
           property = await models.Property.create(scrapedProperty);
-          property.tag = tag;
         } else {
           return null;
         }
@@ -48,7 +53,11 @@ export default {
 
       return property;
     },
-    findProperties: async (parent, { terms, tag }, { models }) => {
+    findProperties: async (
+      parent,
+      { terms, tag, status = statuses.statuses.ACTIVE.value },
+      { models }
+    ) => {
       const properties = [];
 
       for (let i = 0; i < terms.length; i++) {
@@ -59,8 +68,9 @@ export default {
         if (property == null) {
           const scrapedProperty = await zillowScraper.findProperty(term);
           if (scrapedProperty) {
+            scrapedProperty.tag = tag;
+            scrapedProperty.status = status;
             property = await models.Property.create(scrapedProperty);
-            property.tag = tag;
           }
         }
 

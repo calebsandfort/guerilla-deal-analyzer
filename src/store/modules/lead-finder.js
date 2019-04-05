@@ -82,7 +82,9 @@ export const actions = {
       const term = requestVariables.terms[i];
       const variables = Object.assign({}, requestVariables, {
         terms: [],
-        term: term
+        term: term,
+        status: requestVariables.status,
+        tag: requestVariables.tag
       });
 
       const response = await propertyApi.findProperty(apolloClient, variables);

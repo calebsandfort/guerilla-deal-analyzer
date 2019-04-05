@@ -5,8 +5,8 @@ export default gql`
     properties(offset: Int, limit: Int, order: String): [Property!]
     propertiesQueryable(query: EntityQuery): [Property!]
     property(id: ID!): Property
-    findProperty(term: String!, tag: String!): Property
-    findProperties(terms: [String!]!, tag: String!): [Property]
+    findProperty(term: String!, tag: String!, status: Int): Property
+    findProperties(terms: [String!]!, tag: String!, status: Int): [Property]
   }
   extend type Mutation {
     createProperty(input: PropertyInput!): Property!

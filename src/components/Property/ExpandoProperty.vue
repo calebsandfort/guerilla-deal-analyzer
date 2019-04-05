@@ -43,13 +43,42 @@
         </v-layout>
         <v-layout row>
           <v-flex xs3>
-            <v-btn color="yellow lighten-2" @click="exploreClick"
-              >Explore</v-btn
+            <v-btn
+              flat
+              icon
+              color="yellow darken-2"
+              class="ma-1"
+              @click="exploreClick"
             >
-            <v-btn color="grey lighten-2" @click="ignoreClick">Ignore</v-btn>
-            <v-btn color="green lighten-2" @click="openDealWizardClick"
-              >Deal Wizard</v-btn
+              <v-icon>search</v-icon>
+            </v-btn>
+            <v-btn
+              flat
+              icon
+              color="grey darken-2"
+              class="ma-1"
+              @click="ignoreClick"
             >
+              <v-icon>delete</v-icon>
+            </v-btn>
+            <v-btn
+              flat
+              icon
+              color="blue darken-2"
+              class="ma-1"
+              @click="openTaxWindowClick"
+            >
+              <v-icon>account_balance</v-icon>
+            </v-btn>
+            <v-btn
+              flat
+              icon
+              color="green darken-2"
+              class="ma-1"
+              @click="openDealWizardClick"
+            >
+              <v-icon>assignment</v-icon>
+            </v-btn>
           </v-flex>
         </v-layout>
       </v-container>
@@ -147,6 +176,14 @@ export default {
       // });
       // window.open(`${routeData.href}/${this.property.id}`, "_blank");
       window.open(`/deal-wizard/${this.property.id}`, "_blank");
+    },
+    openTaxWindowClick: function() {
+      window.open(
+        `https://multcoproptax.com/Property-Search?searchtext=${this.property.streetAddress
+          .replace(",", "")
+          .replace(".", "")}`,
+        "_blank"
+      );
     }
   }
 };

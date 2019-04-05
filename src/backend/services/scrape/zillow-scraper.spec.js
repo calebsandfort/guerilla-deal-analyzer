@@ -20,21 +20,74 @@ describe("zillow-scraper", () => {
   //         });
   // });
   //
-  it("finds a property for the given url", function() {
+  // it("finds a property for the given url", function() {
+  //   this.timeout(10 * 60 * 1000);
+  //
+  //   const expectedResult = getExpectedProperty();
+  //
+  //   return zillowScraper
+  //     .findProperty(
+  //       "/homedetails/4944-SE-67th-Ave-Portland-OR-97206/54003518_zpid/"
+  //     )
+  //     .then(function(response) {
+  //       expect(response)
+  //         .excluding(["description", "zillow_status"])
+  //         .to.eql(expectedResult);
+  //     });
+  // });
+
+  it("trial scrapes", function() {
     this.timeout(10 * 60 * 1000);
 
-    const expectedResult = getExpectedProperty();
+    const expectedResult = 0;
 
     return zillowScraper
-      .findProperty(
-        "/homedetails/4944-SE-67th-Ave-Portland-OR-97206/54003518_zpid/"
+      .trialScrape(
+        "https://www.zillow.com/homes/recently_sold/house_type/2-_beds/6m_days/950-1250_size/45.497774,-122.571996,45.47572,-122.616027_rect/14_zm/",
+        "zillow_comps"
       )
       .then(function(response) {
-        expect(response)
-          .excluding(["description", "zillow_status"])
-          .to.eql(expectedResult);
+        expect(response.length).to.eql(expectedResult);
       });
   });
+
+  // it("trial seleniums", function() {
+  //   this.timeout(10 * 60 * 1000);
+  //
+  //   const expectedResult = 0;
+  //
+  //   return zillowScraper
+  //     .trialSelenium(
+  //       "https://www.trulia.com/sold/45.468155,45.490205,-122.585666,-122.541628_xy/2p_beds/800-1200_sqft/SINGLE-FAMILY_HOME_type/6_srl"
+  //     )
+  //     .then(function(response) {
+  //       expect(response.length).to.eql(expectedResult);
+  //     });
+  // });
+
+  // it("finds comps for a given property", function() {
+  //   this.timeout(10 * 60 * 1000);
+  //
+  //   const expectedResult = 0;
+  //
+  //   return zillowScraper
+  //     .findCompsTrulia(
+  //       "https://www.trulia.com/sold/45.468155,45.490205,-122.585666,-122.541628_xy/2p_beds/800-1200_sqft/SINGLE-FAMILY_HOME_type/6_srl"
+  //     )
+  //     .then(function(response) {
+  //       expect(response.length).to.eql(expectedResult);
+  //     });
+  // });
+
+  // it("finds comps for a given property", function() {
+  //   this.timeout(10 * 60 * 1000);
+  //
+  //   const expectedResult = 0;
+  //
+  //   return zillowScraper.findComps().then(function(response) {
+  //     expect(response.length).to.eql(expectedResult);
+  //   });
+  // });
   //
   // it("finds properties for the given urls", function () {
   //     this.timeout(10 * 60 * 1000);

@@ -69,6 +69,13 @@
                         v-model="tag"
                         class="pt-0"
                       ></v-text-field>
+                      <v-select
+                        v-model="status"
+                        :items="statusItems"
+                        item-text="display"
+                        item-value="value"
+                        label="Status"
+                      ></v-select>
                     </v-flex>
                   </v-layout>
                 </v-container>
@@ -341,12 +348,14 @@ export default {
   data() {
     return {
       urls: "",
-      tag: "",
+      tag: "ZILLOW",
+      status: statuses.statuses.NEW.value,
       loading: false,
       denied: false,
       expand: false,
       delay: 500,
       statuses: statuses.statuses,
+      statusItems: statuses.array(),
       panelsExpanded: [true, false],
       search_keywords: [
         "invest",
@@ -591,6 +600,7 @@ export default {
       request.terms = this.url_array;
       request.search_keywords = this.search_keywords;
       request.tag = this.tag;
+      request.status = this.status;
 
       this.findPropertiesIncrementally(request);
 
