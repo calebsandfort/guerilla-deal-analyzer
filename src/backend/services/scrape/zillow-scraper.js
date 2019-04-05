@@ -276,6 +276,10 @@ export const trialSelenium = async theUrl => {
   return [];
 };
 
+export const findCompsRedfin = async theUrl => {
+  //https://www.redfin.com/city/30772/OR/Portland/filter/sort=lo-distance,property-type=house,min-beds=2,max-beds=3,min-baths=1,min-sqft=750-sqft,max-sqft=1.25k-sqft,include=sold-6mo,viewport=45.53068281308594:45.427685986914064:-122.49497264921875:-122.63230175078125,no-outline,geo-address=9660+SE+Yukon+St%0C+Portland%0C+OR
+};
+
 export const findCompsTrulia = async theUrl => {
   //https://www.trulia.com/sold/45.468155,45.490205,-122.585666,-122.541628_xy/2p_beds/800-1200_sqft/SINGLE-FAMILY_HOME_type/6_srl
 
