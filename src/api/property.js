@@ -13,7 +13,7 @@ export const fragments = {
       city
       state
       zipcode
-      fullAddress
+      address
       streetPlusZip
       price
       sqft
@@ -70,8 +70,8 @@ const GET_ALL_QUERYABLE = gql`
 `;
 
 const FIND_PROPERTY = gql`
-  query($term: String!, $tag: String!, $status: Int) {
-    findProperty(term: $term, tag: $tag, status: $status) {
+  query($term: String!, $tag: String!, $status: Int, $persist: Boolean) {
+    findProperty(term: $term, tag: $tag, status: $status, persist: $persist) {
       ...SimpleProperty
     }
   }
@@ -79,8 +79,28 @@ const FIND_PROPERTY = gql`
 `;
 
 const FIND_PROPERTIES = gql`
-  query($terms: [String!]!, $tag: String!, $status: Int) {
-    findProperties(terms: $terms, tag: $tag, status: $status) {
+  query($terms: [String!]!, $tag: String!, $status: Int, $persist: Boolean) {
+    findProperties(
+      terms: $terms
+      tag: $tag
+      status: $status
+      persist: $persist
+    ) {
+      ...SimpleProperty
+    }
+  }
+  ${fragments.simple}
+`;
+
+const FIND_COMPS = gql`
+  query($id: ID, $term: String, $tag: String, $status: Int, $persist: Boolean) {
+    findComps(
+      id: $id
+      term: $term
+      tag: $tag
+      status: $status
+      persist: $persist
+    ) {
       ...SimpleProperty
     }
   }
@@ -129,7 +149,8 @@ export const getRequestVariables = () => {
     query: null,
     input: {},
     tag: "",
-    status: statuses.statuses.ACTIVE.value
+    status: statuses.statuses.ACTIVE.value,
+    persist: true
   };
 };
 
@@ -169,6 +190,14 @@ export const findProperties = async (client, variables) =>
   client
     .query({
       query: FIND_PROPERTIES,
+      variables: variables
+    })
+    .catch(errorHandler);
+
+export const findComps = async (client, variables) =>
+  client
+    .query({
+      query: FIND_COMPS,
       variables: variables
     })
     .catch(errorHandler);

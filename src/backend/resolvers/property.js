@@ -5,80 +5,149 @@ import _ from "lodash";
 import moment from "moment";
 import * as statuses from "../../common/enums/statuses";
 
-export default {
-  Query: {
-    properties: async (
-      parent,
-      { offset = 0, limit = 0, order = "id DESC" },
-      { models }
-    ) => {
-      const params = {};
+//region Query
+//region properties
+const properties = async (
+  parent,
+  { offset = 0, limit = 0, order = "id DESC" },
+  { models }
+) => {
+  const params = {};
 
-      if (limit > 0) {
-        params.offset = offset;
-        params.limit = limit;
+  if (limit > 0) {
+    params.offset = offset;
+    params.limit = limit;
+  }
+
+  if (order != "") {
+    params.order = Sequelize.literal(order);
+  }
+
+  return await models.Property.findAll(params);
+};
+//endregion
+
+//region propertiesQueryable
+const propertiesQueryable = async (parent, { query }, { models }) => {
+  const params = entityQuery.entityQueryToSequelize(query);
+  return await models.Property.findAll(params);
+};
+//endregion
+
+//region property
+const property = async (parent, { id }, { models }) => {
+  return await models.Property.findByPk(id);
+};
+//endregion
+
+//region findProperty
+const findProperty = async (
+  parent,
+  { term, tag, status = statuses.statuses.ACTIVE.value, persist = true },
+  { models }
+) => {
+  let property = await findPropertyHelper(term, models);
+
+  if (property == null) {
+    const scrapedProperty = await zillowScraper.findProperty(term);
+    if (scrapedProperty) {
+      scrapedProperty.tag = tag;
+      scrapedProperty.status = status;
+
+      if (persist) {
+        property = await models.Property.create(scrapedProperty);
+      } else {
+        property = scrapedProperty;
       }
+    } else {
+      return null;
+    }
+  }
 
-      if (order != "") {
-        params.order = Sequelize.literal(order);
-      }
+  return property;
+};
+//endregion
 
-      return await models.Property.findAll(params);
-    },
-    propertiesQueryable: async (parent, { query }, { models }) => {
-      const params = entityQuery.entityQueryToSequelize(query);
-      return await models.Property.findAll(params);
-    },
-    property: async (parent, { id }, { models }) => {
-      return await models.Property.findByPk(id);
-    },
-    findProperty: async (
-      parent,
-      { term, tag, status = statuses.statuses.ACTIVE.value },
-      { models }
-    ) => {
-      let property = await models.Property.findOne({
-        where: { zillow_path: term }
-      });
-      if (property == null) {
-        const scrapedProperty = await zillowScraper.findProperty(term);
-        if (scrapedProperty) {
-          scrapedProperty.tag = tag;
-          scrapedProperty.status = status;
+//region findProperties
+const findProperties = async (
+  parent,
+  { terms, tag, status = statuses.statuses.ACTIVE.value, persist = true },
+  { models }
+) => {
+  const properties = [];
+  let counter = 0;
+
+  for (let i = 0; i < terms.length; i++) {
+    const term = terms[i];
+    let property = await findPropertyHelper(term, models);
+
+    if (property == null) {
+      const scrapedProperty = await zillowScraper.findProperty(term);
+      if (scrapedProperty) {
+        scrapedProperty.tag = tag;
+        scrapedProperty.status = status;
+        if (persist) {
           property = await models.Property.create(scrapedProperty);
         } else {
-          return null;
+          property = scrapedProperty;
         }
       }
-
-      return property;
-    },
-    findProperties: async (
-      parent,
-      { terms, tag, status = statuses.statuses.ACTIVE.value },
-      { models }
-    ) => {
-      const properties = [];
-
-      for (let i = 0; i < terms.length; i++) {
-        const term = terms[i];
-        let property = await models.Property.findOne({
-          where: { zillow_path: term }
-        });
-        if (property == null) {
-          const scrapedProperty = await zillowScraper.findProperty(term);
-          if (scrapedProperty) {
-            scrapedProperty.tag = tag;
-            scrapedProperty.status = status;
-            property = await models.Property.create(scrapedProperty);
-          }
-        }
-
-        properties.push(property);
-      }
-
-      return properties;
     }
+
+    properties.push(property);
+
+    if (counter > 50) {
+      await new Promise(r => setTimeout(r, 1000 * 15));
+      counter = 0;
+    } else {
+      counter += 1;
+    }
+  }
+
+  return properties;
+};
+//endregion
+
+//region findComps
+const findComps = async (
+  parent,
+  { id, term, tag, status = statuses.statuses.ACTIVE.value, persist = true },
+  { models }
+) => {
+  let property = null;
+
+  if (id > 0) {
+    property = await models.Property.findByPk(id);
+  } else if (term != "") {
+    property = await findPropertyHelper(term, models);
+  }
+
+  const compAddresses = await zillowScraper.findComps({ property: property });
+
+  const comps = await findProperties(
+    parent,
+    {
+      terms: compAddresses,
+      tag: `COMP ${property.streetAddress}`,
+      status: statuses.statuses.COMP.value,
+      persist: persist
+    },
+    { models }
+  );
+
+  return comps;
+};
+//endregion
+//endregion
+
+export default {
+  Query: {
+    properties,
+    propertiesQueryable,
+    property,
+    findProperty,
+    findProperties,
+    findComps
   },
 
   Mutation: {
@@ -148,3 +217,19 @@ export default {
     }
   }
 };
+
+//region Helpers
+const findPropertyHelper = async (term, models) => {
+  let property = await models.Property.findOne({
+    where: {
+      [Sequelize.Op.or]: [
+        { zillow_path: term },
+        { streetAddress: term },
+        { address: term }
+      ]
+    }
+  });
+
+  return property;
+};
+//endregion

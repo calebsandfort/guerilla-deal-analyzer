@@ -142,7 +142,7 @@ export default {
           notes: this.property.notes
         }
       ),
-      galleryIndex: null,
+      galleryIndex: 0,
       statusItems: statuses.array()
     };
   },

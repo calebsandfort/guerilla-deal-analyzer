@@ -3,7 +3,6 @@ import $ from "cheerio";
 import * as utilities from "../../../utilities/utilities";
 import _ from "lodash";
 import Aigle from "aigle";
-import moment from "moment";
 import { statuses } from "../../../common/enums/statuses";
 
 import seleniumPage from "./selenium-base-page";
@@ -11,6 +10,37 @@ import seleniumPage from "./selenium-base-page";
 Aigle.mixin(_);
 
 const FILE_PATH = "src/backend/services/scrape/files/";
+
+export const findZillowUrl = async address => {
+  let zillowUrl = "";
+
+  if (address.toLowerCase().indexOf("portland") == -1) {
+    address += " portland or";
+  }
+
+  const url = `https://www.google.com/search?q=${address
+    .replace(",", "")
+    .replace(".", "")
+    .replace(" ", "+")}+site+zillow.com`;
+
+  const options = {
+    uri: url,
+    headers: {
+      "user-agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36"
+    }
+  };
+
+  const html = await rp(options);
+
+  const results = $("#search .srg > .g .rc > .r > a", html);
+
+  if (results.length > 0) {
+    zillowUrl = results.first().attr("href");
+  }
+
+  return zillowUrl;
+};
 
 export const findProperty = async term => {
   const property = {
@@ -23,6 +53,7 @@ export const findProperty = async term => {
     city: "",
     state: "",
     zipcode: "",
+    address: "",
     price: -1,
     // propertyTaxesAnnually: 0,
     // propertyTaxesMonthly: 0,
@@ -46,17 +77,19 @@ export const findProperty = async term => {
     status: statuses.ACTIVE.value
   };
 
-  let url = term;
+  let url = "";
 
-  if (!url.startsWith("/")) {
-    url = `https://www.zillow.com/homes/${term.replace(" ", "-")}_rb/`;
+  if (term.indexOf("homedetails") == -1) {
+    url = await findZillowUrl(term);
+  } else {
+    url = term;
   }
 
   if (url.indexOf("http") == -1) {
     url = `https://www.zillow.com` + url;
   }
 
-  console.log(url);
+  //console.log(url);
 
   const options = {
     uri: url,
@@ -73,7 +106,7 @@ export const findProperty = async term => {
   for (let i = 0; i < 3; i++) {
     if (!success) {
       try {
-        const html = await rp(options);
+        html = await rp(options);
         //utilities.writeFile(FILE_PATH + "zillow.html", html);
 
         zillowData = JSON.parse(
@@ -114,6 +147,9 @@ export const findProperty = async term => {
   property.city = zillowData.city;
   property.state = zillowData.state;
   property.zipcode = zillowData.zipcode;
+  property.address = `${property.streetAddress}, ${property.city}, ${
+    property.state
+  } ${property.zipcode}`;
   utilities.setPropertyFromObject(
     zillowData,
     "livingArea",
@@ -124,6 +160,14 @@ export const findProperty = async term => {
 
   utilities.setPropertyFromObject(zillowData, "price", property, "price", -1);
   utilities.setPropertyFromObject(zillowData, "bedrooms", property, "beds", -1);
+
+  if (property.beds == 0) {
+    const bedSpan = $(".ds-bed-bath-living-area > span", html);
+    if (bedSpan.length > 0) {
+      property.beds = parseInt(bedSpan[0].text());
+    }
+  }
+
   utilities.setPropertyFromObject(
     zillowData,
     "bathrooms",
@@ -150,22 +194,6 @@ export const findProperty = async term => {
       ? 1000
       : parseFloat((property.price / property.zestimate).toFixed(2));
   property.zillow_status = zillowData.homeStatus;
-
-  // debugger;
-  // property.date_listed = extractAtAGlanceValues(
-  //   zillowData,
-  //   "Days on Zillow",
-  //   function(x) {
-  //     x = x.replace(" Days", "").replace(" Day", "");
-  //     x = parseInt(x);
-  //     return parseInt(
-  //       moment()
-  //         .subtract(x, "days")
-  //         .format("x")
-  //     );
-  //   },
-  //   0
-  // );
 
   utilities.setPropertyFromObject(
     zillowData,
@@ -204,12 +232,6 @@ export const findProperty = async term => {
     // );
     property.image_urls = "";
   }
-
-  // console.log(
-  //   `****************${zillowData.photoCount}, ${
-  //     zillowData.small.length
-  //   }, ${property.image_urls == ""}******************`
-  // );
 
   utilities.setPropertyFromObject(
     zillowData,
@@ -276,102 +298,105 @@ export const trialSelenium = async theUrl => {
   return [];
 };
 
-export const findCompsRedfin = async theUrl => {
-  //https://www.redfin.com/city/30772/OR/Portland/filter/sort=lo-distance,property-type=house,min-beds=2,max-beds=3,min-baths=1,min-sqft=750-sqft,max-sqft=1.25k-sqft,include=sold-6mo,viewport=45.53068281308594:45.427685986914064:-122.49497264921875:-122.63230175078125,no-outline,geo-address=9660+SE+Yukon+St%0C+Portland%0C+OR
-};
+export const findComps = async ({ term = "", property = null, limit = -1 }) => {
+  let comps = [];
 
-export const findCompsTrulia = async theUrl => {
-  //https://www.trulia.com/sold/45.468155,45.490205,-122.585666,-122.541628_xy/2p_beds/800-1200_sqft/SINGLE-FAMILY_HOME_type/6_srl
+  if (term != "" && property == null) {
+    property = await findProperty(term);
+  }
 
-  const page = new seleniumPage();
-  await page.visit(theUrl);
-  await page.sleep(20000);
+  const minBeds = property.beds > 3 ? property.beds - 1 : property.beds;
+  const maxBeds = property.beds > 3 ? property.beds + 1 : property.beds;
+  const daysSinceSold = 180;
+  const minSqft = property.sqft - property.sqft * 0.15;
+  const maxSqft = property.sqft + property.sqft * 0.15;
 
-  //#resultsColumn
-  await page.findElementsByCss("#resultsColumn");
+  const longitudeOffset = (1 / 49) * 1;
+  const maxLon = property.longitude + longitudeOffset;
+  const minLon = property.longitude - longitudeOffset;
 
-  //.card a.tileLink
+  const latitudeOffset = (1 / 69) * 1;
+  const maxLat = property.latitude + latitudeOffset;
+  const minLat = property.latitude - latitudeOffset;
 
-  //.paginationContainer [aria-label='Next page']
+  const poly = [
+    { lon: maxLon, lat: maxLat },
+    { lon: maxLon, lat: minLat },
+    { lon: minLon, lat: minLat },
+    { lon: minLon, lat: maxLat },
+    { lon: maxLon, lat: maxLat }
+  ];
 
-  let hasNextPage = true;
-  let compUrls = [];
+  //https://www.redfin.com/city/30772/OR/Portland/filter/
+  // sort=lo-distance,
+  // property-type=house,
+  // min-beds=2,
+  // max-beds=3,
+  // min-baths=1,
+  // min-sqft=750-sqft,
+  // max-sqft=1.25k-sqft,
+  // include=sold-6mo,
+  // viewport=45.48965:45.46841:-122.54015:-122.58714,
+  // no-outline
+  // /page-1
 
-  while (hasNextPage) {
-    console.log("scraping comp page");
-    const compLinks = await page.findElementsByCss(".card a.tileLink");
+  //https://www.redfin.com/city/30772/OR/Portland/filter/sort=lo-distance,property-type=house,min-beds=2,max-beds=3,min-baths=1,min-sqft=750-sqft,max-sqft=1.25k-sqft,include=sold-6mo,viewport=45.48965:45.46841:-122.54015:-122.58714,no-outline/page-2
+  //https://www.redfin.com/city/30772/OR/Portland/filter/sort=lo-distance,property-type=house,min-beds=3,max-beds=5,min-baths=1,min-sqft=2077-sqft,max-sqft=2809-sqft,include=sold-9mo,viewport=45.51157:45.48983:-122.66397:-122.69458,no-outline/page-1
 
-    const temp = await Aigle.resolve(compLinks).map(function(compLink) {
-      return compLink.getAttribute("href");
-    });
+  let currentPage = 1;
+  let hasMorePages = true;
 
-    compUrls = _.concat(compUrls, temp);
+  while (hasMorePages) {
+    let compUrl =
+      "https://www.redfin.com/city/30772/OR/Portland/filter/sort=lo-distance,property-type=house";
+    compUrl += `,min-beds=${minBeds}`;
+    compUrl += `,max-beds=${maxBeds}`;
+    compUrl += ",min-baths=1";
+    compUrl += `,min-sqft=${minSqft.toFixed(0)}-sqft`;
+    compUrl += `,max-sqft=${maxSqft.toFixed(0)}-sqft`;
+    compUrl += ",include=sold-1yr";
+    compUrl += `,viewport=${maxLat.toFixed(5)}:${minLat.toFixed(
+      5
+    )}:${maxLon.toFixed(5)}:${minLon.toFixed(5)}`;
+    compUrl += ",no-outline";
+    compUrl += `/page-${currentPage}`;
 
-    const nextButton = await page.findElementsByCssNoWait(
-      ".paginationContainer [aria-label='Next page']"
+    const options = {
+      uri: compUrl,
+      headers: {
+        "user-agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36"
+      }
+    };
+
+    const html = await rp(options);
+
+    const results = $(
+      ".HomeViews .HomeCardContainer > .HomeCard > .v2 > a",
+      html
     );
-    if (nextButton.length == 1) {
-      await page.visit(await nextButton[0].getAttribute("href"));
-      await page.sleep(20000);
+
+    comps = _.concat(
+      comps,
+      _.map(results, function(item) {
+        return $(item).attr("title");
+      })
+    );
+
+    const nextPage = $(
+      ".PagingControls button:not(.disabled) .slide-next",
+      html
+    );
+    if (nextPage.length > 0) {
+      currentPage += 1;
     } else {
-      hasNextPage = false;
+      hasMorePages = false;
     }
   }
 
-  console.log(compUrls.length);
+  //console.log(comps);
 
-  await page.quit();
-
-  return [];
-};
-
-export const findComps = async () => {
-  let theUrl =
-    "https://www.zillow.com/homes/recently_sold/house_type/2-_beds/6m_days/1112-1504_size/45.490204999999996,-122.541628,45.468155,-122.585666_rect/14_zm/";
-
-  const page = new seleniumPage();
-  await page.visit(theUrl);
-  await page.sleep(20000);
-
-  //#list-core-content-container
-  await page.findElementsByCss(
-    "#list-core-content-container, #grid-search-results"
-  );
-
-  //#search-results .hdp-link
-
-  //#search-pagination-wrapper .zsg-pagination-next a
-
-  let hasNextPage = true;
-  let compUrls = [];
-
-  while (hasNextPage) {
-    const compLinks = await page.findElementsByCss(
-      "#search-results .hdp-link, .photo-cards a.list-card-link"
-    );
-
-    const temp = await Aigle.resolve(compLinks).map(function(compLink) {
-      return compLink.getAttribute("href");
-    });
-
-    compUrls = _.concat(compUrls, temp);
-
-    const nextButton = await page.findElementsByCssNoWait(
-      ".zsg-pagination-next a"
-    );
-    if (nextButton.length == 1) {
-      nextButton[0].click();
-      await page.sleep(20000);
-    } else {
-      hasNextPage = false;
-    }
-  }
-
-  console.log(compUrls.length);
-
-  await page.quit();
-
-  return [];
+  return comps;
 };
 
 const setPrice = (property, zillowData) => {

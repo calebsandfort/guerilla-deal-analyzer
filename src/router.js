@@ -41,13 +41,22 @@ export default new Router({
         import(/* webpackChunkName: "about" */ "./components/DealCalculator/DealCalculator.vue")
     },
     {
-      path: "/deal-wizard/:propertyId",
+      path: "/deal-wizard/:propertyId?",
       name: "dealWizard",
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
         import(/* webpackChunkName: "about" */ "./components/DealWizard/DealWizard.vue")
+    },
+    {
+      path: "/sandbox",
+      name: "sandbox",
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./components/Sandbox/Sandbox.vue")
     }
   ]
 });

@@ -5,8 +5,25 @@ export default gql`
     properties(offset: Int, limit: Int, order: String): [Property!]
     propertiesQueryable(query: EntityQuery): [Property!]
     property(id: ID!): Property
-    findProperty(term: String!, tag: String!, status: Int): Property
-    findProperties(terms: [String!]!, tag: String!, status: Int): [Property]
+    findProperty(
+      term: String!
+      tag: String!
+      status: Int
+      persist: Boolean
+    ): Property
+    findProperties(
+      terms: [String!]!
+      tag: String!
+      status: Int
+      persist: Boolean
+    ): [Property]
+    findComps(
+      id: ID
+      term: String
+      tag: String
+      status: Int
+      persist: Boolean
+    ): [Property]
   }
   extend type Mutation {
     createProperty(input: PropertyInput!): Property!
@@ -26,6 +43,7 @@ export default gql`
     city: String!
     state: String!
     zipcode: String!
+    address: String!
     price: Float!
     sqft: Int!
     beds: Int!

@@ -60,6 +60,14 @@ const property = (sequelize, DataTypes) => {
           notEmpty: true
         }
       },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        length: 125,
+        validate: {
+          notEmpty: true
+        }
+      },
       price: {
         type: DataTypes.FLOAT,
         allowNull: false,

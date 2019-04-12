@@ -6,7 +6,90 @@ import * as zillowScraper from "./zillow-scraper";
 
 use(chaiExclude);
 
+const ZILLOW_PROPERTY_URL =
+  "https://www.zillow.com/homedetails/3521-N-Michigan-Ave-Portland-OR-97227/53917319_zpid/";
+const ADDRESS = "3521 N Michigan Ave";
+
 describe("zillow-scraper", () => {
+  it("finds comps for a property", function() {
+    this.timeout(10 * 60 * 1000);
+
+    const expectedResult = 6;
+
+    return zillowScraper.findComps({ term: ADDRESS }).then(function(response) {
+      console.log(response);
+
+      expect(response.length).to.eql(expectedResult);
+    });
+  });
+
+  // it("it finds the zillow url for the given address", function() {
+  //   this.timeout(10 * 60 * 1000);
+  //
+  //   const expectedResult = ZILLOW_PROPERTY_URL;
+  //
+  //   return zillowScraper
+  //     .findZillowUrl("124 SW Woods St")
+  //     .then(function(response) {
+  //       expect(response).to.eql(expectedResult);
+  //     });
+  // });
+
+  // it("finds a property for the given address", function() {
+  //   this.timeout(10 * 60 * 1000);
+  //
+  //   const expectedResult = getSimpleExpectedProperty();
+  //
+  //   return zillowScraper
+  //     .findProperty(ADDRESS + " Portland Or")
+  //     .then(function(response) {
+  //       expect(castToSimpleProperty(response)).to.eql(expectedResult);
+  //     });
+  // });
+  //
+  // it("finds a property for the given address with no city/state", function() {
+  //   this.timeout(10 * 60 * 1000);
+  //
+  //   const expectedResult = getSimpleExpectedProperty();
+  //
+  //   return zillowScraper.findProperty(ADDRESS).then(function(response) {
+  //     expect(castToSimpleProperty(response)).to.eql(expectedResult);
+  //   });
+  // });
+  //
+  // it("finds a property for the given url", function() {
+  //   this.timeout(10 * 60 * 1000);
+  //
+  //   const expectedResult = getSimpleExpectedProperty();
+  //
+  //   return zillowScraper
+  //     .findProperty(ZILLOW_PROPERTY_URL)
+  //     .then(function(response) {
+  //       expect(castToSimpleProperty(response)).to.eql(expectedResult);
+  //     });
+  // });
+  //
+  // it("finds a property for the given url with no http", function() {
+  //   this.timeout(10 * 60 * 1000);
+  //
+  //   const expectedResult = getSimpleExpectedProperty();
+  //
+  //   return zillowScraper
+  //     .findProperty(ZILLOW_PROPERTY_URL.replace("https://www.zillow.com", ""))
+  //     .then(function(response) {
+  //       expect(castToSimpleProperty(response)).to.eql(expectedResult);
+  //     });
+  // });
+
+  // it("it finds the zillow url for the given address", async () => {
+  //   const expectedResult = ZILLOW_PROPERTY_URL;
+  //
+  //   const actualResult = zillowScraper
+  //       .findZillowUrl("124 SW Woods St");
+  //
+  //   expect(actualResult).to.eql(expectedResult);
+  // });
+
   // it("finds a property for the given address", function () {
   //     this.timeout(10 * 60 * 1000);
   //
@@ -36,20 +119,20 @@ describe("zillow-scraper", () => {
   //     });
   // });
 
-  it("trial scrapes", function() {
-    this.timeout(10 * 60 * 1000);
-
-    const expectedResult = 0;
-
-    return zillowScraper
-      .trialScrape(
-        "https://www.zillow.com/homes/recently_sold/house_type/2-_beds/6m_days/950-1250_size/45.497774,-122.571996,45.47572,-122.616027_rect/14_zm/",
-        "zillow_comps"
-      )
-      .then(function(response) {
-        expect(response.length).to.eql(expectedResult);
-      });
-  });
+  // it("trial scrapes", function() {
+  //   this.timeout(10 * 60 * 1000);
+  //
+  //   const expectedResult = 0;
+  //
+  //   return zillowScraper
+  //     .trialScrape(
+  //       "https://www.redfin.com/stingray/api/gis-csv?al=3&market=oregon&max_listing_approx_size=1250&max_num_beds=3&min_listing_approx_size=750&min_stories=1&num_baths=1&num_beds=2&num_homes=350&ord=distance-asc&page_number=1&poly=-122.58714%2045.46841%2C-122.54015%2045.46841%2C-122.54015%2045.48965%2C-122.58714%2045.48965%2C-122.58714%2045.46841&sold_within_days=180&status=9&uipt=1&v=8",
+  //       "redfin_comps"
+  //     )
+  //     .then(function(response) {
+  //       expect(response.length).to.eql(expectedResult);
+  //     });
+  // });
 
   // it("trial seleniums", function() {
   //   this.timeout(10 * 60 * 1000);
@@ -104,6 +187,26 @@ describe("zillow-scraper", () => {
   //         });
   // });
 });
+
+const castToSimpleProperty = property => {
+  return {
+    zillow_propertyId: property.zillow_propertyId,
+    zillow_path: property.zillow_path,
+    zillow_url: property.zillow_url,
+    streetAddress: property.streetAddress
+  };
+};
+
+const getSimpleExpectedProperty = () => {
+  return {
+    zillow_propertyId: 176565162,
+    zillow_path:
+      "/homedetails/124-SW-Woods-St-Portland-OR-97201/176565162_zpid/",
+    zillow_url:
+      "https://www.zillow.com/homedetails/124-SW-Woods-St-Portland-OR-97201/176565162_zpid/?fullpage=true",
+    streetAddress: "124 SW Woods St"
+  };
+};
 
 const getExpectedProperty = () => {
   return {
