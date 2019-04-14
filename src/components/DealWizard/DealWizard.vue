@@ -25,7 +25,7 @@
           </v-flex>
         </v-layout>
       </v-container>
-      <v-container v-else fluid grid-list-lg>
+      <v-container v-else-if="property && !dealWizardStore.finding" fluid grid-list-lg>
         <v-layout row>
           <v-flex xs4>
             <PropertyDetails></PropertyDetails>
@@ -88,7 +88,8 @@ export default {
   },
   data() {
     return {
-      address: "3521 N Michigan Ave"
+      //address: "3521 N Michigan Ave"
+      address: '4544 N Kerby Ave'
     };
   },
   computed: {
