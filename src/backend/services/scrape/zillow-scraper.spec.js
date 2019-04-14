@@ -7,21 +7,21 @@ import * as zillowScraper from "./zillow-scraper";
 use(chaiExclude);
 
 const ZILLOW_PROPERTY_URL =
-  "https://www.zillow.com/homedetails/3521-N-Michigan-Ave-Portland-OR-97227/53917319_zpid/";
-const ADDRESS = "3521 N Michigan Ave";
+  "https://www.zillow.com/homedetails/608-NE-Going-St-Portland-OR-97211/53879348_zpid/";
+const ADDRESS = "4544 N Kerby Ave";
 
 describe("zillow-scraper", () => {
-  it("finds comps for a property", function() {
-    this.timeout(10 * 60 * 1000);
-
-    const expectedResult = 6;
-
-    return zillowScraper.findComps({ term: ADDRESS }).then(function(response) {
-      console.log(response);
-
-      expect(response.length).to.eql(expectedResult);
-    });
-  });
+  // it("finds comps for a property", function() {
+  //   this.timeout(10 * 60 * 1000);
+  //
+  //   const expectedResult = 6;
+  //
+  //   return zillowScraper.findComps({ term: ADDRESS }).then(function(response) {
+  //     console.log(response);
+  //
+  //     expect(response.length).to.eql(expectedResult);
+  //   });
+  // });
 
   // it("it finds the zillow url for the given address", function() {
   //   this.timeout(10 * 60 * 1000);
@@ -57,17 +57,17 @@ describe("zillow-scraper", () => {
   //   });
   // });
   //
-  // it("finds a property for the given url", function() {
-  //   this.timeout(10 * 60 * 1000);
-  //
-  //   const expectedResult = getSimpleExpectedProperty();
-  //
-  //   return zillowScraper
-  //     .findProperty(ZILLOW_PROPERTY_URL)
-  //     .then(function(response) {
-  //       expect(castToSimpleProperty(response)).to.eql(expectedResult);
-  //     });
-  // });
+  it("finds a property for the given url", function() {
+    this.timeout(10 * 60 * 1000);
+
+    const expectedResult = getSimpleExpectedProperty();
+
+    return zillowScraper
+      .findProperty(ZILLOW_PROPERTY_URL)
+      .then(function(response) {
+        expect(castToSimpleProperty(response)).to.eql(expectedResult);
+      });
+  });
   //
   // it("finds a property for the given url with no http", function() {
   //   this.timeout(10 * 60 * 1000);
