@@ -586,7 +586,7 @@ export default {
         );
       });
 
-      //set distance
+      //set
       utilities.setDistanceForList(filteredList, this.property);
 
       //distance

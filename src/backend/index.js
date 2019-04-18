@@ -6,6 +6,7 @@ import { ApolloServer, gql } from "apollo-server-express";
 import schema from "./schema";
 import resolvers from "./resolvers";
 import models, { sequelize } from "./models";
+import { formatValidationError } from "./utilities/logging";
 // import DataLoader from 'dataloader';
 // import loaders from './loaders';
 
@@ -43,23 +44,22 @@ const server = new ApolloServer({
   formatError: error => {
     // console.log("*******************************errro");
     // console.log(JSON.stringify(error));
-    
-    
+
     // remove the internal sequelize error message
     // leave only the important validation error
     const message = error.message
       .replace("SequelizeValidationError: ", "")
       .replace("Validation error: ", "");
 
-    //console.log(error.path.join('\n'))
-    
-    return {
-      ...error,
-      message
-    };
+    if (!formatValidationError(error)) {
+      return {
+        ...error,
+        message
+      };
+    }
   },
   formatResponse: response => {
-    console.log(response);
+    //console.log(response);
     return response;
   }
 });

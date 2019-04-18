@@ -29,4 +29,15 @@ describe("property api", () => {
   //
   //   expect(result.data.findProperties.length).to.eql(expectedResult);
   // });
+
+  // it("it finds comps for the given property", function() {
+  //   this.timeout(10 * 60 * 1000);
+  //
+  //   const requestVariables = propertyApi.getRequestVariables();
+  //   requestVariables.id = 15;
+  //
+  //   return propertyApi
+  //     .findComps(client, requestVariables)
+  //     .then(function(response) {});
+  // });
 });

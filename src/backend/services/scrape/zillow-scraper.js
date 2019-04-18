@@ -4,7 +4,7 @@ import * as utilities from "../../../utilities/utilities";
 import _ from "lodash";
 import Aigle from "aigle";
 import { statuses } from "../../../common/enums/statuses";
-
+import guerillaTor from "../../utilities/guerilla-tor";
 import seleniumPage from "./selenium-base-page";
 
 Aigle.mixin(_);
@@ -89,13 +89,11 @@ export const findProperty = async term => {
     url = `https://www.zillow.com` + url;
   }
 
-  //console.log(url);
-
   const options = {
     uri: url,
     headers: {
       "user-agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36"
+        "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0"
     }
   };
 
@@ -103,10 +101,12 @@ export const findProperty = async term => {
   let success = false;
   let html = "";
 
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 2; i++) {
     if (!success) {
       try {
-        html = await rp(options);
+        html = await guerillaTor.request(options);
+
+        //html = await rp(options);
         //utilities.writeFile(FILE_PATH + "zillow.html", html);
 
         zillowData = JSON.parse(
@@ -116,7 +116,7 @@ export const findProperty = async term => {
         );
 
         if (zillowData == null) {
-          throw "Null zillowData";
+          await guerillaTor.newTorSession();
         }
 
         zillowData = zillowData[Object.keys(zillowData)[0]].property;
@@ -305,8 +305,10 @@ export const findComps = async ({ term = "", property = null, limit = -1 }) => {
     property = await findProperty(term);
   }
 
-  const minBeds = property.beds > 3 ? property.beds - 1 : property.beds;
-  const maxBeds = property.beds > 3 ? property.beds + 1 : property.beds;
+  // const minBeds = property.beds > 3 ? property.beds - 1 : property.beds;
+  // const maxBeds = property.beds > 3 ? property.beds + 1 : property.beds;
+  const minBeds = property.beds;
+  const maxBeds = property.beds;
   const daysSinceSold = 180;
   const minSqft = property.sqft - property.sqft * 0.15;
   const maxSqft = property.sqft + property.sqft * 0.15;

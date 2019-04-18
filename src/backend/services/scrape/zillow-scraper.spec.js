@@ -22,7 +22,6 @@ describe("zillow-scraper", () => {
   //     expect(response.length).to.eql(expectedResult);
   //   });
   // });
-
   // it("it finds the zillow url for the given address", function() {
   //   this.timeout(10 * 60 * 1000);
   //
@@ -34,7 +33,6 @@ describe("zillow-scraper", () => {
   //       expect(response).to.eql(expectedResult);
   //     });
   // });
-
   // it("finds a property for the given address", function() {
   //   this.timeout(10 * 60 * 1000);
   //
@@ -57,17 +55,17 @@ describe("zillow-scraper", () => {
   //   });
   // });
   //
-  it("finds a property for the given url", function() {
-    this.timeout(10 * 60 * 1000);
-
-    const expectedResult = getSimpleExpectedProperty();
-
-    return zillowScraper
-      .findProperty(ZILLOW_PROPERTY_URL)
-      .then(function(response) {
-        expect(castToSimpleProperty(response)).to.eql(expectedResult);
-      });
-  });
+  // it("finds a property for the given url", function() {
+  //   this.timeout(10 * 60 * 1000);
+  //
+  //   const expectedResult = getSimpleExpectedProperty();
+  //
+  //   return zillowScraper
+  //     .findProperty(ZILLOW_PROPERTY_URL)
+  //     .then(function(response) {
+  //       expect(castToSimpleProperty(response)).to.eql(expectedResult);
+  //     });
+  // });
   //
   // it("finds a property for the given url with no http", function() {
   //   this.timeout(10 * 60 * 1000);
@@ -80,7 +78,6 @@ describe("zillow-scraper", () => {
   //       expect(castToSimpleProperty(response)).to.eql(expectedResult);
   //     });
   // });
-
   // it("it finds the zillow url for the given address", async () => {
   //   const expectedResult = ZILLOW_PROPERTY_URL;
   //
@@ -89,7 +86,6 @@ describe("zillow-scraper", () => {
   //
   //   expect(actualResult).to.eql(expectedResult);
   // });
-
   // it("finds a property for the given address", function () {
   //     this.timeout(10 * 60 * 1000);
   //
@@ -103,22 +99,21 @@ describe("zillow-scraper", () => {
   //         });
   // });
   //
-  // it("finds a property for the given url", function() {
-  //   this.timeout(10 * 60 * 1000);
-  //
-  //   const expectedResult = getExpectedProperty();
-  //
-  //   return zillowScraper
-  //     .findProperty(
-  //       "/homedetails/4944-SE-67th-Ave-Portland-OR-97206/54003518_zpid/"
-  //     )
-  //     .then(function(response) {
-  //       expect(response)
-  //         .excluding(["description", "zillow_status"])
-  //         .to.eql(expectedResult);
-  //     });
-  // });
+  it("finds a property for the given url", function() {
+    this.timeout(10 * 60 * 1000);
 
+    const expectedResult = getExpectedProperty();
+
+    return zillowScraper
+      .findProperty(
+        "https://www.zillow.com/homedetails/4804-N-CONCORD-AVE-PORTLAND-OR-97217/53944192_zpid/"
+      )
+      .then(function(response) {
+        expect(response)
+          .excluding(["description", "zillow_status"])
+          .to.eql(expectedResult);
+      });
+  });
   // it("trial scrapes", function() {
   //   this.timeout(10 * 60 * 1000);
   //
@@ -133,7 +128,6 @@ describe("zillow-scraper", () => {
   //       expect(response.length).to.eql(expectedResult);
   //     });
   // });
-
   // it("trial seleniums", function() {
   //   this.timeout(10 * 60 * 1000);
   //
@@ -147,7 +141,6 @@ describe("zillow-scraper", () => {
   //       expect(response.length).to.eql(expectedResult);
   //     });
   // });
-
   // it("finds comps for a given property", function() {
   //   this.timeout(10 * 60 * 1000);
   //
@@ -161,7 +154,6 @@ describe("zillow-scraper", () => {
   //       expect(response.length).to.eql(expectedResult);
   //     });
   // });
-
   // it("finds comps for a given property", function() {
   //   this.timeout(10 * 60 * 1000);
   //

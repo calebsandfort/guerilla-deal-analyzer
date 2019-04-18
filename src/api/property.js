@@ -22,9 +22,9 @@ export const fragments = {
       description
       zestimate
       price_to_zestimate
-      keywords
-      keywords_count
-      keywords_set
+      keywords(search_keywords: $search_keywords)
+      keywords_count(search_keywords: $search_keywords)
+      keywords_set(search_keywords: $search_keywords)
       days_listed
       year_built
       date_sold
@@ -36,8 +36,9 @@ export const fragments = {
       status_display
       notes
       tag
-      distance
-      distance_set
+      distance(coord: $coord)
+      distance_set(coord: $coord)
+      engagement
     }
   `
 };
@@ -70,7 +71,14 @@ const GET_ALL_QUERYABLE = gql`
 `;
 
 const FIND_PROPERTY = gql`
-  query($term: String!, $tag: String!, $status: Int, $persist: Boolean) {
+  query(
+    $term: String!
+    $tag: String!
+    $status: Int
+    $persist: Boolean
+    $coord: CoordInput
+    $search_keywords: [String]
+  ) {
     findProperty(term: $term, tag: $tag, status: $status, persist: $persist) {
       ...SimpleProperty
     }
@@ -93,7 +101,15 @@ const FIND_PROPERTIES = gql`
 `;
 
 const FIND_COMPS = gql`
-  query($id: ID, $term: String, $tag: String, $status: Int, $persist: Boolean) {
+  query(
+    $id: ID
+    $term: String
+    $tag: String
+    $status: Int
+    $persist: Boolean
+    $coord: CoordInput
+    $search_keywords: [String]
+  ) {
     findComps(
       id: $id
       term: $term
@@ -150,7 +166,13 @@ export const getRequestVariables = () => {
     input: {},
     tag: "",
     status: statuses.statuses.ACTIVE.value,
-    persist: true
+    persist: true,
+    triggerFindComps: true,
+    fromAction: false,
+    coord: {
+      latitude: 0,
+      longitude: 0
+    }
   };
 };
 

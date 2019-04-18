@@ -57,9 +57,9 @@ export default gql`
     zillow_status: String!
     fullAddress: String!
     streetPlusZip: String!
-    keywords: [String]
-    keywords_count: Int
-    keywords_set: Boolean
+    keywords(search_keywords: [String]): [String]
+    keywords_count(search_keywords: [String]): Int
+    keywords_set(search_keywords: [String]): Boolean
     image_urls: String!
     date_sold: String!
     latitude: Float!
@@ -70,8 +70,9 @@ export default gql`
     status: Int!
     status_display: String
     tag: String
-    distance: Float
-    distance_set: Boolean
+    distance(coord: CoordInput): Float
+    distance_set(coord: CoordInput): Boolean
+    engagement: Int
   }
   input PropertyInput {
     zillow_propertyId: Int!
@@ -101,5 +102,9 @@ export default gql`
   input ExpandoPropertyUpdateInput {
     notes: String
     status: Int!
+  }
+  input CoordInput {
+    latitude: Float!
+    longitude: Float!
   }
 `;

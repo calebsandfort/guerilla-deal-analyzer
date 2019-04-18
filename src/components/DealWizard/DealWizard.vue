@@ -25,10 +25,31 @@
           </v-flex>
         </v-layout>
       </v-container>
-      <v-container v-else-if="property && !dealWizardStore.finding" fluid grid-list-lg>
+      <v-container
+        v-else-if="property && !dealWizardStore.finding"
+        fluid
+        grid-list-lg
+      >
         <v-layout row>
           <v-flex xs4>
-            <PropertyDetails></PropertyDetails>
+            <v-layout row>
+              <v-flex xs12>
+                <PropertyDetails
+                  ref="mainPropertyDetails"
+                  v-on:show-gallery="showGallery"
+                ></PropertyDetails>
+              </v-flex>
+            </v-layout>
+            <v-layout row v-if="dealWizardStore.spotlightItem">
+              <v-flex xs12>
+                <PropertyDetails
+                  ref="spotlightPropertyDetails"
+                  :engagement="engagements.engagements.SPOTLIGHT.value"
+                  field="spotlightItem"
+                  v-on:show-gallery="showGallery"
+                ></PropertyDetails>
+              </v-flex>
+            </v-layout>
           </v-flex>
           <v-flex xs8>
             <v-card>
@@ -69,6 +90,10 @@
         </v-layout>
       </v-container>
     </v-content>
+    <PropertyGallery
+      ref="propertyGallery"
+      v-on:closed="propertyGalleryClosed"
+    ></PropertyGallery>
   </v-container>
 </template>
 
@@ -77,19 +102,23 @@ import { mapState, mapActions } from "vuex";
 import Toolbar from "../Toolbar";
 import PropertyDetails from "./PropertyDetailsV2";
 import CompPackage from "./CompPackageV2";
+import PropertyGallery from "../Shared/PropertyGallery";
 import { getRequestVariables as propertyRequest } from "../../api/property";
+import * as engagements from "../../common/enums/engagements";
 
 export default {
   name: "DealWizard",
   components: {
     Toolbar,
     CompPackage,
-    PropertyDetails
+    PropertyDetails,
+    PropertyGallery
   },
   data() {
     return {
-      //address: "3521 N Michigan Ave"
-      address: '4544 N Kerby Ave'
+      address: "3521 N Michigan Ave",
+      activeGalleryRef: "",
+      engagements: engagements
     };
   },
   computed: {
@@ -119,6 +148,20 @@ export default {
       request.term = this.address;
 
       this.findProperty(request);
+    },
+    propertyGalleryClosed: function(lastIndex) {
+      switch (this.activeGalleryRef) {
+        case "item":
+          this.$refs.mainPropertyDetails.setLastIndex(lastIndex);
+          break;
+        case "spotlightItem":
+          this.$refs.spotlightPropertyDetails.setLastIndex(lastIndex);
+          break;
+      }
+    },
+    showGallery: function(args) {
+      this.activeGalleryRef = args.ref;
+      this.$refs.propertyGallery.open(args);
     }
   }
 };

@@ -2,7 +2,13 @@
   <v-layout row wrap>
     <v-flex xs12>
       <v-card>
-        <v-card-title class="blue-grey darken-2 white--text py-2">
+        <v-card-title
+          v-bind:class="{
+            'white--text py-2': true,
+            red: engagement == engagements.engagements.ANALYSIS.value,
+            blue: engagement == engagements.engagements.SPOTLIGHT.value
+          }"
+        >
           <div class="headline">{{ property.streetAddress }}</div>
         </v-card-title>
         <v-container fluid grid-list-sm class="pa-3">
@@ -13,14 +19,16 @@
                 class="image"
                 width="100%"
                 @click="imgClick"
+                style="cursor: pointer;"
+                alt="Click for more pictures..."
               />
-              <gallery
-                ref="theGallery"
-                :images="property.image_urls_list"
-                :index="galleryIndex"
-                @close="index = null"
-                @onslideend="slideEnd"
-              ></gallery>
+              <!--              <gallery-->
+              <!--                ref="theGallery"-->
+              <!--                :images="property.image_urls_list"-->
+              <!--                :index="galleryIndex"-->
+              <!--                @close="index = null"-->
+              <!--                @onslideend="slideEnd"-->
+              <!--              ></gallery>-->
             </v-flex>
             <v-flex xs7>
               <v-layout row wrap>
@@ -94,36 +102,59 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import VueGallery from "vue-gallery";
+// import VueGallery from "vue-gallery";
 import formatMoney from "accounting-js/lib/formatMoney";
 import formatNumber from "accounting-js/lib/formatNumber";
+import * as engagements from "../../common/enums/engagements";
 
 export default {
   name: "PropertyDetailsV2",
   components: {
-    gallery: VueGallery
+    // gallery: VueGallery
+  },
+  props: {
+    field: {
+      type: String,
+      default: "item"
+    },
+    engagement: {
+      type: Number,
+      default: engagements.engagements.ANALYSIS.value
+    }
   },
   data() {
     return {
       galleryIndex: null,
-      lastIndex: 0
+      lastIndex: 0,
+      engagements: engagements
     };
   },
   computed: {
     ...mapState({
-      dealWizardStore: state => state.dealWizard,
-      property: state => state.dealWizard.item
-    })
+      dealWizardStore: state => state.dealWizard
+      // property: state => state.dealWizard.item
+    }),
+    property: function() {
+      return this.dealWizardStore[this.field];
+    }
   },
   methods: {
     formatMoney: formatMoney,
     formatNumber: formatNumber,
     imgClick: function() {
-      this.$refs.theGallery.open(this.lastIndex);
+      this.$emit("show-gallery", {
+        lastIndex: this.lastIndex,
+        image_urls_list: [...this.property.image_urls_list],
+        ref: this.field
+      });
+      // this.$refs.theGallery.open(this.lastIndex);
     },
-    slideEnd: function({ index }) {
-      this.lastIndex = index;
+    setLastIndex: function(lastIndex) {
+      this.lastIndex = lastIndex;
     }
+    // slideEnd: function({ index }) {
+    //   this.lastIndex = index;
+    // }
   }
 };
 </script>

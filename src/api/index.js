@@ -1,10 +1,14 @@
-export const errorHandler = (err) => {
-  if(typeof (err.networkError) != 'undefined'
-    && typeof (err.networkError.result) != 'undefined'
-    && typeof (err.networkError.result.errors) != 'undefined'
-    && err.networkError.result.errors.length > 0){
+import _ from "lodash";
+import chalk from "chalk";
 
-    const errTable = []
+export const errorHandler = err => {
+  if (
+    _.get(err, "networkError", null) != null &&
+    _.get(err, "networkError.result", null) != null &&
+    _.get(err, "networkError.result.errors", null) != null &&
+    err.networkError.result.errors.length > 0
+  ) {
+    const errTable = [];
 
     err.networkError.result.errors.forEach(function(e) {
       errTable.push({
@@ -12,14 +16,16 @@ export const errorHandler = (err) => {
         stack_trace: e.extensions.exception.stacktrace[0]
       });
 
-      for(let i = 1; i < e.extensions.exception.stacktrace.length; i++){
+      for (let i = 1; i < e.extensions.exception.stacktrace.length; i++) {
         errTable.push({
-          message: '',
+          message: "",
           stack_trace: e.extensions.exception.stacktrace[i]
         });
       }
     });
 
     console.table(errTable);
+  } else if (_.get(err, "message", "") != "") {
+    console.log(chalk.red(_.get(err, "message", "")));
   }
-}
+};

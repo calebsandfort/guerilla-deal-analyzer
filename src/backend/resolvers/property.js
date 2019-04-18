@@ -4,6 +4,9 @@ import * as zillowScraper from "../services/scrape/zillow-scraper";
 import _ from "lodash";
 import moment from "moment";
 import * as statuses from "../../common/enums/statuses";
+import * as engagements from "../../common/enums/engagements";
+import { logInfo } from "../utilities/logging";
+import { getDistance } from "../../utilities/utilities";
 
 //region Query
 //region properties
@@ -46,23 +49,7 @@ const findProperty = async (
   { term, tag, status = statuses.statuses.ACTIVE.value, persist = true },
   { models }
 ) => {
-  let property = await findPropertyHelper(term, models);
-
-  if (property == null) {
-    const scrapedProperty = await zillowScraper.findProperty(term);
-    if (scrapedProperty) {
-      scrapedProperty.tag = tag;
-      scrapedProperty.status = status;
-
-      if (persist) {
-        property = await models.Property.create(scrapedProperty);
-      } else {
-        property = scrapedProperty;
-      }
-    } else {
-      return null;
-    }
-  }
+  let property = await findPropertyHelper(term, models, tag, status, persist);
 
   return property;
 };
@@ -79,22 +66,21 @@ const findProperties = async (
 
   for (let i = 0; i < terms.length; i++) {
     const term = terms[i];
-    let property = await findPropertyHelper(term, models);
-
-    if (property == null) {
-      const scrapedProperty = await zillowScraper.findProperty(term);
-      if (scrapedProperty) {
-        scrapedProperty.tag = tag;
-        scrapedProperty.status = status;
-        if (persist) {
-          property = await models.Property.create(scrapedProperty);
-        } else {
-          property = scrapedProperty;
-        }
+    let property = await findPropertyHelper(
+      term,
+      models,
+      tag,
+      status,
+      persist,
+      {
+        current: i + 1,
+        total: terms.length
       }
-    }
+    );
 
-    properties.push(property);
+    if (property) {
+      properties.push(property);
+    }
 
     if (counter > 50) {
       await new Promise(r => setTimeout(r, 1000 * 15));
@@ -119,7 +105,13 @@ const findComps = async (
   if (id > 0) {
     property = await models.Property.findByPk(id);
   } else if (term != "") {
-    property = await findPropertyHelper(term, models);
+    property = await findPropertyHelper(
+      term,
+      models,
+      "FIND_COMPS",
+      status,
+      persist
+    );
   }
 
   const compAddresses = await zillowScraper.findComps({ property: property });
@@ -182,14 +174,20 @@ export default {
       `${property.streetAddress}, ${property.city}, ${property.state} ${
         property.zipcode
       }`,
-    keywords: property => {
-      return [];
+    keywords: (property, { search_keywords = [] }) => {
+      const lowerCaseDescription = property.description.toLowerCase();
+      return _.filter(search_keywords, function(skw) {
+        return lowerCaseDescription.indexOf(skw.toLowerCase()) > -1;
+      });
     },
-    keywords_count: property => {
-      return 0;
+    keywords_count: (property, { search_keywords = [] }) => {
+      const lowerCaseDescription = property.description.toLowerCase();
+      return _.filter(search_keywords, function(skw) {
+        return lowerCaseDescription.indexOf(skw.toLowerCase()) > -1;
+      }).length;
     },
-    keywords_set: property => {
-      return false;
+    keywords_set: (property, { search_keywords = [] }) => {
+      return search_keywords.length > 0;
     },
     days_listed: property => {
       return moment().diff(moment(property.date_listed, "x"), "days");
@@ -209,17 +207,45 @@ export default {
     status_display: property => {
       return statuses.getDisplayForValue(property.status);
     },
-    distance: property => {
-      return 0;
+    distance: (property, { coord = { latitude: 0, longitude: 0 } }) => {
+      if (coord.latitude != 0 && coord.longitude != 0) {
+        return getDistance(property, coord);
+      } else {
+        return 0;
+      }
     },
-    distance_set: property => {
-      return false;
+    distance_set: (property, { coord = { latitude: 0, longitude: 0 } }) => {
+      return coord.latitude != 0 && coord.longitude != 0;
+    },
+    engagement: property => {
+      return engagements.engagements.NONE.value;
     }
   }
 };
 
 //region Helpers
-const findPropertyHelper = async (term, models) => {
+const findPropertyHelper = async (
+  term,
+  models,
+  tag,
+  status = statuses.statuses.ACTIVE.value,
+  persist = true,
+  collectionInfo = null
+) => {
+  const logRows = [];
+
+  if (collectionInfo) {
+    logRows.push({
+      message: "record",
+      term: `${collectionInfo.current} of ${collectionInfo.total}`
+    });
+  }
+
+  logRows.push({
+    message: "finding",
+    term
+  });
+
   let property = await models.Property.findOne({
     where: {
       [Sequelize.Op.or]: [
@@ -229,6 +255,53 @@ const findPropertyHelper = async (term, models) => {
       ]
     }
   });
+
+  if (property == null && term.indexOf("homedetails") == -1) {
+    const zillowUrl = await zillowScraper.findZillowUrl(term);
+    logRows.push({
+      message: "check zillow",
+      term: zillowUrl.replace("https://www.zillow.com", "")
+    });
+
+    property = await models.Property.findOne({
+      where: {
+        zillow_url: zillowUrl + "?fullpage=true"
+      }
+    });
+
+    if (property == null) {
+      logRows.push({
+        message: "scraping zillow",
+        term: zillowUrl.replace("https://www.zillow.com", "")
+      });
+
+      if (zillowUrl.indexOf("homedetails") > -1) {
+        const scrapedProperty = await zillowScraper.findProperty(zillowUrl);
+        if (scrapedProperty) {
+          scrapedProperty.tag = tag;
+          scrapedProperty.status = status;
+
+          if (persist) {
+            property = await models.Property.create(scrapedProperty);
+          } else {
+            property = scrapedProperty;
+          }
+
+          logRows.push({
+            message: "scraped zillow",
+            term: zillowUrl.replace("https://www.zillow.com", "")
+          });
+        }
+      }
+    }
+  }
+
+  logRows.push({
+    message: property == null ? "not found" : "found",
+    term
+  });
+
+  logInfo("findPropertyHelper", logRows, property == null ? "red" : "green");
 
   return property;
 };

@@ -63,6 +63,14 @@ export const setDistance = (prop1, prop2) => {
   prop1.distance_set = true;
 };
 
+export const getDistance = (prop1, prop2) => {
+  return haversineDistance(
+    [prop1.longitude, prop1.latitude],
+    [prop2.longitude, prop2.latitude],
+    true
+  );
+};
+
 export const haversineDistance = function(coords1, coords2, isMiles) {
   function toRad(x) {
     return (x * Math.PI) / 180;

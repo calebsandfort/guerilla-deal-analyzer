@@ -1,10 +1,20 @@
 import { apolloClient } from "../../apollo";
 import * as propertyApi from "../../api/property";
+import _ from "lodash";
 
 const state = {
   item: null,
+  spotlightItem: null,
   comps: [],
-  finding: false
+  finding: false,
+  search_keywords: [
+    "remodel",
+    "update",
+    "hardwood",
+    "hard wood",
+    "new",
+    "granite"
+  ]
 };
 
 const getters = {};
@@ -15,6 +25,14 @@ export const mutations = {
   },
   setItem(state, item) {
     state.item = item;
+  },
+  setSpotlightItem(state, id) {
+    state.spotlightItem = Object.assign(
+      {},
+      _.find(state.comps, function(c) {
+        return c.id == id;
+      })
+    );
   },
   setComps(state, list) {
     state.comps = list;
@@ -28,11 +46,7 @@ export const actions = {
     commit("setItem", response.data.property);
   },
 
-  async findItem(
-    { dispatch, commit, state },
-    requestVariables,
-    triggerFindComps = true
-  ) {
+  async findItem({ dispatch, commit, state }, requestVariables) {
     commit("setFinding", true);
     const findProperty = await propertyApi.findProperty(
       apolloClient,
@@ -40,17 +54,22 @@ export const actions = {
     );
     commit("setItem", findProperty.data.findProperty);
 
-    if (triggerFindComps) {
+    if (requestVariables.triggerFindComps) {
       const findCompsRequest = propertyApi.getRequestVariables();
       findCompsRequest.id = parseInt(findProperty.data.findProperty.id);
-      await dispatch("findComps", findCompsRequest, true);
+      findCompsRequest.fromAction = true;
+      findCompsRequest.coord.latitude = findProperty.data.findProperty.latitude;
+      findCompsRequest.coord.longitude =
+        findProperty.data.findProperty.longitude;
+      findCompsRequest.search_keywords = state.search_keywords;
+      await dispatch("findComps", findCompsRequest);
     }
 
     commit("setFinding", false);
   },
 
-  async findComps({ commit }, requestVariables, fromAction = false) {
-    if (!fromAction) {
+  async findComps({ commit }, requestVariables) {
+    if (!requestVariables.fromAction) {
       commit("setFinding", true);
     }
 
@@ -60,7 +79,7 @@ export const actions = {
     );
     commit("setComps", response.data.findComps);
 
-    if (!fromAction) {
+    if (!requestVariables.fromAction) {
       commit("setFinding", false);
     }
   }
