@@ -37,9 +37,32 @@
       </v-flex>
       <v-flex xs4>
         <v-layout row wrap>
-          <v-flex xs12> </v-flex>
-          <v-flex xs12> </v-flex>
-          <v-flex xs12> </v-flex>
+          <v-flex xs12>
+            <v-text-field
+              name="arv_average"
+              label="Avg Sale Price"
+              prefix="$"
+              v-model.number="arv_average"
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12>
+            <v-text-field
+              name="arv_pricePerSqft"
+              label="Avg Price Per Sqft"
+              prefix="$"
+              v-model.number="arv_pricePerSqft"
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12>
+            <v-text-field
+              name="arv"
+              label="ARV"
+              mask="#######"
+              prefix="$"
+              :value="arv"
+              v-on:keyup="fieldChangedNumber"
+            ></v-text-field>
+          </v-flex>
         </v-layout>
       </v-flex>
     </v-layout>
@@ -143,7 +166,7 @@
 
 <script>
 import _ from "lodash";
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 import { getRequestVariables as propertyRequest } from "../../api/property";
 import formatMoney from "accounting-js/lib/formatMoney";
 import formatNumber from "accounting-js/lib/formatNumber";
@@ -206,7 +229,8 @@ export default {
     ...mapState({
       dealWizardStore: state => state.dealWizard,
       property: state => state.dealWizard.item,
-      comps: state => state.dealWizard.comps
+      comps: state => state.dealWizard.comps,
+      arv: state => state.dealWizard.arv
     }),
     filteredComps: function() {
       let filteredList = _.map(this.localComps, function(property) {
@@ -235,6 +259,26 @@ export default {
         lat: this.property.latitude,
         lng: this.property.longitude
       };
+    },
+    arv_average: function() {
+      return this.selectedComps.length == 0
+        ? 0
+        : Math.floor(
+            _.meanBy(this.selectedComps, function(comp) {
+              return comp.price;
+            })
+          );
+    },
+    arv_pricePerSqft: function() {
+      return (
+        (this.selectedComps.length == 0
+          ? 0
+          : Math.floor(
+              _.meanBy(this.selectedComps, function(comp) {
+                return comp.pricePerSqft;
+              })
+            )) * this.property.sqft
+      );
     }
   },
   watch: {
@@ -247,6 +291,9 @@ export default {
   methods: {
     ...mapMutations({
       setSpotlightComp: "dealWizard/setSpotlightItem"
+    }),
+    ...mapActions({
+      setField: "dealWizard/setField"
     }),
     formatMoney: formatMoney,
     formatNumber: formatNumber,
@@ -302,7 +349,13 @@ export default {
       if (comp.engagement != engagements.engagements.SPOTLIGHT.value) {
         comp.engagement = engagements.engagements.NONE.value;
       }
-    }
+    },
+    fieldChangedNumber: _.debounce(function(event) {
+      this.setField({
+        name: event.target.name,
+        v: utilities.tryParseNumber(event.target.value, 0)
+      });
+    }, 1000)
   }
 };
 </script>

@@ -101,3 +101,15 @@ export const haversineDistance = function(coords1, coords2, isMiles) {
 
   return d;
 };
+
+export const tryParseNumber = function(str, defaultValue) {
+  var retValue = defaultValue;
+  if (str !== null) {
+    if (str.length > 0) {
+      if (!isNaN(str)) {
+        retValue = parseFloat(str);
+      }
+    }
+  }
+  return retValue;
+};

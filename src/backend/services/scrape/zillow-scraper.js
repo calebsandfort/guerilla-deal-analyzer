@@ -158,6 +158,14 @@ export const findProperty = async term => {
     -1
   );
 
+  utilities.setPropertyFromObject(
+    zillowData,
+    "lotSize",
+    property,
+    "lotSize",
+    -1
+  );
+
   utilities.setPropertyFromObject(zillowData, "price", property, "price", -1);
   utilities.setPropertyFromObject(zillowData, "bedrooms", property, "beds", -1);
 
@@ -320,6 +328,11 @@ export const findComps = async ({ term = "", property = null, limit = -1 }) => {
   const latitudeOffset = (1 / 69) * 1;
   const maxLat = property.latitude + latitudeOffset;
   const minLat = property.latitude - latitudeOffset;
+
+  //min-year-built=1950
+  //max-year-built=2019
+  //min-lot-size=4.5k-sqft
+  //max-lot-size=2-acre
 
   const poly = [
     { lon: maxLon, lat: maxLat },

@@ -46,6 +46,7 @@ export default gql`
     address: String!
     price: Float!
     sqft: Int!
+    lotSize: Int!
     beds: Int!
     baths: Float!
     zestimate: Float!
@@ -73,6 +74,7 @@ export default gql`
     distance(coord: CoordInput): Float
     distance_set(coord: CoordInput): Boolean
     engagement: Int
+    pricePerSqft: Float
   }
   input PropertyInput {
     zillow_propertyId: Int!

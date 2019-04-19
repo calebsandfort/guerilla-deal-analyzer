@@ -219,6 +219,9 @@ export default {
     },
     engagement: property => {
       return engagements.engagements.NONE.value;
+    },
+    pricePerSqft: property => {
+      return Math.round(property.price / property.sqft);
     }
   }
 };

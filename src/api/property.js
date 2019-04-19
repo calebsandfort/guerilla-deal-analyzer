@@ -17,6 +17,7 @@ export const fragments = {
       streetPlusZip
       price
       sqft
+      lotSize
       beds
       baths
       description
@@ -39,6 +40,7 @@ export const fragments = {
       distance(coord: $coord)
       distance_set(coord: $coord)
       engagement
+      pricePerSqft
     }
   `
 };

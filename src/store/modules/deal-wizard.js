@@ -14,7 +14,8 @@ const state = {
     "hard wood",
     "new",
     "granite"
-  ]
+  ],
+  arv: 0
 };
 
 const getters = {};
@@ -36,6 +37,9 @@ export const mutations = {
   },
   setComps(state, list) {
     state.comps = list;
+  },
+  setField(state, payload) {
+    state[payload.name] = payload.v;
   }
 };
 
@@ -82,6 +86,9 @@ export const actions = {
     if (!requestVariables.fromAction) {
       commit("setFinding", false);
     }
+  },
+  setField({ commit }, payload) {
+    commit("setField", payload);
   }
 };
 

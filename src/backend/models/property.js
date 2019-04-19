@@ -82,6 +82,13 @@ const property = (sequelize, DataTypes) => {
           notEmpty: true
         }
       },
+      lotSize: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: true
+        }
+      },
       beds: {
         type: DataTypes.INTEGER,
         allowNull: false,
