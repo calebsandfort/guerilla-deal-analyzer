@@ -79,10 +79,12 @@ describe("zillow-scraper", () => {
   //     });
   // });
   // it("it finds the zillow url for the given address", async () => {
-  //   const expectedResult = ZILLOW_PROPERTY_URL;
+  //   const expectedResult =
+  //     "https://www.zillow.com/homedetails/7445-SW-Stewart-St-Portland-OR-97223/48585125_zpid/";
   //
-  //   const actualResult = zillowScraper
-  //       .findZillowUrl("124 SW Woods St");
+  //   const actualResult = await zillowScraper.findZillowUrl(
+  //     "7445 SW Stewart St"
+  //   );
   //
   //   expect(actualResult).to.eql(expectedResult);
   // });
@@ -99,19 +101,32 @@ describe("zillow-scraper", () => {
   //         });
   // });
   //
-  it("finds a property for the given url", function() {
+  // it("finds a property for the given url", function() {
+  //   this.timeout(10 * 60 * 1000);
+  //
+  //   const expectedResult = getExpectedProperty();
+  //
+  //   return zillowScraper
+  //     .findProperty(
+  //       "https://www.zillow.com/homedetails/4804-N-CONCORD-AVE-PORTLAND-OR-97217/53944192_zpid/"
+  //     )
+  //     .then(function(response) {
+  //       expect(response)
+  //         .excluding(["description", "zillow_status"])
+  //         .to.eql(expectedResult);
+  //     });
+  // });
+  it("scrapes property tax info", function() {
     this.timeout(10 * 60 * 1000);
 
-    const expectedResult = getExpectedProperty();
+    const expectedResult = {};
 
     return zillowScraper
-      .findProperty(
-        "https://www.zillow.com/homedetails/4804-N-CONCORD-AVE-PORTLAND-OR-97217/53944192_zpid/"
-      )
+      .findPropertyTaxInfo({
+        streetAddress: ADDRESS
+      })
       .then(function(response) {
-        expect(response)
-          .excluding(["description", "zillow_status"])
-          .to.eql(expectedResult);
+        expect(response).to.eql(expectedResult);
       });
   });
   // it("trial scrapes", function() {
@@ -121,8 +136,8 @@ describe("zillow-scraper", () => {
   //
   //   return zillowScraper
   //     .trialScrape(
-  //       "https://www.redfin.com/stingray/api/gis-csv?al=3&market=oregon&max_listing_approx_size=1250&max_num_beds=3&min_listing_approx_size=750&min_stories=1&num_baths=1&num_beds=2&num_homes=350&ord=distance-asc&page_number=1&poly=-122.58714%2045.46841%2C-122.54015%2045.46841%2C-122.54015%2045.48965%2C-122.58714%2045.48965%2C-122.58714%2045.46841&sold_within_days=180&status=9&uipt=1&v=8",
-  //       "redfin_comps"
+  //       `https://multcoproptax.com/Property-Search?searchtext=4544%20N%20Kerby%20Ave`,
+  //       "multcoproptax_search"
   //     )
   //     .then(function(response) {
   //       expect(response.length).to.eql(expectedResult);

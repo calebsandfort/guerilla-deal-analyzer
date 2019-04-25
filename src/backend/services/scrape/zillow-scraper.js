@@ -6,10 +6,16 @@ import Aigle from "aigle";
 import { statuses } from "../../../common/enums/statuses";
 import guerillaTor from "../../utilities/guerilla-tor";
 import seleniumPage from "./selenium-base-page";
+import qs from "qs";
 
 Aigle.mixin(_);
 
 const FILE_PATH = "src/backend/services/scrape/files/";
+
+String.prototype.replaceAll = function(search, replacement) {
+  var target = this;
+  return target.split(search).join(replacement);
+};
 
 export const findZillowUrl = async address => {
   let zillowUrl = "";
@@ -18,25 +24,31 @@ export const findZillowUrl = async address => {
     address += " portland or";
   }
 
-  const url = `https://www.google.com/search?q=${address
-    .replace(",", "")
-    .replace(".", "")
-    .replace(" ", "+")}+site+zillow.com`;
+  const params = {
+    key: "AIzaSyBRVBsMsXWrLl0OKH3lu3dsmCE8UNc_jDM",
+    cx: "008770600537533351055:k9v8qvgqv6w",
+    num: 1,
+    q: address.replaceAll(",", "").replaceAll(".", "")
+  };
+
+  const url =
+    "https://www.googleapis.com/customsearch/v1?" + qs.stringify(params);
 
   const options = {
-    uri: url,
-    headers: {
-      "user-agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36"
-    }
+    uri: url
+    //headers: {
+    //   "user-agent":
+    //     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36"
+    // }
   };
 
   const html = await rp(options);
 
-  const results = $("#search .srg > .g .rc > .r > a", html);
+  const result = JSON.parse(html);
+  const items = _.get(result, "items", []);
 
-  if (results.length > 0) {
-    zillowUrl = results.first().attr("href");
+  if (items.length > 0) {
+    zillowUrl = items[0].link;
   }
 
   return zillowUrl;
@@ -287,6 +299,8 @@ export const trialScrape = async (url, filename = "") => {
     }
   };
 
+  console.log(url);
+
   const html = await rp(options);
 
   if (filename != "") {
@@ -306,7 +320,93 @@ export const trialSelenium = async theUrl => {
   return [];
 };
 
-export const findComps = async ({ term = "", property = null, limit = -1 }) => {
+export const findPropertyTaxInfo = async property => {
+  const propertyTaxInfo = {};
+
+  //https://multcoproptax.com/Property-Search?searchtext=4544%20N%20Kerby%20Ave
+
+  let options = {
+    uri: "https://multcoproptax.com/Property-Search",
+    qs: {
+      searchtext: property.streetAddress
+    }
+  };
+
+  let html = await guerillaTor.request(options);
+
+  const jsonInput = $("input[id$=_SearchResultJson]", html);
+
+  if (jsonInput.length > 0) {
+    const searchResult = JSON.parse(jsonInput[0].attribs["value"]);
+    const resultList = _.get(searchResult, "ResultList", []);
+    if (resultList.length > 0) {
+      //https://multcoproptax.com/Property-Detail?PropertyQuickRefID=R135723&PartyQuickRefID=O132014
+
+      options = {
+        uri: "https://multcoproptax.com/Property-Detail",
+        qs: {
+          PropertyQuickRefID: resultList[0].PropertyQuickRefID,
+          PartyQuickRefID: resultList[0].PartyQuickRefID
+        }
+      };
+
+      html = await guerillaTor.request(options);
+
+      debugger;
+    }
+  }
+
+  // JSON
+  //   ResultList
+  //     0
+  //       PropertyQuickRefID : "R135723"
+  //       PartyQuickRefID : "O132014"
+  //       OwnerQuickRefID : "R135723"
+  //       LegacyID : null
+  //       PropertyNumber : "R135723"
+  //       OwnerName : "JONES,LEE ROY & JONES,CARROL"
+  //       SitusAddress : "4544 N KERBY AVE, PORTLAND, OR 97217"
+  //       PropertyValue : 82560
+  //       LegalDescription : "CLIFFORD ADD, LOT Q"
+  //       NeighborhoodCode : "R163"
+  //       Abstract : null
+  //       Subdivision : "CLIFFORD ADD"
+  //       PropertyType : "Real"
+  //       AltAccountNo : "R163904050"
+  //       CustomID : null
+  //       ID : 0
+  //       Text : null
+  //       TaxYear : 2019
+  //       PropertyValueTaxYear : 2018
+  //       HasMoreData : false
+  //       TotalPageCount : 1
+  //       CurrentPage : 1
+  //       RecordCount : 1
+  //       SearchText : "4544 N Kerby Ave"
+  //       PagingHandledByCaller : false
+  //       TaxYear : 2019
+  //       PropertyValueTaxYear : 0
+
+  return propertyTaxInfo;
+};
+
+export const findComps = async ({
+  term = "",
+  property = null,
+  compFilter = {
+    minBeds: -1,
+    maxBeds: -1,
+    minSqft: -1,
+    maxSqft: -1,
+    minLotSqft: -1,
+    maxLotSqft: -1,
+    minYearBuilt: -1,
+    maxYearBuilt: -1,
+    minBaths: -1,
+    searchDistance: 1
+  },
+  limit = -1
+}) => {
   let comps = [];
 
   if (term != "" && property == null) {
@@ -321,18 +421,13 @@ export const findComps = async ({ term = "", property = null, limit = -1 }) => {
   const minSqft = property.sqft - property.sqft * 0.15;
   const maxSqft = property.sqft + property.sqft * 0.15;
 
-  const longitudeOffset = (1 / 49) * 1;
+  const longitudeOffset = (1 / 49) * compFilter.searchDistance;
   const maxLon = property.longitude + longitudeOffset;
   const minLon = property.longitude - longitudeOffset;
 
-  const latitudeOffset = (1 / 69) * 1;
+  const latitudeOffset = (1 / 69) * compFilter.searchDistance;
   const maxLat = property.latitude + latitudeOffset;
   const minLat = property.latitude - latitudeOffset;
-
-  //min-year-built=1950
-  //max-year-built=2019
-  //min-lot-size=4.5k-sqft
-  //max-lot-size=2-acre
 
   const poly = [
     { lon: maxLon, lat: maxLat },
@@ -342,6 +437,12 @@ export const findComps = async ({ term = "", property = null, limit = -1 }) => {
     { lon: maxLon, lat: maxLat }
   ];
 
+  //min-year-built=1950
+  //max-year-built=2019
+  //min-lot-size=4.5k-sqft
+  //max-lot-size=2-acre
+
+  //region Example url
   //https://www.redfin.com/city/30772/OR/Portland/filter/
   // sort=lo-distance,
   // property-type=house,
@@ -357,6 +458,9 @@ export const findComps = async ({ term = "", property = null, limit = -1 }) => {
 
   //https://www.redfin.com/city/30772/OR/Portland/filter/sort=lo-distance,property-type=house,min-beds=2,max-beds=3,min-baths=1,min-sqft=750-sqft,max-sqft=1.25k-sqft,include=sold-6mo,viewport=45.48965:45.46841:-122.54015:-122.58714,no-outline/page-2
   //https://www.redfin.com/city/30772/OR/Portland/filter/sort=lo-distance,property-type=house,min-beds=3,max-beds=5,min-baths=1,min-sqft=2077-sqft,max-sqft=2809-sqft,include=sold-9mo,viewport=45.51157:45.48983:-122.66397:-122.69458,no-outline/page-1
+  //endregion
+
+  // console.log(compFilter);
 
   let currentPage = 1;
   let hasMorePages = true;
@@ -364,17 +468,55 @@ export const findComps = async ({ term = "", property = null, limit = -1 }) => {
   while (hasMorePages) {
     let compUrl =
       "https://www.redfin.com/city/30772/OR/Portland/filter/sort=lo-distance,property-type=house";
-    compUrl += `,min-beds=${minBeds}`;
-    compUrl += `,max-beds=${maxBeds}`;
-    compUrl += ",min-baths=1";
-    compUrl += `,min-sqft=${minSqft.toFixed(0)}-sqft`;
-    compUrl += `,max-sqft=${maxSqft.toFixed(0)}-sqft`;
+    compUrl += addCompUrlParameter("min-beds", compFilter.minBeds, -1);
+    compUrl += addCompUrlParameter("max-beds", compFilter.maxBeds, -1);
+    compUrl += addCompUrlParameter("min-baths", compFilter.minBaths, -1);
+    compUrl += addCompUrlParameter(
+      "min-sqft",
+      compFilter.minSqft,
+      -1,
+      formatSqftForUrl,
+      property.sqft
+    );
+    compUrl += addCompUrlParameter(
+      "max-sqft",
+      compFilter.maxSqft,
+      -1,
+      formatSqftForUrl,
+      property.sqft
+    );
+    compUrl += addCompUrlParameter(
+      "min-lot-size",
+      compFilter.minLotSqft,
+      -1,
+      formatSqftForUrl,
+      property.lotSize
+    );
+    compUrl += addCompUrlParameter(
+      "max-lot-size",
+      compFilter.maxLotSqft,
+      -1,
+      formatSqftForUrl,
+      property.lotSize
+    );
+    compUrl += addCompUrlParameter(
+      "min-year-built",
+      compFilter.minYearBuilt,
+      -1
+    );
+    compUrl += addCompUrlParameter(
+      "max-year-built",
+      compFilter.maxYearBuilt,
+      -1
+    );
     compUrl += ",include=sold-1yr";
     compUrl += `,viewport=${maxLat.toFixed(5)}:${minLat.toFixed(
       5
     )}:${maxLon.toFixed(5)}:${minLon.toFixed(5)}`;
     compUrl += ",no-outline";
     compUrl += `/page-${currentPage}`;
+
+    // console.log(compUrl);
 
     const options = {
       uri: compUrl,
@@ -412,6 +554,28 @@ export const findComps = async ({ term = "", property = null, limit = -1 }) => {
   //console.log(comps);
 
   return comps;
+};
+
+const addCompUrlParameter = (
+  paramName,
+  paramValue,
+  ignoreValue = -1,
+  formatFunc = null,
+  formatParam = null
+) => {
+  if (paramValue != ignoreValue) {
+    if (formatFunc != null) {
+      paramValue = formatFunc(formatParam, paramValue);
+    }
+    return `,${paramName}=${paramValue}`;
+  } else {
+    return "";
+  }
+};
+
+const formatSqftForUrl = (val, multiplier) => {
+  const adjVal = val + val * multiplier;
+  return `${adjVal.toFixed(0)}-sqft`;
 };
 
 const setPrice = (property, zillowData) => {

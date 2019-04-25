@@ -16,6 +16,6 @@ export default gql`
     property: Property!
   }
   input CompInput {
-    propertyId: ID!
+    compId: ID!
   }
 `;

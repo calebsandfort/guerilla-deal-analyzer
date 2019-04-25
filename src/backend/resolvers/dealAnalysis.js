@@ -61,7 +61,7 @@ export default {
     },
 
     updateDealAnalysis: async (parent, { id, input }, { models }) => {
-      const dealAnalysis = await models.DealAnalysis.findById(id);
+      const dealAnalysis = await models.DealAnalysis.findByPk(id);
       return await dealAnalysis.update(input);
     },
 
@@ -73,8 +73,15 @@ export default {
   },
 
   DealAnalysis: {
-    compPackage: async (dealAnalysis, args, { models }) => {
-      return await models.CompPackage.findOne({
+    compPackages: async (dealAnalysis, args, { models }) => {
+      return await models.CompPackage.findAll({
+        where: {
+          dealAnalysisId: dealAnalysis.id
+        }
+      });
+    },
+    repairEstimates: async (dealAnalysis, args, { models }) => {
+      return await models.RepairEstimate.findAll({
         where: {
           dealAnalysisId: dealAnalysis.id
         }

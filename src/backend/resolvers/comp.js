@@ -36,7 +36,7 @@ export default {
     },
 
     updateComp: async (parent, { id, input }, { models }) => {
-      const comp = await models.Comp.findById(id);
+      const comp = await models.Comp.findByPk(id);
       return await comp.update(input);
     },
 

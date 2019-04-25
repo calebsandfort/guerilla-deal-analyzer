@@ -116,7 +116,7 @@ export default {
   },
   data() {
     return {
-      address: "3521 N Michigan Ave",
+      address: "9943 SW 55th Ave",
       activeGalleryRef: "",
       engagements: engagements
     };

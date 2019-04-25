@@ -23,6 +23,7 @@ export default gql`
       tag: String
       status: Int
       persist: Boolean
+      compFilter: CompFilter
     ): [Property]
   }
   extend type Mutation {
@@ -108,5 +109,17 @@ export default gql`
   input CoordInput {
     latitude: Float!
     longitude: Float!
+  }
+  input CompFilter {
+    minBeds: Int
+    maxBeds: Int
+    minSqft: Float
+    maxSqft: Float
+    minLotSqft: Float
+    maxLotSqft: Float
+    minYearBuilt: Int
+    maxYearBuilt: Int
+    minBaths: Int
+    searchDistance: Float
   }
 `;

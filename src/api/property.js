@@ -1,6 +1,7 @@
 import { gql } from "apollo-boost";
 import { errorHandler } from "./index";
 import * as statuses from "../common/enums/statuses";
+import * as utilities from "../utilities/utilities";
 
 export const fragments = {
   simple: gql`
@@ -109,6 +110,7 @@ const FIND_COMPS = gql`
     $tag: String
     $status: Int
     $persist: Boolean
+    $compFilter: CompFilter
     $coord: CoordInput
     $search_keywords: [String]
   ) {
@@ -118,6 +120,7 @@ const FIND_COMPS = gql`
       tag: $tag
       status: $status
       persist: $persist
+      compFilter: $compFilter
     ) {
       ...SimpleProperty
     }
@@ -174,7 +177,8 @@ export const getRequestVariables = () => {
     coord: {
       latitude: 0,
       longitude: 0
-    }
+    },
+    compFilter: utilities.defaultCompFilter()
   };
 };
 

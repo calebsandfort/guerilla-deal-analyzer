@@ -4,6 +4,9 @@ import propertySchema from "./property";
 import dealAnalysisSchema from "./dealAnalysis";
 import compPackageSchema from "./compPackage";
 import compSchema from "./comp";
+import repairEstimateSchema from "./repairEstimate";
+import repairEstimateSectionSchema from "./repairEstimateSection";
+import repairEstimateLineItemSchema from "./repairEstimateLineItem";
 import entityQuerySchema from "./entityQuery";
 
 const linkSchema = gql`
@@ -26,5 +29,8 @@ export default [
   dealAnalysisSchema,
   compPackageSchema,
   compSchema,
+  repairEstimateSchema,
+  repairEstimateSectionSchema,
+  repairEstimateLineItemSchema,
   entityQuerySchema
 ];

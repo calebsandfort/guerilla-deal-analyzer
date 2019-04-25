@@ -15,7 +15,10 @@ const models = {
   Property: sequelize.import("./property"),
   Comp: sequelize.import("./comp"),
   CompPackage: sequelize.import("./compPackage"),
-  DealAnalysis: sequelize.import("./dealAnalysis")
+  DealAnalysis: sequelize.import("./dealAnalysis"),
+  RepairEstimate: sequelize.import("./repairEstimate"),
+  RepairEstimateSection: sequelize.import("./repairEstimateSection"),
+  RepairEstimateLineItem: sequelize.import("./repairEstimateLineItem")
 };
 
 Object.keys(models).forEach(key => {

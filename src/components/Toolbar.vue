@@ -13,7 +13,7 @@
       >
         <v-icon>arrow_back</v-icon>
       </v-btn>
-      <span>GUERILLA </span>
+      <span>Columbia Sunset </span>
       <span class="font-weight-light">DEAL TOOLS</span>
     </v-toolbar-title>
     <v-spacer></v-spacer>

@@ -8,6 +8,10 @@
           map-type-id="roadmap"
           style="width: 100%; height: 400px"
         >
+          <GmapPolyline
+            :path="search_path"
+            :options="search_path_options"
+          ></GmapPolyline>
           <GmapMarker
             key="center"
             :position="map_center"
@@ -63,6 +67,15 @@
               v-on:keyup="fieldChangedNumber"
             ></v-text-field>
           </v-flex>
+          <v-flex xs12>
+            <v-btn
+              :color="onlyShowSelected ? 'primary' : 'success'"
+              block
+              class="white--text"
+              @click="onlyShowSelected = !onlyShowSelected"
+              >{{ onlyShowSelected ? "Show All" : "Show Selected" }}</v-btn
+            >
+          </v-flex>
         </v-layout>
       </v-flex>
     </v-layout>
@@ -77,12 +90,13 @@
           :loading="loading"
           :items="filteredComps"
           item-key="zillow_propertyId"
+          style="max-height: 550px; overflow: auto;"
         >
           <template slot="headers" slot-scope="props">
             <tr>
               <th
-                v-for="header in props.headers"
-                :key="header.text"
+                v-for="(header, index) in props.headers"
+                :key="`header_${index}`"
                 :class="[
                   'column sortable',
                   header.descending ? 'desc' : 'asc',
@@ -90,14 +104,19 @@
                 ]"
                 @click="changeSort(header)"
               >
-                {{
-                  indexHeaderInStack(header) >= 0
-                    ? indexHeaderInStack(header) + 1
-                    : ""
-                }}
-                <v-icon small>arrow_upward</v-icon>
+                <template v-if="index == 0">
+                  <CompFiltersDialog></CompFiltersDialog>
+                </template>
+                <template v-else>
+                  {{
+                    indexHeaderInStack(header) >= 0
+                      ? indexHeaderInStack(header) + 1
+                      : ""
+                  }}
+                  <v-icon small>arrow_upward</v-icon>
 
-                {{ header.text }}
+                  {{ header.text }}
+                </template>
               </th>
             </tr>
           </template>
@@ -175,10 +194,13 @@ import * as engagements from "../../common/enums/engagements";
 import * as utilities from "../../utilities/utilities";
 import ExpandoProperty from "../Property/ExpandoProperty";
 import PropertyDetails from "../Property/PropertyDetails";
+import CompFiltersDialog from "./CompFilters/CompFiltersDialog";
+import colors from "vuetify/es5/util/colors";
 
 export default {
   name: "CompPackageV2",
   components: {
+    CompFiltersDialog
     // ExpandoProperty,
     // PropertyDetails
   },
@@ -213,9 +235,15 @@ export default {
         // descending: true,
         rowsPerPage: 25
       },
+      onlyShowSelected: false,
       localComps: [],
       selectedComps: [],
-      engagements: engagements
+      engagements: engagements,
+      search_path_options: {
+        strokeColor: colors.purple.lighten2,
+        strokeOpacity: 0.5,
+        geodesic: true
+      }
     };
   },
   created() {
@@ -230,14 +258,26 @@ export default {
       dealWizardStore: state => state.dealWizard,
       property: state => state.dealWizard.item,
       comps: state => state.dealWizard.comps,
+      dealComps: state => state.dealWizard.dealComps,
+      compFilter: state => state.dealWizard.compFilter,
       arv: state => state.dealWizard.arv
     }),
     filteredComps: function() {
+      const that = this;
+
       let filteredList = _.map(this.localComps, function(property) {
         return Object.assign({}, property);
       });
 
-      const that = this;
+      if (this.onlyShowSelected && that.selectedComps.length > 0) {
+        filteredList = _.filter(filteredList, function(item1) {
+          const foundItem = _.find(that.selectedComps, function(item2) {
+            return item1.id == item2.id;
+          });
+
+          return foundItem != null;
+        });
+      }
 
       let resultRows = [...filteredList];
       let stack = this.sortStack;
@@ -259,6 +299,25 @@ export default {
         lat: this.property.latitude,
         lng: this.property.longitude
       };
+    },
+    search_path: function() {
+      const longitudeOffset = (1 / 49) * this.compFilter.searchDistance;
+      const maxLon = this.property.longitude + longitudeOffset;
+      const minLon = this.property.longitude - longitudeOffset;
+
+      const latitudeOffset = (1 / 69) * this.compFilter.searchDistance;
+      const maxLat = this.property.latitude + latitudeOffset;
+      const minLat = this.property.latitude - latitudeOffset;
+
+      const poly = [
+        { lng: maxLon, lat: maxLat },
+        { lng: maxLon, lat: minLat },
+        { lng: minLon, lat: minLat },
+        { lng: minLon, lat: maxLat },
+        { lng: maxLon, lat: maxLat }
+      ];
+
+      return poly;
     },
     arv_average: function() {
       return this.selectedComps.length == 0
@@ -286,14 +345,26 @@ export default {
       this.localComps = _.map(this.comps, function(property) {
         return Object.assign({}, property);
       });
+    },
+    "dealWizardStore.compFilter": function() {
+      this.findComps(propertyRequest());
+    },
+    selectedComps: function() {
+      this.setDealComps(
+        _.map(this.selectedComps, function(property) {
+          return Object.assign({}, property);
+        })
+      );
     }
   },
   methods: {
     ...mapMutations({
-      setSpotlightComp: "dealWizard/setSpotlightItem"
+      setSpotlightComp: "dealWizard/setSpotlightItem",
+      setDealComps: "dealWizard/setDealComps"
     }),
     ...mapActions({
-      setField: "dealWizard/setField"
+      setField: "dealWizard/setField",
+      findComps: "dealWizard/findComps"
     }),
     formatMoney: formatMoney,
     formatNumber: formatNumber,
@@ -325,6 +396,15 @@ export default {
       alert("markerClicked");
     },
     compClicked(id) {
+      _.each(
+        _.filter(this.localComps, function(c1) {
+          return c1.engagement == engagements.engagements.SPOTLIGHT.value;
+        }),
+        function(c2) {
+          c2.engagement = engagements.engagements.NONE;
+        }
+      );
+
       const comp = _.find(this.localComps, function(c) {
         return c.id == id;
       });

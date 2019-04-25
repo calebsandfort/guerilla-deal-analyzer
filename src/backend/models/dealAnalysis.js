@@ -1,9 +1,7 @@
 const dealAnalysis = (sequelize, DataTypes) => {
   const DealAnalysis = sequelize.define("dealAnalysis", {});
 
-  DealAnalysis.associate = models => {
-    DealAnalysis.hasOne(models.CompPackage, { onDelete: "CASCADE" });
-  };
+  DealAnalysis.associate = models => {};
 
   return DealAnalysis;
 };

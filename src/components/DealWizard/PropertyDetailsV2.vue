@@ -87,6 +87,14 @@
                   }}
                 </v-flex>
               </v-layout>
+              <v-layout row wrap>
+                <v-flex xs3 class="font-weight-medium">
+                  Keywords
+                </v-flex>
+                <v-flex xs9>
+                  {{ property.keywords.join(", ") }}
+                </v-flex>
+              </v-layout>
             </v-flex>
           </v-layout>
           <v-layout row wrap>

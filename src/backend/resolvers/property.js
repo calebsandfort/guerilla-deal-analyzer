@@ -97,7 +97,14 @@ const findProperties = async (
 //region findComps
 const findComps = async (
   parent,
-  { id, term, tag, status = statuses.statuses.ACTIVE.value, persist = true },
+  {
+    id,
+    term,
+    tag,
+    status = statuses.statuses.ACTIVE.value,
+    persist = true,
+    compFilter
+  },
   { models }
 ) => {
   let property = null;
@@ -114,7 +121,10 @@ const findComps = async (
     );
   }
 
-  const compAddresses = await zillowScraper.findComps({ property: property });
+  const compAddresses = await zillowScraper.findComps({
+    property: property,
+    compFilter: compFilter
+  });
 
   const comps = await findProperties(
     parent,
@@ -268,7 +278,11 @@ const findPropertyHelper = async (
 
     property = await models.Property.findOne({
       where: {
-        zillow_url: zillowUrl + "?fullpage=true"
+        [Sequelize.Op.or]: [
+          { zillow_url: zillowUrl + "?fullpage=true" },
+          { zillow_url: zillowUrl },
+          { address: term }
+        ]
       }
     });
 

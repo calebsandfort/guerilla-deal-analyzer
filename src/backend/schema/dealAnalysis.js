@@ -13,9 +13,11 @@ export default gql`
   }
   type DealAnalysis {
     id: ID!
-    compPackage: CompPackage
+    compPackages: [CompPackage]
+    repairEstimates: [RepairEstimate]
   }
   input DealAnalysisInput {
-    compPackage: CompPackageInput
+    compPackages: [CompPackageInput]
+    repairEstimates: [RepairEstimateInput]
   }
 `;

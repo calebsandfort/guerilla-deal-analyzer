@@ -11,6 +11,9 @@ const compPackage = (sequelize, DataTypes) => {
 
   CompPackage.associate = models => {
     CompPackage.hasMany(models.Comp, { onDelete: "CASCADE" });
+    CompPackage.belongsTo(models.DealAnalysis, {
+      onDelete: "CASCADE"
+    });
   };
 
   return CompPackage;

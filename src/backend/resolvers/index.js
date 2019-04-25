@@ -4,6 +4,9 @@ import propertyResolvers from "./property";
 import compPackageResolvers from "./compPackage";
 import dealAnalysisResolvers from "./dealAnalysis";
 import compResolvers from "./comp";
+import repairEstimateResolvers from "./repairEstimate";
+import repairEstimateSectionResolvers from "./repairEstimateSection";
+import repairEstimateLineItemResolvers from "./repairEstimateLineItem";
 // import {scalarResolverMap} from './scalars'
 
 const customScalarResolver = {
@@ -16,5 +19,8 @@ export default [
   propertyResolvers,
   dealAnalysisResolvers,
   compPackageResolvers,
-  compResolvers
+  compResolvers,
+  repairEstimateResolvers,
+  repairEstimateSectionResolvers,
+  repairEstimateLineItemResolvers
 ];

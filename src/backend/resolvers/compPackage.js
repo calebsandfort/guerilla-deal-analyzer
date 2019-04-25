@@ -51,7 +51,7 @@ export default {
     },
 
     updateCompPackage: async (parent, { id, input }, { models }) => {
-      const compPackage = await models.CompPackage.findById(id);
+      const compPackage = await models.CompPackage.findByPk(id);
       return await compPackage.update(input);
     },
 
