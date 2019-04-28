@@ -331,30 +331,50 @@ export const findPropertyTaxInfo = async property => {
       searchtext: property.streetAddress
     }
   };
+  
+  const searchUrl = "https://multcoproptax.com/Property-Search?" + qs.stringify({
+    searchtext: property.streetAddress
+  });
+  const page = new seleniumPage();
+  await page.visit(searchUrl);
+  
+  debugger;
+  const tableRow = await page.findByCss("tr[data-uid]");
+  await tableRow.click();
+  
+  
+  // let html = await guerillaTor.request(options);
+  //
+  // const jsonInput = $("input[id$=_SearchResultJson]", html);
 
-  let html = await guerillaTor.request(options);
-
-  const jsonInput = $("input[id$=_SearchResultJson]", html);
-
-  if (jsonInput.length > 0) {
-    const searchResult = JSON.parse(jsonInput[0].attribs["value"]);
-    const resultList = _.get(searchResult, "ResultList", []);
-    if (resultList.length > 0) {
-      //https://multcoproptax.com/Property-Detail?PropertyQuickRefID=R135723&PartyQuickRefID=O132014
-
-      options = {
-        uri: "https://multcoproptax.com/Property-Detail",
-        qs: {
-          PropertyQuickRefID: resultList[0].PropertyQuickRefID,
-          PartyQuickRefID: resultList[0].PartyQuickRefID
-        }
-      };
-
-      html = await guerillaTor.request(options);
-
-      debugger;
-    }
-  }
+  // if (jsonInput.length > 0) {
+  //   const searchResult = JSON.parse(jsonInput[0].attribs["value"]);
+  //   const resultList = _.get(searchResult, "ResultList", []);
+  //   if (resultList.length > 0) {
+  //     //https://multcoproptax.com/Property-Detail?PropertyQuickRefID=R135723&PartyQuickRefID=O132014
+  //
+  //     const url =
+  //       "https://multcoproptax.com/Property-Detail?" + qs.stringify({
+  //         PropertyQuickRefID: resultList[0].PropertyQuickRefID,
+  //         PartyQuickRefID: resultList[0].PartyQuickRefID
+  //       });
+  //
+  //     //debugger;
+  //
+  //     //https://multcoproptax.com/Property-Detail?PropertyQuickRefID=R135723&PartyQuickRefID=O132014
+  //     //https://multcoproptax.com/Property-Detail?PropertyQuickRefID=R135723&PartyQuickRefID=O132014
+  //
+  //     options = {
+  //       uri: url,
+  //       // qs: {
+  //       //   PropertyQuickRefID: resultList[0].PropertyQuickRefID,
+  //       //   PartyQuickRefID: resultList[0].PartyQuickRefID
+  //       // }
+  //     };
+  //
+  //     html = await guerillaTor.request(options);
+  //   }
+  // }
 
   // JSON
   //   ResultList

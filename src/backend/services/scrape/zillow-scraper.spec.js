@@ -148,9 +148,11 @@ describe("zillow-scraper", () => {
   //
   //   const expectedResult = 0;
   //
+  //   //https://multcoproptax.com/Property-Detail?PropertyQuickRefID=R135723&PartyQuickRefID=O132014
+  //
   //   return zillowScraper
   //     .trialSelenium(
-  //       "https://www.trulia.com/sold/45.468155,45.490205,-122.585666,-122.541628_xy/2p_beds/800-1200_sqft/SINGLE-FAMILY_HOME_type/6_srl"
+  //       "https://multcoproptax.com/Property-Search?searchtext=4544%20N%20Kerby%20Ave"
   //     )
   //     .then(function(response) {
   //       expect(response.length).to.eql(expectedResult);

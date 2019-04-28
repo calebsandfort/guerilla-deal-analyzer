@@ -6,8 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test:mocha": "mocha --reporter spec --require @babel/register --recursive 'src/**/*.spec.js'",
-    "test:mocha:debug": "mocha --reporter spec --inspect-brk --require @babel/register --recursive 'src/**/*.spec.js'",
+    "test:mocha": "mocha --reporter spec --require @babel/register --recursive \"src/**/*.spec.js\"",
+    "test:mocha:debug": "mocha --reporter spec --inspect-brk --require @babel/register --recursive \"src/**/*.spec.js\"",
     "start:backend": "nodemon --exec babel-node src/backend/index.js"
   },
   "nodemonConfig": {
