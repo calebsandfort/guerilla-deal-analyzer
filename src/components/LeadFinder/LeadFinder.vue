@@ -337,7 +337,7 @@ import formatMoney from "accounting-js/lib/formatMoney";
 import formatNumber from "accounting-js/lib/formatNumber";
 // import * as entityQuery from "../../backend/utilities/entityQuery";
 import * as statuses from "../../common/enums/statuses";
-import * as utilities from "../../utilities/utilities";
+import * as utilities from "../../backend/utilities/utilities";
 
 export default {
   name: "LeadFinder",

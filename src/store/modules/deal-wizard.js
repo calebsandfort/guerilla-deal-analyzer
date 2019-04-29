@@ -1,7 +1,7 @@
 import { apolloClient } from "../../apollo";
 import * as propertyApi from "../../api/property";
 import _ from "lodash";
-import * as utilities from "../../utilities/utilities";
+import * as utilities from "../../backend/utilities/utilities";
 
 const state = {
   item: null,

@@ -1,7 +1,7 @@
 import { gql } from "apollo-boost";
 import { errorHandler } from "./index";
 import * as statuses from "../common/enums/statuses";
-import * as utilities from "../utilities/utilities";
+import * as utilities from "../backend/utilities/utilities";
 
 export const fragments = {
   simple: gql`

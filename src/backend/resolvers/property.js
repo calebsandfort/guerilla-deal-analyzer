@@ -6,7 +6,7 @@ import moment from "moment";
 import * as statuses from "../../common/enums/statuses";
 import * as engagements from "../../common/enums/engagements";
 import { logInfo } from "../utilities/logging";
-import { getDistance } from "../../utilities/utilities";
+import { getDistance } from "../utilities/utilities";
 
 //region Query
 //region properties

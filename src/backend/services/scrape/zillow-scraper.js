@@ -1,6 +1,6 @@
 import rp from "request-promise";
 import $ from "cheerio";
-import * as utilities from "../../../utilities/utilities";
+import * as utilities from "../../utilities/utilities";
 import _ from "lodash";
 import Aigle from "aigle";
 import { statuses } from "../../../common/enums/statuses";

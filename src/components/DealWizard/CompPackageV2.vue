@@ -191,7 +191,7 @@ import formatMoney from "accounting-js/lib/formatMoney";
 import formatNumber from "accounting-js/lib/formatNumber";
 import * as statuses from "../../common/enums/statuses";
 import * as engagements from "../../common/enums/engagements";
-import * as utilities from "../../utilities/utilities";
+import * as utilities from "../../backend/utilities/utilities";
 import ExpandoProperty from "../Property/ExpandoProperty";
 import PropertyDetails from "../Property/PropertyDetails";
 import CompFiltersDialog from "./CompFilters/CompFiltersDialog";

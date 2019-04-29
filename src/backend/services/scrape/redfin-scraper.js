@@ -2,7 +2,7 @@ import rp from "request-promise";
 import axios from "axios";
 import $ from "cheerio";
 import _ from "lodash";
-import * as utilities from "../../../utilities/utilities";
+import * as utilities from "../../utilities/utilities";
 
 const FIND_URL = "/do/location-autocomplete";
 const INITIAL_INFO_URL = "/api/home/details/initialInfo";

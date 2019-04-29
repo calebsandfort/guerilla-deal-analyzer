@@ -70,7 +70,7 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
-import * as utilities from "../../../utilities/utilities";
+import * as utilities from "../../../backend/utilities/utilities";
 import MinMaxRow from "./MinMaxRow";
 
 export default {
