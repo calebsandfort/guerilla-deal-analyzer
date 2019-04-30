@@ -104,7 +104,7 @@ import PropertyDetails from "./PropertyDetailsV2";
 import CompPackage from "./CompPackageV2";
 import PropertyGallery from "../Shared/PropertyGallery";
 import { getRequestVariables as propertyRequest } from "../../api/property";
-import * as engagements from "../../common/enums/engagements";
+import * as engagements from "../../backend/enums/engagements";
 
 export default {
   name: "DealWizard",

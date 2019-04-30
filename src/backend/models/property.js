@@ -1,4 +1,4 @@
-import { statuses } from "../../common/enums/statuses";
+import { statuses } from "../enums/statuses";
 
 const property = (sequelize, DataTypes) => {
   const property = sequelize.define(

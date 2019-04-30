@@ -122,7 +122,7 @@
 
 <script>
 import VueGallery from "vue-gallery";
-import * as statuses from "../../common/enums/statuses";
+import * as statuses from "../../backend/enums/statuses";
 
 export default {
   name: "ExpandoProperty",

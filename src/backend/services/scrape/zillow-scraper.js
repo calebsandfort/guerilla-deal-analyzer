@@ -3,7 +3,7 @@ import $ from "cheerio";
 import * as utilities from "../../utilities/utilities";
 import _ from "lodash";
 import Aigle from "aigle";
-import { statuses } from "../../../common/enums/statuses";
+import { statuses } from "../../enums/statuses";
 import guerillaTor from "../../utilities/guerilla-tor";
 import seleniumPage from "./selenium-base-page";
 import qs from "qs";

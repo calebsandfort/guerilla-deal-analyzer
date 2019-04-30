@@ -335,7 +335,7 @@ import { mapState, mapActions } from "vuex";
 import { getRequestVariables as propertyRequest } from "../../api/property";
 import formatMoney from "accounting-js/lib/formatMoney";
 import formatNumber from "accounting-js/lib/formatNumber";
-import * as statuses from "../../common/enums/statuses";
+import * as statuses from "../../backend/enums/statuses";
 import * as utilities from "../../backend/utilities/utilities";
 import ExpandoProperty from "../Property/ExpandoProperty";
 import PropertyDetails from "../Property/PropertyDetails";

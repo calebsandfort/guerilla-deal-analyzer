@@ -113,7 +113,7 @@ import { mapState, mapActions } from "vuex";
 // import VueGallery from "vue-gallery";
 import formatMoney from "accounting-js/lib/formatMoney";
 import formatNumber from "accounting-js/lib/formatNumber";
-import * as engagements from "../../common/enums/engagements";
+import * as engagements from "../../backend/enums/engagements";
 
 export default {
   name: "PropertyDetailsV2",

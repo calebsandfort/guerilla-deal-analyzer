@@ -3,8 +3,8 @@ import * as entityQuery from "../utilities/entityQuery";
 import * as zillowScraper from "../services/scrape/zillow-scraper";
 import _ from "lodash";
 import moment from "moment";
-import * as statuses from "../../common/enums/statuses";
-import * as engagements from "../../common/enums/engagements";
+import * as statuses from "../enums/statuses";
+import * as engagements from "../enums/engagements";
 import { logInfo } from "../utilities/logging";
 import { getDistance } from "../utilities/utilities";
 

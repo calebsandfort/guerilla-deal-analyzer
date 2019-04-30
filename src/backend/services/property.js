@@ -2,7 +2,7 @@ import Sequelize from "sequelize";
 import * as entityQuery from "../utilities/entityQuery";
 import * as zillowScraper from "../services/scrape/zillow-scraper";
 import moment from "moment";
-import * as statuses from "../../common/enums/statuses";
+import * as statuses from "../enums/statuses";
 
 const findProperty = async (
   { term, tag, status = statuses.statuses.ACTIVE.value, persist = true },
