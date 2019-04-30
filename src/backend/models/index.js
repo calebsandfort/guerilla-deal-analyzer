@@ -1,15 +1,27 @@
 import Sequelize from "sequelize";
 
+// const sequelize = new Sequelize(
+//   process.env.DATABASE,
+//   process.env.DATABASE_USER,
+//   process.env.DATABASE_PASSWORD,
+//   {
+//     dialect: "postgres",
+//     host: process.env.DATABASE_HOST,
+//     logging: false
+//   }
+// );
+
 const sequelize = new Sequelize(
-  process.env.DATABASE,
-  process.env.DATABASE_USER,
-  process.env.DATABASE_PASSWORD,
+  'guerilladealanalyzer',
+  'myuser',
+  'yd1f!H7LGO',
   {
     dialect: "postgres",
-    host: process.env.DATABASE_HOST,
+    host: 'futuresninjadb.c6hy8gdblg15.us-west-2.rds.amazonaws.com',
     logging: false
   }
 );
+
 
 const models = {
   Property: sequelize.import("./property"),
