@@ -59,24 +59,29 @@ const server = new ApolloServer({
     }
   },
   formatResponse: response => {
-    console.log(response);
+    // console.log(response);
     return response;
   }
 });
 
 server.applyMiddleware({ app, path: "/graphql" });
 
-const eraseDatabaseOnSync = true;
+const eraseDatabaseOnSync = false;
 
-sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
-  if (eraseDatabaseOnSync) {
-    //seedTeams();
-  }
+sequelize
+  .sync({
+    // force: eraseDatabaseOnSync,
+    alter: true
+  })
+  .then(async () => {
+    if (eraseDatabaseOnSync) {
+      //seedTeams();
+    }
 
-  app.listen({ port: 5050 }, () => {
-    console.log("Apollo Server on http://localhost:5050/graphql");
+    app.listen({ port: 5050 }, () => {
+      console.log("Apollo Server on http://localhost:5050/graphql");
+    });
   });
-});
 
 // const seedTeams = async () => {
 //   await models.Team.create(

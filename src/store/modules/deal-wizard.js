@@ -138,6 +138,7 @@ export const actions = {
       findCompsRequest.coord.latitude = property.latitude;
       findCompsRequest.coord.longitude = property.longitude;
       findCompsRequest.search_keywords = state.search_keywords;
+      findCompsRequest.useCompCache = true;
 
       const compFilter = utilities.defaultCompFilter();
       compFilter.minBeds = property.beds;

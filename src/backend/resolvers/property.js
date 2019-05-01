@@ -6,7 +6,7 @@ import moment from "moment";
 import * as statuses from "../enums/statuses";
 import * as engagements from "../enums/engagements";
 import { logInfo } from "../utilities/logging";
-import { getDistance } from "../utilities/utilities";
+import { getDistance, tryParseNumber } from "../utilities/utilities";
 
 //region Query
 //region properties
@@ -103,7 +103,8 @@ const findComps = async (
     tag,
     status = statuses.statuses.ACTIVE.value,
     persist = true,
-    compFilter
+    compFilter,
+    useCompCache = true
   },
   { models }
 ) => {
@@ -121,21 +122,37 @@ const findComps = async (
     );
   }
 
-  const compAddresses = await zillowScraper.findComps({
-    property: property,
-    compFilter: compFilter
-  });
+  let compTerms = [];
+  const compCache = _.get(property, "compCache", "");
+
+  if (useCompCache && compCache != null && compCache != "") {
+    compTerms = compCache.split(",");
+  } else {
+    compTerms = await zillowScraper.findComps({
+      property: property,
+      compFilter: compFilter
+    });
+  }
 
   const comps = await findProperties(
     parent,
     {
-      terms: compAddresses,
+      terms: compTerms,
       tag: `COMP ${property.streetAddress}`,
       status: statuses.statuses.COMP.value,
       persist: persist
     },
     { models }
   );
+
+  if (comps.length > 0) {
+    const updateProperty = await models.Property.findByPk(property.id);
+    await updateProperty.update({
+      compCache: _.map(comps, function(c) {
+        return c.id;
+      }).join()
+    });
+  }
 
   return comps;
 };
@@ -254,60 +271,72 @@ const findPropertyHelper = async (
     });
   }
 
-  logRows.push({
-    message: "finding",
-    term
-  });
+  let property = null;
+  let id = tryParseNumber(term, 0);
 
-  let property = await models.Property.findOne({
-    where: {
-      [Sequelize.Op.or]: [
-        { zillow_path: term },
-        { streetAddress: term },
-        { address: term }
-      ]
-    }
-  });
-
-  if (property == null && term.indexOf("homedetails") == -1) {
-    const zillowUrl = await zillowScraper.findZillowUrl(term);
+  if (id > 0) {
     logRows.push({
-      message: "check zillow",
-      term: zillowUrl.replace("https://www.zillow.com", "")
+      message: "cache",
+      term
+    });
+
+    property = await models.Property.findByPk(id);
+  } else {
+    logRows.push({
+      message: "finding",
+      term
     });
 
     property = await models.Property.findOne({
       where: {
         [Sequelize.Op.or]: [
-          { zillow_url: zillowUrl + "?fullpage=true" },
-          { zillow_url: zillowUrl },
+          { zillow_path: term },
+          { streetAddress: term },
           { address: term }
         ]
       }
     });
 
-    if (property == null) {
+    if (property == null && term.indexOf("homedetails") == -1) {
+      const zillowUrl = await zillowScraper.findZillowUrl(term);
       logRows.push({
-        message: "scraping zillow",
+        message: "check zillow",
         term: zillowUrl.replace("https://www.zillow.com", "")
       });
 
-      if (zillowUrl.indexOf("homedetails") > -1) {
-        const scrapedProperty = await zillowScraper.findProperty(zillowUrl);
-        if (scrapedProperty) {
-          scrapedProperty.tag = tag;
-          scrapedProperty.status = status;
+      property = await models.Property.findOne({
+        where: {
+          [Sequelize.Op.or]: [
+            { zillow_url: zillowUrl + "?fullpage=true" },
+            { zillow_url: zillowUrl },
+            { address: term }
+          ]
+        }
+      });
 
-          if (persist) {
-            property = await models.Property.create(scrapedProperty);
-          } else {
-            property = scrapedProperty;
+      if (property == null) {
+        logRows.push({
+          message: "scraping zillow",
+          term: zillowUrl.replace("https://www.zillow.com", "")
+        });
+
+        if (zillowUrl.indexOf("homedetails") > -1) {
+          const scrapedProperty = await zillowScraper.findProperty(zillowUrl);
+          if (scrapedProperty) {
+            scrapedProperty.tag = tag;
+            scrapedProperty.status = status;
+
+            if (persist) {
+              property = await models.Property.create(scrapedProperty);
+            } else {
+              property = scrapedProperty;
+            }
+
+            logRows.push({
+              message: "scraped zillow",
+              term: zillowUrl.replace("https://www.zillow.com", "")
+            });
           }
-
-          logRows.push({
-            message: "scraped zillow",
-            term: zillowUrl.replace("https://www.zillow.com", "")
-          });
         }
       }
     }

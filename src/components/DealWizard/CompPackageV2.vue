@@ -347,7 +347,9 @@ export default {
       });
     },
     "dealWizardStore.compFilter": function() {
-      this.findComps(propertyRequest());
+      const rv = propertyRequest();
+      rv.useCompCache = false;
+      this.findComps(rv);
     },
     selectedComps: function() {
       this.setDealComps(

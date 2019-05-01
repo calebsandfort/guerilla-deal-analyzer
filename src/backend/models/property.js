@@ -183,6 +183,10 @@ const property = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
         length: 50
+      },
+      compCache: {
+        type: DataTypes.TEXT,
+        allowNull: true
       }
     },
     {

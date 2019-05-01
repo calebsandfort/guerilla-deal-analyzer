@@ -3,21 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build:backend": "npm run babel-build:backend && npm run copy:backend",
-    "babel-build:backend": "babel src/backend -d dist_backend/",
-    "copy:backend": "cp package.json dist_backend/ && cp .env dist_backend/",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "deploy": "npm run build && npm run deploy:frontend && npm run deploy:backend",
+    "deploy:frontend": "vue-cli-service s3-deploy",
+    "deploy:backend": "pm2 deploy ecosystem.config.js production",
+    "babel-build:backend": "babel src/backend -d dist_backend/",
+    "build:backend": "npm run remove:backend && npm run babel-build:backend && npm run copy:backend",
+    "copy:backend": "cp package.json dist_backend/ && cp .env dist_backend/",
+    "remove:backend": "rm -rf dist_backend/*",
+    "rollup:backend": "npm run remove:backend && ./node_modules/.bin/rollup -c && npm run copy:backend",
+    "start:backend": "nodemon --exec babel-node src/backend/index.js",
     "test:mocha": "mocha --reporter spec --require @babel/register --recursive \"src/**/*.spec.js\"",
     "test:mocha:debug": "mocha --reporter spec --inspect-brk --require @babel/register --recursive \"src/**/*.spec.js\"",
-    "start:backend": "nodemon --exec babel-node src/backend/index.js"
-  },
-  "nodemonConfig": {
-    "ignore": [
-      "src/components/*",
-      "src/store/*"
-    ]
+    "webpack:backend": "npm run remove:backend && webpack && npm run copy:backend"
   },
   "dependencies": {
     "accounting-js": "^1.1.1",
@@ -47,7 +48,7 @@
     "material-design-icons-iconfont": "^3.0.3",
     "moment": "^2.24.0",
     "papaparse": "^4.6.3",
-    "pg": "^7.9.0",
+    "pg": "^7.10.0",
     "pg-hstore": "^2.3.2",
     "qs": "^6.7.0",
     "querystring": "^0.2.0",
@@ -70,7 +71,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
+    "@babel/core": "^7.4.4",
     "@babel/node": "^7.2.2",
     "@babel/plugin-proposal-export-default-from": "^7.2.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
@@ -80,6 +81,8 @@
     "@vue/cli-plugin-eslint": "^3.5.0",
     "@vue/cli-service": "^3.5.0",
     "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.5",
+    "babelrc-rollup": "^3.0.0",
     "chai": "^4.2.0",
     "chai-exclude": "^1.0.12",
     "concurrently": "^4.1.0",
@@ -88,8 +91,23 @@
     "fs": "0.0.1-security",
     "mocha": "^6.0.2",
     "nodemon": "^1.18.9",
+    "pm2": "^3.5.0",
     "prettier": "^1.16.4",
+    "rollup": "^1.10.1",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^4.2.3",
     "vue-cli-plugin-vuetify": "^0.5.0",
-    "vue-template-compiler": "^2.5.21"
+    "vue-template-compiler": "^2.5.21",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.1",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "src/components/*",
+      "src/store/*"
+    ]
   }
 }

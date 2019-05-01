@@ -24,6 +24,7 @@ export default gql`
       status: Int
       persist: Boolean
       compFilter: CompFilter
+      useCompCache: Boolean
     ): [Property]
   }
   extend type Mutation {

@@ -113,6 +113,7 @@ const FIND_COMPS = gql`
     $compFilter: CompFilter
     $coord: CoordInput
     $search_keywords: [String]
+    $useCompCache: Boolean
   ) {
     findComps(
       id: $id
@@ -121,6 +122,7 @@ const FIND_COMPS = gql`
       status: $status
       persist: $persist
       compFilter: $compFilter
+      useCompCache: $useCompCache
     ) {
       ...SimpleProperty
     }
@@ -178,7 +180,8 @@ export const getRequestVariables = () => {
       latitude: 0,
       longitude: 0
     },
-    compFilter: utilities.defaultCompFilter()
+    compFilter: utilities.defaultCompFilter(),
+    useCompCache: true
   };
 };
 

@@ -1,6 +1,7 @@
 import rp from "request-promise";
 import $ from "cheerio";
 import * as utilities from "../../utilities/utilities";
+import { logInfo } from "../../utilities/logging";
 import _ from "lodash";
 import Aigle from "aigle";
 import { statuses } from "../../enums/statuses";
@@ -86,7 +87,8 @@ export const findProperty = async term => {
     latitude: -1,
     longitude: -1,
     notes: "",
-    status: statuses.ACTIVE.value
+    status: statuses.ACTIVE.value,
+    compCache: ""
   };
 
   let url = "";
@@ -331,18 +333,18 @@ export const findPropertyTaxInfo = async property => {
       searchtext: property.streetAddress
     }
   };
-  
-  const searchUrl = "https://multcoproptax.com/Property-Search?" + qs.stringify({
-    searchtext: property.streetAddress
-  });
+
+  const searchUrl =
+    "https://multcoproptax.com/Property-Search?" +
+    qs.stringify({
+      searchtext: property.streetAddress
+    });
   const page = new seleniumPage();
   await page.visit(searchUrl);
-  
-  debugger;
+
   const tableRow = await page.findByCss("tr[data-uid]");
   await tableRow.click();
-  
-  
+
   // let html = await guerillaTor.request(options);
   //
   // const jsonInput = $("input[id$=_SearchResultJson]", html);
@@ -536,7 +538,23 @@ export const findComps = async ({
     compUrl += ",no-outline";
     compUrl += `/page-${currentPage}`;
 
-    // console.log(compUrl);
+    // logRows.push({
+    //   message: "record",
+    //   term: `${collectionInfo.current} of ${collectionInfo.total}`
+    // });
+
+    //logInfo("findPropertyHelper", logRows, property == null ? "red" : "green");
+
+    logInfo(
+      "scrapeComps",
+      [
+        {
+          message: "page",
+          term: currentPage
+        }
+      ],
+      "magenta"
+    );
 
     const options = {
       uri: compUrl,
@@ -546,7 +564,13 @@ export const findComps = async ({
       }
     };
 
-    const html = await rp(options);
+    let html = await guerillaTor.request(options);
+
+    const captcha = $("#captcha", html);
+    if (captcha.length > 0 || html.indexOf("is blocked") > -1) {
+      await guerillaTor.newTorSession();
+      html = await guerillaTor.request(options);
+    }
 
     const results = $(
       ".HomeViews .HomeCardContainer > .HomeCard > .v2 > a",

@@ -116,7 +116,7 @@ export default {
   },
   data() {
     return {
-      address: "9943 SW 55th Ave",
+      address: "1203 SE Malden St",
       activeGalleryRef: "",
       engagements: engagements
     };

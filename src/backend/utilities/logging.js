@@ -33,6 +33,8 @@ export const logInfo = function(caller, rows, color = "") {
     colorFunc = chalk.green;
   } else if (color == "red") {
     colorFunc = chalk.red;
+  } else if (color == "magenta") {
+    colorFunc = chalk.magenta;
   }
 
   console.log("\n");
