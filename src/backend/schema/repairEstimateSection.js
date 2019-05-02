@@ -27,6 +27,7 @@ export default gql`
     selected: Boolean
     title: String
     totalCost: Float
+    sectionType: Int
     lineItems: [RepairEstimateLineItem]
   }
   input RepairEstimateSectionInput {
@@ -34,6 +35,7 @@ export default gql`
     selected: Boolean
     title: String
     totalCost: Float
+    sectionType: Int
     lineItems: [RepairEstimateLineItemInput]
   }
 `;

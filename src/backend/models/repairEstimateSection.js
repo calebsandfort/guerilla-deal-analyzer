@@ -15,6 +15,11 @@ const repairEstimateSection = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT,
       defaultValue: 0,
       allowNull: false
+    },
+    sectionType: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: false
     }
   });
 

@@ -10,6 +10,11 @@ const repairEstimate = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT,
       defaultValue: 0,
       allowNull: false
+    },
+    quick: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false
     }
   });
 

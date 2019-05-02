@@ -15,12 +15,14 @@ export default gql`
     id: ID!
     title: String
     totalCost: Float
+    quick: Boolean
     sections: [RepairEstimateSection]
   }
   input RepairEstimateInput {
     repairEstimateId: ID!
     title: String
     totalCost: Float
+    quick: Boolean
     sections: [RepairEstimateInput]
   }
 `;

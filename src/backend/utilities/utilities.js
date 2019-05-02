@@ -1,5 +1,6 @@
 import _ from "lodash";
 import fs from "fs";
+import * as repairEstimateSectionTypes from "../enums/repairEstimateSectionTypes";
 
 export const setPropertyFromObject = (
   source,
@@ -137,6 +138,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Exterior - Roof",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.EXTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -216,6 +219,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Exterior - Gutters",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.EXTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -239,6 +244,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Exterior - Finish",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.EXTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -309,6 +316,8 @@ export const newRepairEstimate = () => {
       {
         selected: false,
         title: "Exterior - Masonry",
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.EXTERIOR.value,
         totalCost: 0,
         lineItems: [
           {
@@ -365,6 +374,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Exterior - Painting",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.EXTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -420,6 +431,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Exterior - Windows",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.EXTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -451,6 +464,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Exterior - Garage",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.EXTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -498,6 +513,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Exterior - Landscaping",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.EXTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -553,6 +570,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Exterior - Concrete/Asphalt",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.EXTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -592,6 +611,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Exterior - Decks",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.EXTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -662,6 +683,8 @@ export const newRepairEstimate = () => {
       {
         selected: false,
         title: "Exterior - Pergola",
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.EXTERIOR.value,
         totalCost: 0,
         lineItems: [
           {
@@ -685,6 +708,8 @@ export const newRepairEstimate = () => {
       {
         selected: false,
         title: "Exterior - Fence",
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.EXTERIOR.value,
         totalCost: 0,
         lineItems: [
           {
@@ -716,6 +741,8 @@ export const newRepairEstimate = () => {
       {
         selected: false,
         title: "Exterior - Pool",
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.EXTERIOR.value,
         totalCost: 0,
         lineItems: [
           {
@@ -739,6 +766,8 @@ export const newRepairEstimate = () => {
       {
         selected: false,
         title: "Exterior - Septic",
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.EXTERIOR.value,
         totalCost: 0,
         lineItems: [
           {
@@ -771,6 +800,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Interior - Painting",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -794,6 +825,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Interior - Hardwood",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -833,6 +866,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Interior - Carpet / Vinyl",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -856,6 +891,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Interior - Tiling",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -911,6 +948,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Interior - Kitchen - (Grouped)",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -958,6 +997,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Interior - Appliances - (Grouped)",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -997,6 +1038,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Interior - Kitchen - (By Item)",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -1084,6 +1127,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Interior - Bathroom - (Grouped)",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -1115,6 +1160,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Interior - Bathroom - (By Item)",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -1210,6 +1257,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Interior - Framing",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -1249,6 +1298,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Interior - Insulation",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -1280,6 +1331,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Interior - Walls",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -1336,6 +1389,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Interior - Doors & Trim",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -1423,6 +1478,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Interior - Basement",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -1479,6 +1536,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Interior - Foundation",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value,
         lineItems: [
           {
             selected: false,
@@ -1560,6 +1619,9 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Mechanicals - HVAC",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.MECHANICALS
+            .value,
         lineItems: [
           {
             selected: false,
@@ -1640,6 +1702,9 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Mechanicals - Plumbing",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.MECHANICALS
+            .value,
         lineItems: [
           {
             selected: false,
@@ -1681,6 +1746,9 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Mechanicals - Electrical",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.MECHANICALS
+            .value,
         lineItems: [
           {
             selected: false,
@@ -1722,6 +1790,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Other - Demolition & Dumpsters",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.OTHER.value,
         lineItems: [
           {
             selected: false,
@@ -1745,6 +1815,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Other - Termites/Abatement",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.OTHER.value,
         lineItems: [
           {
             selected: false,
@@ -1776,6 +1848,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Other - Permits",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.OTHER.value,
         lineItems: [
           {
             selected: false,
@@ -1839,6 +1913,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Other - Staging",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.OTHER.value,
         lineItems: [
           {
             selected: false,
@@ -1854,6 +1930,8 @@ export const newRepairEstimate = () => {
         selected: false,
         title: "Other - Contingency",
         totalCost: 0,
+        sectionType:
+          repairEstimateSectionTypes.repairEstimateSectionTypes.OTHER.value,
         lineItems: [
           {
             selected: false,

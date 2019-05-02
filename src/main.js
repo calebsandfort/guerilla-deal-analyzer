@@ -11,8 +11,6 @@ import * as VueGoogleMaps from "vue2-google-maps";
 
 Vue.config.productionTip = false;
 
-console.log(process.env);
-
 Vue.use(VueGoogleMaps, {
   load: {
     key: process.env.VUE_APP_GOOGLE_MAPS_API_KEY

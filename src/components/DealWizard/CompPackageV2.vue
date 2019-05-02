@@ -42,30 +42,32 @@
       <v-flex xs4>
         <v-layout row wrap>
           <v-flex xs12>
-            <v-text-field
-              name="arv_average"
+            <VuetifyNumeric
+              field="arv_average"
               label="Avg Sale Price"
-              prefix="$"
-              v-model.number="arv_average"
-            ></v-text-field>
+              currency="$"
+              :value="arv_average"
+            >
+            </VuetifyNumeric>
           </v-flex>
           <v-flex xs12>
-            <v-text-field
-              name="arv_pricePerSqft"
+            <VuetifyNumeric
+              field="arv_pricePerSqft"
               label="Avg Price Per Sqft"
-              prefix="$"
-              v-model.number="arv_pricePerSqft"
-            ></v-text-field>
+              currency="$"
+              :value="arv_pricePerSqft"
+            >
+            </VuetifyNumeric>
           </v-flex>
           <v-flex xs12>
-            <v-text-field
-              name="arv"
+            <VuetifyNumeric
+              field="arv"
               label="ARV"
-              mask="#######"
-              prefix="$"
+              currency="$"
               :value="arv"
-              v-on:keyup="fieldChangedNumber"
-            ></v-text-field>
+              v-on:input="fieldChangedNumber"
+            >
+            </VuetifyNumeric>
           </v-flex>
           <v-flex xs12>
             <v-btn
@@ -196,11 +198,13 @@ import ExpandoProperty from "../Property/ExpandoProperty";
 import PropertyDetails from "../Property/PropertyDetails";
 import CompFiltersDialog from "./CompFilters/CompFiltersDialog";
 import colors from "vuetify/es5/util/colors";
+import VuetifyNumeric from "../Shared/VuetifyNumeric";
 
 export default {
   name: "CompPackageV2",
   components: {
-    CompFiltersDialog
+    CompFiltersDialog,
+    VuetifyNumeric
     // ExpandoProperty,
     // PropertyDetails
   },
@@ -432,10 +436,10 @@ export default {
         comp.engagement = engagements.engagements.NONE.value;
       }
     },
-    fieldChangedNumber: _.debounce(function(event) {
+    fieldChangedNumber: _.debounce(function(args) {
       this.setField({
-        name: event.target.name,
-        v: utilities.tryParseNumber(event.target.value, 0)
+        name: args.field,
+        v: args.value
       });
     }, 1000)
   }
