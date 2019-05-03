@@ -8,7 +8,7 @@ use(chaiExclude);
 
 const ZILLOW_PROPERTY_URL =
   "https://www.zillow.com/homedetails/608-NE-Going-St-Portland-OR-97211/53879348_zpid/";
-const ADDRESS = "4544 N Kerby Ave";
+const ADDRESS = "1203 SE Malden St";
 
 describe("zillow-scraper", () => {
   // it("finds comps for a property", function() {
@@ -22,38 +22,38 @@ describe("zillow-scraper", () => {
   //     expect(response.length).to.eql(expectedResult);
   //   });
   // });
-  it("it finds the zillow url for the given address", function() {
-    this.timeout(10 * 60 * 1000);
-
-    const expectedResult = ZILLOW_PROPERTY_URL;
-
-    return zillowScraper
-      .findZillowUrl("124 SW Woods St")
-      .then(function(response) {
-        expect(response).to.eql(expectedResult);
-      });
-  });
-  // it("finds a property for the given address", function() {
+  // it("it finds the zillow url for the given address", function() {
   //   this.timeout(10 * 60 * 1000);
   //
-  //   const expectedResult = getSimpleExpectedProperty();
+  //   const expectedResult = ZILLOW_PROPERTY_URL;
   //
   //   return zillowScraper
-  //     .findProperty(ADDRESS + " Portland Or")
+  //     .findZillowUrl("124 SW Woods St")
   //     .then(function(response) {
-  //       expect(castToSimpleProperty(response)).to.eql(expectedResult);
+  //       expect(response).to.eql(expectedResult);
   //     });
   // });
-  //
-  it("finds a property for the given address with no city/state", function() {
+  it("finds a property for the given address", function() {
     this.timeout(10 * 60 * 1000);
 
     const expectedResult = getSimpleExpectedProperty();
 
-    return zillowScraper.findProperty(ADDRESS).then(function(response) {
-      expect(castToSimpleProperty(response)).to.eql(expectedResult);
-    });
+    return zillowScraper
+      .findProperty(ADDRESS + " Portland Or")
+      .then(function(response) {
+        expect(castToSimpleProperty(response)).to.eql(expectedResult);
+      });
   });
+  //
+  // it("finds a property for the given address with no city/state", function() {
+  //   this.timeout(10 * 60 * 1000);
+  //
+  //   const expectedResult = getSimpleExpectedProperty();
+  //
+  //   return zillowScraper.findProperty(ADDRESS).then(function(response) {
+  //     expect(castToSimpleProperty(response)).to.eql(expectedResult);
+  //   });
+  // });
 
   // it("finds a property for the given url", function() {
   //   this.timeout(10 * 60 * 1000);

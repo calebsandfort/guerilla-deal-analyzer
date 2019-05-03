@@ -1,1 +1,1606 @@
-{"zpid":53919249,"city":"Portland","state":"OR","address":{"streetAddress":"1211 NE 60th Ave","city":"Portland","state":"OR","zipcode":"97213","neighborhood":"Rose City Park","community":null,"subdivision":null,"unitPrefix":null,"unitNumber":null},"homeStatus":"PRE_FORECLOSURE","isListingClaimedByCurrentSignedInUser":false,"isCurrentSignedInAgentResponsible":false,"streetAddress":"1211 NE 60th Ave","zipcode":"97213","desktopWebHdpImageLink":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.602480&zoom=17&size=550x413&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=BFp14S75sD5L3_dTrMAtSIrJ2iw=","photoCount":null,"responsivePhotos":[{"caption":null,"subjectType":null,"mixedSources":{"jpeg":[{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.602480&zoom=17&size=192x144&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=5blIrhr9Cm9ZkjQejaNagBlUrGg=","width":192},{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.602480&zoom=17&size=384x288&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=0th_Jv3rmTQLGshz-vy56FiVXUo=","width":384},{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.602480&zoom=17&size=576x432&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=wUpc0RXnmEXJx7FBSQgYbjBjG_o=","width":576},{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.602480&zoom=17&size=768x576&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=5HZZC8MZs3Zzzy6y5bJo1jFuvdE=","width":768},{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.602480&zoom=17&size=960x720&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=vxfte4j4UUwYj1elBb4feuuF5R4=","width":960},{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.602480&zoom=17&size=1152x864&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=_IXuTSW-YIFA9kx9OzHUSSYDijc=","width":1152},{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.602480&zoom=17&size=1344x1008&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=b2KLmpMVaV7zv_ORs6rmYUSD93E=","width":1344},{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.602480&zoom=17&size=1536x1152&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=Eyi6RjrntmYzANoZM0DYMiUR1l0=","width":1536}],"webp":[{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.602480&zoom=17&size=192x144&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=5blIrhr9Cm9ZkjQejaNagBlUrGg=","width":192},{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.602480&zoom=17&size=384x288&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=0th_Jv3rmTQLGshz-vy56FiVXUo=","width":384},{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.602480&zoom=17&size=576x432&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=wUpc0RXnmEXJx7FBSQgYbjBjG_o=","width":576},{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.602480&zoom=17&size=768x576&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=5HZZC8MZs3Zzzy6y5bJo1jFuvdE=","width":768},{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.602480&zoom=17&size=960x720&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=vxfte4j4UUwYj1elBb4feuuF5R4=","width":960},{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.602480&zoom=17&size=1152x864&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=_IXuTSW-YIFA9kx9OzHUSSYDijc=","width":1152},{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.602480&zoom=17&size=1344x1008&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=b2KLmpMVaV7zv_ORs6rmYUSD93E=","width":1344},{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.602480&zoom=17&size=1536x1152&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=Eyi6RjrntmYzANoZM0DYMiUR1l0=","width":1536}]}}],"longitude":-122.60248,"latitude":45.531838,"listing_sub_type":{"is_FSBA":false,"is_newHome":false,"is_FSBO":false,"is_bankOwned":false,"is_foreclosure":false,"is_forAuction":false,"is_comingSoon":false},"streetViewMetadataUrlMediaWallLatLong":"https://maps.googleapis.com/maps/api/streetview/metadata?location=45.531838,-122.60248&key=AIzaSyARFMLB1na-BBWf7_R3-5YOQQaHqEJf6RQ&source=outdoor&signature=fYxE2bHZdmqxpZeAtmGv3VsE0N0=","streetViewMetadataUrlMediaWallAddress":"https://maps.googleapis.com/maps/api/streetview/metadata?location=1211%20NE%2060th%20Ave%2C%20Portland%2C%20OR%2097213&key=AIzaSyARFMLB1na-BBWf7_R3-5YOQQaHqEJf6RQ&source=outdoor&signature=2gkpqo6YnHtC9kGnfcaNZtYvG88=","streetView":{"addressSources":[{"width":192,"url":"https://maps.googleapis.com/maps/api/streetview?location=1211%20NE%2060th%20Ave%2C%20Portland%2C%20OR%2097213&size=192x72&key=AIzaSyARFMLB1na-BBWf7_R3-5YOQQaHqEJf6RQ&source=outdoor&signature=v9gxbmr2M-FMxnKcZx0JM4VEnPY="},{"width":384,"url":"https://maps.googleapis.com/maps/api/streetview?location=1211%20NE%2060th%20Ave%2C%20Portland%2C%20OR%2097213&size=384x144&key=AIzaSyARFMLB1na-BBWf7_R3-5YOQQaHqEJf6RQ&source=outdoor&signature=mXSQfFoq5EA0WJDK_Gomt0oVXvw="},{"width":768,"url":"https://maps.googleapis.com/maps/api/streetview?location=1211%20NE%2060th%20Ave%2C%20Portland%2C%20OR%2097213&size=768x288&key=AIzaSyARFMLB1na-BBWf7_R3-5YOQQaHqEJf6RQ&source=outdoor&signature=F2qPlVz3TCOL4qW19Xxu22HyAtY="}],"latLongSources":[{"width":192,"url":"https://maps.googleapis.com/maps/api/streetview?location=45.531838,-122.60248&size=192x72&key=AIzaSyARFMLB1na-BBWf7_R3-5YOQQaHqEJf6RQ&source=outdoor&signature=S0j_hX5LVMEMlifbb2d0mBVjb2s="},{"width":384,"url":"https://maps.googleapis.com/maps/api/streetview?location=45.531838,-122.60248&size=384x144&key=AIzaSyARFMLB1na-BBWf7_R3-5YOQQaHqEJf6RQ&source=outdoor&signature=hIpoFcIiXdQHAf8pN4zmQ1TEdts="},{"width":768,"url":"https://maps.googleapis.com/maps/api/streetview?location=45.531838,-122.60248&size=768x288&key=AIzaSyARFMLB1na-BBWf7_R3-5YOQQaHqEJf6RQ&source=outdoor&signature=KeIjfq62_ouuYOaAWgg9Uxf4cXA="}]},"staticMap":{"sources":[{"width":192,"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.60248&zoom=15&size=192x144&maptype=roadmap&key=AIzaSyARFMLB1na-BBWf7_R3-5YOQQaHqEJf6RQ&signature=Mn153cFE10FKzIyqQbX2Hjyh1MQ="},{"width":384,"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.60248&zoom=16&size=384x288&maptype=roadmap&key=AIzaSyARFMLB1na-BBWf7_R3-5YOQQaHqEJf6RQ&signature=1oKM4PKabwJ6mBUPZIbao-npMX4="},{"width":768,"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.60248&zoom=17&size=768x576&maptype=roadmap&key=AIzaSyARFMLB1na-BBWf7_R3-5YOQQaHqEJf6RQ&signature=XNixVBp1di2jS02CAbg1BvPr6vc="}]},"description":"This 831 square foot single family home has 2 bedrooms and 1.0 bathrooms. It is located at 1211 NE 60th Ave Portland, Oregon.","hasPublicVideo":false,"primaryPublicVideo":null,"isUndisclosedAddress":false,"isPreforeclosureAuction":false,"listingCollectionConfig":null,"hdpUrl":"/homedetails/1211-NE-60th-Ave-Portland-OR-97213/53919249_zpid/","price":355119,"bedrooms":2,"bathrooms":1,"livingArea":831,"country":"USA","homeType":"SINGLE_FAMILY","festimate":355119,"zestimate":394577,"rentZestimate":1775,"hideZestimate":false,"comingSoonOnMarketDate":null,"currency":"USD","priceChange":null,"datePriceChanged":null,"lotSize":4792,"contingentListingType":null,"isPremierBuilder":false,"newConstructionType":null,"isZillowOwned":false,"whatILove":null,"listingProvider":{"logos":null},"timeOnZillow":null,"pageViewCount":85,"favoriteCount":2,"openHouseSchedule":[],"enhancedBrokerImageUrl":null,"brokerageName":null,"tourPhotos":[{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531838,-122.602480&zoom=17&size=400x300&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=26d09-x3Le0YaDZxXaa0C3OrVxI="}],"countyFIPS":"41051","parcelId":"1N2E31AA18200","homeFacts":{"aboveFactsAndFeaturesCategories":null,"atAGlanceFacts":[{"factLabel":"Type","factValue":"Single Family"},{"factLabel":"Year Built","factValue":"1890"},{"factLabel":"Heating","factValue":"Forced air"},{"factLabel":"Cooling","factValue":null},{"factLabel":"Parking","factValue":"1 space"},{"factLabel":"Lot","factValue":"4,792 sqft"}],"categoryDetails":[{"categoryGroupName":"Interior Features","categories":[{"categoryName":"Bedrooms","categoryFacts":[{"factLabel":"Beds","factValue":"2"}]},{"categoryName":"Heating and Cooling","categoryFacts":[{"factLabel":"Heating","factValue":"Forced air"}]},{"categoryName":"Basement","categoryFacts":[{"factLabel":null,"factValue":"Unfinished basement"}]},{"categoryName":"Attic","categoryFacts":[{"factLabel":"Attic size","factValue":"200"}]},{"categoryName":"Flooring","categoryFacts":[{"factLabel":"Floor size","factValue":"831 sqft"}]}]},{"categoryGroupName":"Spaces and Amenities","categories":[{"categoryName":"Size","categoryFacts":[{"factLabel":"Unit count","factValue":"0"}]}]},{"categoryGroupName":"Construction","categories":[{"categoryName":"Type and Style","categoryFacts":[{"factLabel":"Structure type","factValue":"Other"},{"factLabel":null,"factValue":"Single Family"}]},{"categoryName":"Materials","categoryFacts":[{"factLabel":"Roof type","factValue":"Composition"},{"factLabel":"Exterior material","factValue":"Wood"},{"factLabel":"Foundation type","factValue":"Concrete"}]},{"categoryName":"Dates","categoryFacts":[{"factLabel":"Last remodel year","factValue":"1890"},{"factLabel":null,"factValue":"Built in 1890"}]},{"categoryName":"Other Construction Features","categoryFacts":[{"factLabel":"Stories","factValue":"1"}]}]},{"categoryGroupName":"Exterior Features","categories":[{"categoryName":"Lot","categoryFacts":[{"factLabel":"Lot","factValue":"4,792 sqft"}]},{"categoryName":"Other Exterior Features","categoryFacts":[{"factLabel":"Parcel #","factValue":"1N2E31AA18200"}]}]},{"categoryGroupName":"Parking","categories":[{"categoryName":"","categoryFacts":[{"factLabel":"Parking","factValue":"Attached Garage, Detached Garage, 1 space, 288 sqft garage"}]}]},{"categoryGroupName":"Activity On Zillow","categories":[{"categoryName":"","categoryFacts":[{"factLabel":"Views since listing","factValue":"85"},{"factLabel":null,"factValue":"2 shoppers saved this home"}]}]}]},"resoFacts":{"bedrooms":2,"bathrooms":1,"bathroomsFull":null,"bathroomsThreeQuarter":null,"bathroomsHalf":null,"bathroomsOneQuarter":null,"bathroomsPartial":null,"mainLevelBathrooms":null,"rooms":null,"basement":"Unfinished","flooring":null,"heating":["Forced air"],"hasHeating":true,"cooling":null,"hasCooling":false,"appliances":null,"laundryFeatures":null,"fireplaces":null,"fireplaceFeatures":null,"hasFireplace":false,"furnished":false,"commonWalls":null,"buildingArea":null,"livingArea":"831 sqft","aboveGradeFinishedArea":null,"belowGradeFinishedArea":null,"virtualTour":"","parking":null,"parkingFeatures":["Attached Garage","Detached Garage"],"garageSpaces":1,"coveredSpaces":null,"hasAttachedGarage":false,"hasGarage":true,"openParkingSpaces":null,"hasOpenParking":false,"carportSpaces":null,"hasCarport":false,"otherParking":null,"accessibilityFeatures":null,"levels":null,"stories":null,"entryLevel":null,"entryLocation":null,"hasPrivatePool":false,"hasSpa":false,"spaFeatures":null,"exteriorFeatures":["Wood"],"patioAndPorchFeatures":null,"fencing":null,"view":null,"hasView":false,"hasWaterfrontView":false,"waterfrontFeatures":null,"frontageType":null,"frontageLength":null,"topography":null,"woodedArea":null,"vegetation":null,"canRaiseHorses":false,"lotSize":"0.11 acres","lotSizeDimensions":null,"otherStructures":null,"additionalParcelsDescription":null,"hasAdditionalParcels":false,"parcelNumber":"1N2E31AA18200","hasAttachedProperty":false,"hasLandLease":false,"landLeaseAmount":null,"zoning":null,"zoningDescription":null,"homeType":"Single Family","architecturalStyle":null,"constructionMaterials":null,"foundationDetails":["Concrete"],"roofType":"Composition","windowFeatures":null,"propertyCondition":null,"isNewConstruction":false,"yearBuilt":1890,"developmentStatus":null,"yearBuiltEffective":1890,"onMarketDate":null,"builderModel":null,"builderName":null,"hasHomeWarranty":false,"electric":null,"hasElectricOnProperty":null,"gas":null,"sewer":null,"waterSources":null,"utilities":null,"greenBuildingVerificationType":null,"greenEnergyEfficient":null,"greenIndoorAirQuality":null,"greenSustainability":null,"greenWaterConservation":null,"numberOfUnitsInCommunity":null,"numberOfUnitsVacant":null,"storiesTotal":null,"hasPetsAllowed":true,"hasRentControl":false,"buildingFeatures":null,"structureType":"Other","buildingName":null,"elementarySchool":null,"elementarySchoolDistrict":null,"middleOrJuniorSchool":null,"middleOrJuniorSchoolDistrict":null,"highSchool":null,"highSchoolDistrict":null,"securityFeatures":null,"communityFeatures":null,"isSeniorCommunity":false,"cityRegion":"Portland","associationFee":null,"hasAssociation":false,"associationAmenities":null,"associationFeeIncludes":null,"associationName":null,"associationPhone":null,"associationFee2":null,"associationName2":null,"associationPhone2":null,"taxAssessedValue":408290,"taxAnnualAmount":3330,"listingId":null,"buildingAreaSource":null,"otherFacts":[]},"comps":[{"price":368900,"currency":"USD","bedrooms":3,"bathrooms":2,"livingArea":1284,"address":{"streetAddress":"6221 NE Halsey St","city":"Portland","state":"OR","zipcode":"97213"},"latitude":45.533864,"longitude":-122.598987,"zpid":53901359,"homeStatus":"FOR_SALE","homeType":"SINGLE_FAMILY","hdpUrl":"/homedetails/6221-NE-Halsey-St-Portland-OR-97213/53901359_zpid/","miniCardPhotos":[{"url":"https://photos.zillowstatic.com/p_c/ISinhgourb6f6g1000000000.jpg"}],"listing_sub_type":{"is_newHome":false,"is_forAuction":false,"is_bankOwned":false,"is_foreclosure":false,"is_FSBO":false,"is_comingSoon":false,"is_FSBA":true},"isPremierBuilder":false,"state":"OR","isZillowOwned":false,"newConstructionType":null},{"price":384900,"currency":"USD","bedrooms":1,"bathrooms":2,"livingArea":1142,"address":{"streetAddress":"1927 NE 63rd Ave","city":"Portland","state":"OR","zipcode":"97213"},"latitude":45.536595,"longitude":-122.598858,"zpid":53901261,"homeStatus":"FOR_SALE","homeType":"SINGLE_FAMILY","hdpUrl":"/homedetails/1927-NE-63rd-Ave-Portland-OR-97213/53901261_zpid/","miniCardPhotos":[{"url":"https://photos.zillowstatic.com/p_c/ISegp6ncljb8iu1000000000.jpg"}],"listing_sub_type":{"is_newHome":false,"is_forAuction":false,"is_bankOwned":false,"is_foreclosure":false,"is_FSBO":false,"is_comingSoon":false,"is_FSBA":true},"isPremierBuilder":false,"state":"OR","isZillowOwned":false,"newConstructionType":null},{"price":339975,"currency":"USD","bedrooms":2,"bathrooms":1,"livingArea":792,"address":{"streetAddress":"6811 NE Pacific St","city":"Portland","state":"OR","zipcode":"97213"},"latitude":45.529427,"longitude":-122.593099,"zpid":53907964,"homeStatus":"FOR_SALE","homeType":"SINGLE_FAMILY","hdpUrl":"/homedetails/6811-NE-Pacific-St-Portland-OR-97213/53907964_zpid/","miniCardPhotos":[{"url":"https://photos.zillowstatic.com/p_c/ISq12ss65dmrue1000000000.jpg"}],"listing_sub_type":{"is_newHome":false,"is_forAuction":false,"is_bankOwned":false,"is_foreclosure":false,"is_FSBO":false,"is_comingSoon":false,"is_FSBA":true},"isPremierBuilder":false,"state":"OR","isZillowOwned":false,"newConstructionType":null},{"price":365000,"currency":"USD","bedrooms":2,"bathrooms":1,"livingArea":798,"address":{"streetAddress":"7026 NE Hassalo St","city":"Portland","state":"OR","zipcode":"97213"},"latitude":45.530162,"longitude":-122.590818,"zpid":53891168,"homeStatus":"FOR_SALE","homeType":"SINGLE_FAMILY","hdpUrl":"/homedetails/7026-NE-Hassalo-St-Portland-OR-97213/53891168_zpid/","miniCardPhotos":[{"url":"https://photos.zillowstatic.com/p_c/ISy3pxspyl1v920000000000.jpg"}],"listing_sub_type":{"is_newHome":false,"is_forAuction":false,"is_bankOwned":false,"is_foreclosure":false,"is_FSBO":false,"is_comingSoon":false,"is_FSBA":true},"isPremierBuilder":false,"state":"OR","isZillowOwned":false,"newConstructionType":null},{"price":427560,"currency":"USD","bedrooms":4,"bathrooms":2,"livingArea":1548,"address":{"streetAddress":"1726 NE 65th Ave","city":"Portland","state":"OR","zipcode":"97213"},"latitude":45.535369,"longitude":-122.596414,"zpid":176399497,"homeStatus":"FOR_SALE","homeType":"SINGLE_FAMILY","hdpUrl":"/homedetails/1726-NE-65th-Ave-Portland-OR-97213/176399497_zpid/","miniCardPhotos":[{"url":"https://photos.zillowstatic.com/p_c/ISal2hqfuazn6w1000000000.jpg"}],"listing_sub_type":{"is_newHome":false,"is_forAuction":true,"is_bankOwned":false,"is_foreclosure":false,"is_FSBO":false,"is_comingSoon":false,"is_FSBA":true},"isPremierBuilder":false,"state":"OR","isZillowOwned":false,"newConstructionType":null}],"nearbyHomes":[{"price":360497,"currency":"USD","bedrooms":2,"bathrooms":1,"livingArea":868,"address":{"streetAddress":"1145 NE 60th Ave","city":"Portland","state":"OR","zipcode":"97213"},"latitude":45.531706,"longitude":-122.602484,"zpid":53919248,"homeStatus":"OTHER","homeType":"SINGLE_FAMILY","hdpUrl":"/homedetails/1145-NE-60th-Ave-Portland-OR-97213/53919248_zpid/","miniCardPhotos":[{"url":"https://photos.zillowstatic.com/p_c/ISts1tjz7qohe80000000000.jpg"}],"listing_sub_type":{"is_newHome":false,"is_forAuction":false,"is_bankOwned":false,"is_foreclosure":false,"is_FSBO":false,"is_comingSoon":false,"is_FSBA":false},"isPremierBuilder":false,"state":"OR","isZillowOwned":false,"newConstructionType":null},{"price":420851,"currency":"USD","bedrooms":2,"bathrooms":2,"livingArea":1560,"address":{"streetAddress":"1221 NE 60th Ave","city":"Portland","state":"OR","zipcode":"97213"},"latitude":45.531973,"longitude":-122.602478,"zpid":53958725,"homeStatus":"OTHER","homeType":"SINGLE_FAMILY","hdpUrl":"/homedetails/1221-NE-60th-Ave-Portland-OR-97213/53958725_zpid/","miniCardPhotos":[{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531973,-122.602478&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=VOo5Vqnde3DO_DVVOyrpyTMUbd8="}],"listing_sub_type":{"is_newHome":false,"is_forAuction":false,"is_bankOwned":false,"is_foreclosure":false,"is_FSBO":false,"is_comingSoon":false,"is_FSBA":false},"isPremierBuilder":false,"state":"OR","isZillowOwned":false,"newConstructionType":null},{"price":379990,"currency":"USD","bedrooms":2,"bathrooms":1,"livingArea":890,"address":{"streetAddress":"1231 NE 60th Ave","city":"Portland","state":"OR","zipcode":"97213"},"latitude":45.532106,"longitude":-122.602476,"zpid":53958724,"homeStatus":"OTHER","homeType":"SINGLE_FAMILY","hdpUrl":"/homedetails/1231-NE-60th-Ave-Portland-OR-97213/53958724_zpid/","miniCardPhotos":[{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.532106,-122.602476&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=6NpoN_y103nphnkeJ9JBPlHdz1o="}],"listing_sub_type":{"is_newHome":false,"is_forAuction":false,"is_bankOwned":false,"is_foreclosure":false,"is_FSBO":false,"is_comingSoon":false,"is_FSBA":false},"isPremierBuilder":false,"state":"OR","isZillowOwned":false,"newConstructionType":null},{"price":329005,"currency":"USD","bedrooms":1,"bathrooms":1,"livingArea":618,"address":{"streetAddress":"1137 NE 60th Ave","city":"Portland","state":"OR","zipcode":"97213"},"latitude":45.531564,"longitude":-122.602484,"zpid":53919247,"homeStatus":"OTHER","homeType":"SINGLE_FAMILY","hdpUrl":"/homedetails/1137-NE-60th-Ave-Portland-OR-97213/53919247_zpid/","miniCardPhotos":[{"url":"https://photos.zillowstatic.com/p_c/ISuo6yvaw3ma591000000000.jpg"}],"listing_sub_type":{"is_newHome":false,"is_forAuction":false,"is_bankOwned":false,"is_foreclosure":false,"is_FSBO":false,"is_comingSoon":false,"is_FSBA":false},"isPremierBuilder":false,"state":"OR","isZillowOwned":false,"newConstructionType":null},{"price":411734,"currency":"USD","bedrooms":3,"bathrooms":1,"livingArea":1520,"address":{"streetAddress":"1214 NE 59th Ave","city":"Portland","state":"OR","zipcode":"97213"},"latitude":45.531839,"longitude":-122.60287,"zpid":53919239,"homeStatus":"OTHER","homeType":"SINGLE_FAMILY","hdpUrl":"/homedetails/1214-NE-59th-Ave-Portland-OR-97213/53919239_zpid/","miniCardPhotos":[{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531839,-122.602870&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=Nxh-dsB8xO7hJfZMf8QJsr5Qfa8="}],"listing_sub_type":{"is_newHome":false,"is_forAuction":false,"is_bankOwned":false,"is_foreclosure":false,"is_FSBO":false,"is_comingSoon":false,"is_FSBA":false},"isPremierBuilder":false,"state":"OR","isZillowOwned":false,"newConstructionType":null},{"price":400483,"currency":"USD","bedrooms":2,"bathrooms":2,"livingArea":1232,"address":{"streetAddress":"1224 NE 59th Ave","city":"Portland","state":"OR","zipcode":"97213"},"latitude":45.531974,"longitude":-122.602858,"zpid":53958726,"homeStatus":"OTHER","homeType":"SINGLE_FAMILY","hdpUrl":"/homedetails/1224-NE-59th-Ave-Portland-OR-97213/53958726_zpid/","miniCardPhotos":[{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531974,-122.602858&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=MkTEfzUWNABQ-A0gX3oRMV_bsPc="}],"listing_sub_type":{"is_newHome":false,"is_forAuction":false,"is_bankOwned":false,"is_foreclosure":false,"is_FSBO":false,"is_comingSoon":false,"is_FSBA":false},"isPremierBuilder":false,"state":"OR","isZillowOwned":false,"newConstructionType":null},{"price":436656,"currency":"USD","bedrooms":2,"bathrooms":2,"livingArea":1629,"address":{"streetAddress":"1117 NE 60th Ave","city":"Portland","state":"OR","zipcode":"97213"},"latitude":45.531424,"longitude":-122.602483,"zpid":53919246,"homeStatus":"OTHER","homeType":"MULTI_FAMILY","hdpUrl":"/homedetails/1117-NE-60th-Ave-Portland-OR-97213/53919246_zpid/","miniCardPhotos":[{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531424,-122.602483&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=cNHzf-dEnd-0sbAxN-Cc5ChZW-k="}],"listing_sub_type":{"is_newHome":false,"is_forAuction":false,"is_bankOwned":false,"is_foreclosure":false,"is_FSBO":false,"is_comingSoon":false,"is_FSBA":false},"isPremierBuilder":false,"state":"OR","isZillowOwned":false,"newConstructionType":null},{"price":479871,"currency":"USD","bedrooms":3,"bathrooms":2,"livingArea":1946,"address":{"streetAddress":"1206 NE 59th Ave","city":"Portland","state":"OR","zipcode":"97213"},"latitude":45.531701,"longitude":-122.602872,"zpid":53919240,"homeStatus":"OTHER","homeType":"SINGLE_FAMILY","hdpUrl":"/homedetails/1206-NE-59th-Ave-Portland-OR-97213/53919240_zpid/","miniCardPhotos":[{"url":"https://maps.googleapis.com/maps/api/staticmap?center=45.531701,-122.602872&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=eLdsQoZSyJPYrwuBwa-hiT845Lk="}],"listing_sub_type":{"is_newHome":false,"is_forAuction":false,"is_bankOwned":false,"is_foreclosure":false,"is_FSBO":false,"is_comingSoon":false,"is_FSBA":false},"isPremierBuilder":false,"state":"OR","isZillowOwned":false,"newConstructionType":null}],"homeValues":{"region":{"zhvi":{"yoy":-6.881996696641586,"value":507400},"shortName":"Rose City Park","link":"/rose-city-park-portland-or/home-values/"},"parentRegion":{"zhvi":{"yoy":-0.2343566908835247,"value":425700},"buyerSellerIndex":{"value":2.1}}},"parentRegion":{"name":"Rose City Park"},"nearbyCities":[{"regionUrl":{"path":"/bridal-veil-or/"},"name":"Bridal Veil","body":{"city":"Bridal Veil","state":"OR"}},{"regionUrl":{"path":"/corbett-or/"},"name":"Corbett","body":{"city":"Corbett","state":"OR"}},{"regionUrl":{"path":"/fairview-or/"},"name":"Fairview","body":{"city":"Fairview","state":"OR"}},{"regionUrl":{"path":"/gresham-or/"},"name":"Gresham","body":{"city":"Gresham","state":"OR"}},{"regionUrl":{"path":"/maywood-park-or/"},"name":"Maywood Park","body":{"city":"Maywood Park","state":"OR"}},{"regionUrl":{"path":"/portland-or/"},"name":"Portland","body":{"city":"Portland","state":"OR"}},{"regionUrl":{"path":"/troutdale-or/"},"name":"Troutdale","body":{"city":"Troutdale","state":"OR"}},{"regionUrl":{"path":"/wood-village-or/"},"name":"Wood Village","body":{"city":"Wood Village","state":"OR"}}],"nearbyNeighborhoods":[{"regionUrl":{"path":"/brentwood-darlington-portland-or/"},"name":"Brentwood-Darlington","body":{"neighborhood":"Brentwood-Darlington","city":"Portland","state":"OR"}},{"regionUrl":{"path":"/centennial-portland-or/"},"name":"Centennial","body":{"neighborhood":"Centennial","city":"Portland","state":"OR"}},{"regionUrl":{"path":"/cully-portland-or/"},"name":"Cully","body":{"neighborhood":"Cully","city":"Portland","state":"OR"}},{"regionUrl":{"path":"/hazelwood-portland-or/"},"name":"Hazelwood","body":{"neighborhood":"Hazelwood","city":"Portland","state":"OR"}},{"regionUrl":{"path":"/lents-portland-or/"},"name":"Lents","body":{"neighborhood":"Lents","city":"Portland","state":"OR"}},{"regionUrl":{"path":"/montavilla-portland-or/"},"name":"Montavilla","body":{"neighborhood":"Montavilla","city":"Portland","state":"OR"}},{"regionUrl":{"path":"/northwest-portland-or/"},"name":"Northwest","body":{"neighborhood":"Northwest","city":"Portland","state":"OR"}},{"regionUrl":{"path":"/powellhurst-gilbert-portland-or/"},"name":"Powellhurst Gilbert","body":{"neighborhood":"Powellhurst Gilbert","city":"Portland","state":"OR"}},{"regionUrl":{"path":"/richmond-portland-or/"},"name":"Richmond","body":{"neighborhood":"Richmond","city":"Portland","state":"OR"}},{"regionUrl":{"path":"/st.johns-portland-or/"},"name":"St.Johns","body":{"neighborhood":"St.Johns","city":"Portland","state":"OR"}}],"nearbyZipcodes":[{"regionUrl":{"path":"/portland-or-97202/"},"name":"97202","body":{"zipcode":"97202","city":"Portland","state":"OR"}},{"regionUrl":{"path":"/portland-or-97206/"},"name":"97206","body":{"zipcode":"97206","city":"Portland","state":"OR"}},{"regionUrl":{"path":"/portland-or-97209/"},"name":"97209","body":{"zipcode":"97209","city":"Portland","state":"OR"}},{"regionUrl":{"path":"/portland-or-97217/"},"name":"97217","body":{"zipcode":"97217","city":"Portland","state":"OR"}},{"regionUrl":{"path":"/portland-or-97219/"},"name":"97219","body":{"zipcode":"97219","city":"Portland","state":"OR"}},{"regionUrl":{"path":"/portland-or-97222/"},"name":"97222","body":{"zipcode":"97222","city":"Portland","state":"OR"}},{"regionUrl":{"path":"/portland-or-97223/"},"name":"97223","body":{"zipcode":"97223","city":"Portland","state":"OR"}},{"regionUrl":{"path":"/portland-or-97224/"},"name":"97224","body":{"zipcode":"97224","city":"Portland","state":"OR"}},{"regionUrl":{"path":"/portland-or-97229/"},"name":"97229","body":{"zipcode":"97229","city":"Portland","state":"OR"}},{"regionUrl":{"path":"/portland-or-97230/"},"name":"97230","body":{"zipcode":"97230","city":"Portland","state":"OR"}}],"citySearchUrl":{"text":"Homes in Portland","path":"/portland-or/"},"zipcodeSearchUrl":{"path":"/portland-or-97213/"},"apartmentsForRentInZipcodeSearchUrl":{"path":"/portland-or-97213/apartments/"},"housesForRentInZipcodeSearchUrl":{"path":"/portland-or-97213/rent-houses/"},"abbreviatedAddress":null,"boroughId":null,"providerListingID":"","neighborhoodSearchUrl":{"path":"/rose-city-park-portland-or/"},"stateSearchUrl":{"path":"/or/"},"boroughSearchUrl":null,"communityUrl":null,"schools":[{"distance":1.2,"name":"Roseway Heights School","rating":5,"level":"Elementary","studentsPerTeacher":18,"assigned":null,"grades":"K-8","link":"/portland-or/schools/roseway-heights-school-74738/","type":"Public","size":700,"totalCount":1,"isAssigned":true},{"distance":1.5,"name":"Madison High School","rating":3,"level":"High","studentsPerTeacher":19,"assigned":null,"grades":"9-12","link":"/portland-or/schools/madison-high-school-75211/","type":"Public","size":1074,"totalCount":1,"isAssigned":true}],"schoolSearchUrl":{"path":"/portland-or/schools/"}}
+{
+  "id": "UHJvcGVydHk6NTM4NDA3MjY=",
+  "streetAddress": "1203 SE Malden St",
+  "abbreviatedAddress": null,
+  "city": "Portland",
+  "state": "OR",
+  "zipcode": "97202",
+  "address": {
+    "neighborhood": "Sellwood-Moreland",
+    "community": null,
+    "subdivision": null,
+    "unitPrefix": null,
+    "unitNumber": null,
+    "zipcode": "97202",
+    "city": "Portland",
+    "state": "OR"
+  },
+  "isUndisclosedAddress": false,
+  "boroughId": null,
+  "providerListingID": "",
+  "neighborhoodSearchUrl": { "path": "/sellwood-moreland-portland-or/" },
+  "stateSearchUrl": { "path": "/or/" },
+  "citySearchUrl": { "text": "Homes in Portland", "path": "/portland-or/" },
+  "zipcodeSearchUrl": { "path": "/portland-or-97202/" },
+  "boroughSearchUrl": null,
+  "communityUrl": null,
+  "isPremierBuilder": false,
+  "homeStatus": "OTHER",
+  "listing_sub_type": {
+    "is_FSBO": false,
+    "is_FSBA": false,
+    "is_newHome": false,
+    "is_foreclosure": false,
+    "is_bankOwned": false,
+    "is_forAuction": false,
+    "is_comingSoon": false
+  },
+  "zpid": 53840726,
+  "isZillowOwned": false,
+  "hdpUrl": "/homedetails/1203-SE-Malden-St-Portland-OR-97202/53840726_zpid/",
+  "isNonOwnerOccupied": false,
+  "building": null,
+  "price": 700309,
+  "bedrooms": 4,
+  "bathrooms": 2.5,
+  "livingArea": 2598,
+  "homeType": "SINGLE_FAMILY",
+  "lotSize": 4792,
+  "latitude": 45.469534,
+  "longitude": -122.653789,
+  "mediumImageLink": "https://maps.googleapis.com/maps/api/staticmap?center=45.469534,-122.653789&zoom=17&size=400x300&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=Un3CPfRvHr5e2Ak5hqp6o03Ddxg=",
+  "desktopWebHdpImageLink": "https://maps.googleapis.com/maps/api/staticmap?center=45.469534,-122.653789&zoom=17&size=550x413&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=pA1RvGIqt4OHDiPs5Ph-P5qtx4Q=",
+  "photoCount": null,
+  "small": [
+    {
+      "url": "https://maps.googleapis.com/maps/api/staticmap?center=45.469534,-122.653789&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=dGPHXyBVxyrY18gVozlyeEg5vOg=",
+      "width": 316
+    }
+  ],
+  "description": "1203 SE Malden St, Portland, OR is a single family home that contains 2,598 sq ft and was built in 1909. It contains 4 bedrooms and 2.5 bathrooms. \n \nThe Zestimate for this house is $700,309, which has increased by $18,242 in the last 30 days. The Rent Zestimate for this home is $3,000/mo, which has increased by $199/mo in the last 30 days. ",
+  "homeTags": null,
+  "dateSold": null,
+  "rentZestimate": 3000,
+  "zestimate": 700309,
+  "festimate": 630278,
+  "hideZestimate": false,
+  "isPreforeclosureAuction": false,
+  "comingSoonOnMarketDate": null,
+  "priceChange": null,
+  "datePriceChanged": null,
+  "brokerId": null,
+  "currency": "USD",
+  "contingentListingType": null,
+  "nearbyCities": [
+    {
+      "regionUrl": { "path": "/bridal-veil-or/" },
+      "name": "Bridal Veil",
+      "body": { "city": "Bridal Veil", "state": "OR" }
+    },
+    {
+      "regionUrl": { "path": "/corbett-or/" },
+      "name": "Corbett",
+      "body": { "city": "Corbett", "state": "OR" }
+    },
+    {
+      "regionUrl": { "path": "/fairview-or/" },
+      "name": "Fairview",
+      "body": { "city": "Fairview", "state": "OR" }
+    },
+    {
+      "regionUrl": { "path": "/gresham-or/" },
+      "name": "Gresham",
+      "body": { "city": "Gresham", "state": "OR" }
+    },
+    {
+      "regionUrl": { "path": "/maywood-park-or/" },
+      "name": "Maywood Park",
+      "body": { "city": "Maywood Park", "state": "OR" }
+    },
+    {
+      "regionUrl": { "path": "/portland-or/" },
+      "name": "Portland",
+      "body": { "city": "Portland", "state": "OR" }
+    },
+    {
+      "regionUrl": { "path": "/troutdale-or/" },
+      "name": "Troutdale",
+      "body": { "city": "Troutdale", "state": "OR" }
+    },
+    {
+      "regionUrl": { "path": "/wood-village-or/" },
+      "name": "Wood Village",
+      "body": { "city": "Wood Village", "state": "OR" }
+    }
+  ],
+  "nearbyNeighborhoods": [
+    {
+      "regionUrl": { "path": "/cedar-mill-portland-or/" },
+      "name": "Cedar Mill",
+      "body": {
+        "neighborhood": "Cedar Mill",
+        "city": "Portland",
+        "state": "OR"
+      }
+    },
+    {
+      "regionUrl": { "path": "/centennial-portland-or/" },
+      "name": "Centennial",
+      "body": {
+        "neighborhood": "Centennial",
+        "city": "Portland",
+        "state": "OR"
+      }
+    },
+    {
+      "regionUrl": { "path": "/cully-portland-or/" },
+      "name": "Cully",
+      "body": { "neighborhood": "Cully", "city": "Portland", "state": "OR" }
+    },
+    {
+      "regionUrl": { "path": "/hazelwood-portland-or/" },
+      "name": "Hazelwood",
+      "body": { "neighborhood": "Hazelwood", "city": "Portland", "state": "OR" }
+    },
+    {
+      "regionUrl": { "path": "/lents-portland-or/" },
+      "name": "Lents",
+      "body": { "neighborhood": "Lents", "city": "Portland", "state": "OR" }
+    },
+    {
+      "regionUrl": { "path": "/montavilla-portland-or/" },
+      "name": "Montavilla",
+      "body": {
+        "neighborhood": "Montavilla",
+        "city": "Portland",
+        "state": "OR"
+      }
+    },
+    {
+      "regionUrl": { "path": "/northwest-portland-or/" },
+      "name": "Northwest",
+      "body": { "neighborhood": "Northwest", "city": "Portland", "state": "OR" }
+    },
+    {
+      "regionUrl": { "path": "/powellhurst-gilbert-portland-or/" },
+      "name": "Powellhurst Gilbert",
+      "body": {
+        "neighborhood": "Powellhurst Gilbert",
+        "city": "Portland",
+        "state": "OR"
+      }
+    },
+    {
+      "regionUrl": { "path": "/st.johns-portland-or/" },
+      "name": "St.Johns",
+      "body": { "neighborhood": "St.Johns", "city": "Portland", "state": "OR" }
+    }
+  ],
+  "country": "USA",
+  "nearbyZipcodes": [
+    {
+      "regionUrl": { "path": "/portland-or-97202/" },
+      "name": "97202",
+      "body": { "zipcode": "97202", "city": "Portland", "state": "OR" }
+    },
+    {
+      "regionUrl": { "path": "/portland-or-97206/" },
+      "name": "97206",
+      "body": { "zipcode": "97206", "city": "Portland", "state": "OR" }
+    },
+    {
+      "regionUrl": { "path": "/portland-or-97209/" },
+      "name": "97209",
+      "body": { "zipcode": "97209", "city": "Portland", "state": "OR" }
+    },
+    {
+      "regionUrl": { "path": "/portland-or-97217/" },
+      "name": "97217",
+      "body": { "zipcode": "97217", "city": "Portland", "state": "OR" }
+    },
+    {
+      "regionUrl": { "path": "/portland-or-97219/" },
+      "name": "97219",
+      "body": { "zipcode": "97219", "city": "Portland", "state": "OR" }
+    },
+    {
+      "regionUrl": { "path": "/portland-or-97222/" },
+      "name": "97222",
+      "body": { "zipcode": "97222", "city": "Portland", "state": "OR" }
+    },
+    {
+      "regionUrl": { "path": "/portland-or-97223/" },
+      "name": "97223",
+      "body": { "zipcode": "97223", "city": "Portland", "state": "OR" }
+    },
+    {
+      "regionUrl": { "path": "/portland-or-97224/" },
+      "name": "97224",
+      "body": { "zipcode": "97224", "city": "Portland", "state": "OR" }
+    },
+    {
+      "regionUrl": { "path": "/portland-or-97229/" },
+      "name": "97229",
+      "body": { "zipcode": "97229", "city": "Portland", "state": "OR" }
+    },
+    {
+      "regionUrl": { "path": "/portland-or-97230/" },
+      "name": "97230",
+      "body": { "zipcode": "97230", "city": "Portland", "state": "OR" }
+    }
+  ],
+  "apartmentsForRentInZipcodeSearchUrl": {
+    "path": "/portland-or-97202/apartments/"
+  },
+  "housesForRentInZipcodeSearchUrl": {
+    "path": "/portland-or-97202/rent-houses/"
+  },
+  "postingUrl": "",
+  "isPaidSingleFamilyBrokerId": false,
+  "isPaidMultiFamilyBrokerId": false,
+  "showDescriptionDisclaimer": false,
+  "whatILove": null,
+  "countyFIPS": "41051",
+  "parcelId": "1S1E23BD12900",
+  "homeFacts": {
+    "aboveFactsAndFeaturesCategories": null,
+    "atAGlanceFacts": [
+      { "factLabel": "Type", "factValue": "Single Family" },
+      { "factLabel": "Year Built", "factValue": "1909" },
+      { "factLabel": "Heating Type", "factValue": "Forced air" },
+      { "factLabel": "Cooling", "factValue": "Central" },
+      { "factLabel": "Parking", "factValue": "2 spaces" },
+      { "factLabel": "Lot", "factValue": "4,792 sqft" }
+    ],
+    "categoryDetails": [
+      {
+        "categoryGroupName": "Interior Features",
+        "categories": [
+          {
+            "categoryName": "Bedrooms",
+            "categoryFacts": [{ "factLabel": "Beds", "factValue": "4" }]
+          },
+          {
+            "categoryName": "Heating and Cooling",
+            "categoryFacts": [
+              { "factLabel": "Heating", "factValue": "Forced air" },
+              { "factLabel": "Cooling", "factValue": "Central" }
+            ]
+          },
+          {
+            "categoryName": "Basement",
+            "categoryFacts": [
+              { "factLabel": null, "factValue": "Finished basement" },
+              { "factLabel": null, "factValue": "920 sqft basement" }
+            ]
+          },
+          {
+            "categoryName": "Attic",
+            "categoryFacts": [
+              { "factLabel": null, "factValue": "Attic" },
+              { "factLabel": "Attic size", "factValue": "0" }
+            ]
+          },
+          {
+            "categoryName": "Flooring",
+            "categoryFacts": [
+              { "factLabel": "Floor size", "factValue": "2,598 sqft" }
+            ]
+          },
+          {
+            "categoryName": "Other Interior Features",
+            "categoryFacts": [
+              { "factLabel": "Addition size", "factValue": "1478" },
+              { "factLabel": null, "factValue": "Fireplace" },
+              { "factLabel": null, "factValue": "Storage" }
+            ]
+          }
+        ]
+      },
+      {
+        "categoryGroupName": "Spaces and Amenities",
+        "categories": [
+          {
+            "categoryName": "Size",
+            "categoryFacts": [{ "factLabel": "Unit count", "factValue": "0" }]
+          }
+        ]
+      },
+      {
+        "categoryGroupName": "Construction",
+        "categories": [
+          {
+            "categoryName": "Type and Style",
+            "categoryFacts": [
+              { "factLabel": "Structure type", "factValue": "Other" },
+              { "factLabel": null, "factValue": "Single Family" }
+            ]
+          },
+          {
+            "categoryName": "Materials",
+            "categoryFacts": [
+              { "factLabel": "Roof type", "factValue": "Composition" },
+              { "factLabel": "Exterior material", "factValue": "Wood" },
+              { "factLabel": "Foundation type", "factValue": "Concrete" }
+            ]
+          },
+          {
+            "categoryName": "Dates",
+            "categoryFacts": [
+              { "factLabel": "Last remodel year", "factValue": "1909" },
+              { "factLabel": null, "factValue": "Built in 1909" }
+            ]
+          },
+          {
+            "categoryName": "Other Construction Features",
+            "categoryFacts": [{ "factLabel": "Stories", "factValue": "1" }]
+          }
+        ]
+      },
+      {
+        "categoryGroupName": "Exterior Features",
+        "categories": [
+          {
+            "categoryName": "Patio",
+            "categoryFacts": [
+              { "factLabel": null, "factValue": "Deck" },
+              { "factLabel": null, "factValue": "Patio" }
+            ]
+          },
+          {
+            "categoryName": "Lot",
+            "categoryFacts": [{ "factLabel": "Lot", "factValue": "4,792 sqft" }]
+          },
+          {
+            "categoryName": "Other Exterior Features",
+            "categoryFacts": [
+              { "factLabel": "Parcel #", "factValue": "1S1E23BD12900" }
+            ]
+          }
+        ]
+      },
+      {
+        "categoryGroupName": "Parking",
+        "categories": [
+          {
+            "categoryName": "",
+            "categoryFacts": [
+              {
+                "factLabel": "Parking",
+                "factValue": "Attached Garage, Detached Garage, 2 spaces, 400 sqft garage"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "categoryGroupName": "Finance",
+        "categories": [
+          {
+            "categoryName": "HOA",
+            "categoryFacts": [{ "factLabel": "HOA Fee", "factValue": "Yes" }]
+          }
+        ]
+      },
+      {
+        "categoryGroupName": "Activity On Zillow",
+        "categories": [
+          {
+            "categoryName": "",
+            "categoryFacts": [
+              { "factLabel": "Views since listing", "factValue": "2" },
+              { "factLabel": null, "factValue": "0 shoppers saved this home" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "parentRegion": { "name": "Sellwood-Moreland" },
+  "thumb": [
+    {
+      "url": "https://maps.googleapis.com/maps/api/staticmap?center=45.469534,-122.653789&zoom=17&size=46x46&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=uNcB02Qke24G00cW6G4awUInkBI="
+    }
+  ],
+  "nearbyHomes": [
+    {
+      "latitude": 45.469534,
+      "longitude": -122.653618,
+      "daysOnZillow": null,
+      "homeStatus": "OTHER",
+      "photoCount": null,
+      "zpid": 53840727,
+      "hdpUrl": "/homedetails/1213-SE-Malden-St-Portland-OR-97202/53840727_zpid/",
+      "bedrooms": 3,
+      "bathrooms": 1.5,
+      "livingArea": 1680,
+      "price": 410377,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "1213 SE Malden St"
+      },
+      "openHouseHours": null,
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": false
+      },
+      "contingentListingType": null,
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://maps.googleapis.com/maps/api/staticmap?center=45.469534,-122.653618&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=BnsMSzk1GuxWd1X9tMEJGnYEEs4="
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.469534,-122.653618&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=bb_k5F8W56GPaX5OpEY94oaYjA8=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.469534,-122.653618&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=1wQiar0wZRET1PREwaJO8ZsCCw8=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.469534,-122.653618&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=_UOFeA-YUM3gKB3I5ev8YJlV91o=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "latitude": 45.469534,
+      "longitude": -122.653983,
+      "daysOnZillow": 4966,
+      "homeStatus": "OTHER",
+      "photoCount": null,
+      "zpid": 53840725,
+      "hdpUrl": "/homedetails/1145-SE-Malden-St-Portland-OR-97202/53840725_zpid/",
+      "bedrooms": 4,
+      "bathrooms": 2,
+      "livingArea": 2132,
+      "price": 653912,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "1145 SE Malden St"
+      },
+      "openHouseHours": null,
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": false
+      },
+      "contingentListingType": null,
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://maps.googleapis.com/maps/api/staticmap?center=45.469534,-122.653983&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=pSmjq1VJW6XuevcBtlPSgwbmyvU="
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.469534,-122.653983&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=gZHyFtAUdhJissljenhjbbxQGtY=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.469534,-122.653983&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=7pIfn9DJiTlSHpKvwc47CyKxiTU=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.469534,-122.653983&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=amniKH6PEaxEIl-uo-Yv7o58d0s=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "latitude": 45.469809,
+      "longitude": -122.653788,
+      "daysOnZillow": 7386,
+      "homeStatus": "OTHER",
+      "photoCount": null,
+      "zpid": 53840715,
+      "hdpUrl": "/homedetails/1204-SE-Rex-St-Portland-OR-97202/53840715_zpid/",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "livingArea": 2384,
+      "price": 597961,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "1204 SE Rex St"
+      },
+      "openHouseHours": null,
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": false
+      },
+      "contingentListingType": null,
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://maps.googleapis.com/maps/api/staticmap?center=45.469809,-122.653788&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=GW5r0NRaJHh2VVix2t7kvRMw0RI="
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.469809,-122.653788&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=tudJBZy04wza-pqtRJ_JpsgH3Xk=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.469809,-122.653788&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=PDwtAOg49gL708Tk2-q6DdKMhUI=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.469809,-122.653788&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=_biOiOsYohDHgnHxdr86HUA5gLY=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "latitude": 45.469534,
+      "longitude": -122.653475,
+      "daysOnZillow": null,
+      "homeStatus": "OTHER",
+      "photoCount": null,
+      "zpid": 176557612,
+      "hdpUrl": "/homedetails/1221-SE-Malden-St-Portland-OR-97202/176557612_zpid/",
+      "bedrooms": 0,
+      "bathrooms": 3.5,
+      "livingArea": 2700,
+      "price": 913086,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "1221 SE Malden St"
+      },
+      "openHouseHours": null,
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": false
+      },
+      "contingentListingType": null,
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://maps.googleapis.com/maps/api/staticmap?center=45.469534,-122.653475&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=zE5lV_-v6ZX0otzVC-qDOSxsKmE="
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.469534,-122.653475&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=rwEIEGG53QTPihPHvRdRLO-2xJI=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.469534,-122.653475&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=pdSqEIhEbwQLFn_249i1w_7lCMA=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.469534,-122.653475&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=p8E1J42q-FWkiGDD8ndBUZdDnck=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "latitude": 45.469809,
+      "longitude": -122.653983,
+      "daysOnZillow": 1576,
+      "homeStatus": "OTHER",
+      "photoCount": null,
+      "zpid": 53840716,
+      "hdpUrl": "/homedetails/1144-SE-Rex-St-Portland-OR-97202/53840716_zpid/",
+      "bedrooms": 4,
+      "bathrooms": 2,
+      "livingArea": 2862,
+      "price": 853837,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "1144 SE Rex St"
+      },
+      "openHouseHours": null,
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": false
+      },
+      "contingentListingType": null,
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://maps.googleapis.com/maps/api/staticmap?center=45.469809,-122.653983&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=3UzTTNFW96aPGAJ8UzFavNDvuHw="
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.469809,-122.653983&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=aa3ugu7albjq9Szlr6ebKehjpjI=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.469809,-122.653983&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=J276o-B-VlGycUUgq3IdUsG14Go=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.469809,-122.653983&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=eCSIeLOcSGGKhpqtqHGizUZHZdY=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "latitude": 45.469809,
+      "longitude": -122.653547,
+      "daysOnZillow": 7217,
+      "homeStatus": "OTHER",
+      "photoCount": null,
+      "zpid": 53840714,
+      "hdpUrl": "/homedetails/1218-SE-Rex-St-Portland-OR-97202/53840714_zpid/",
+      "bedrooms": 3,
+      "bathrooms": 2.5,
+      "livingArea": 2316,
+      "price": 711173,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "1218 SE Rex St"
+      },
+      "openHouseHours": null,
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": false
+      },
+      "contingentListingType": null,
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://maps.googleapis.com/maps/api/staticmap?center=45.469809,-122.653547&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=EyeowrntAjfSZBQrKE2Q-_udjg4="
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.469809,-122.653547&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=ZVVmizpd5dO7QqxOv9IUXpR0_DM=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.469809,-122.653547&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=RpCp1aTMfRTMj80NJMArgHpuqdI=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.469809,-122.653547&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=GuNF7VraOsQbN2QxDYmReM0PwXc=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "latitude": 45.469534,
+      "longitude": -122.654178,
+      "daysOnZillow": 1372,
+      "homeStatus": "OTHER",
+      "photoCount": null,
+      "zpid": 53840724,
+      "hdpUrl": "/homedetails/1135-SE-Malden-St-Portland-OR-97202/53840724_zpid/",
+      "bedrooms": 3,
+      "bathrooms": 3,
+      "livingArea": 2677,
+      "price": 793645,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "1135 SE Malden St"
+      },
+      "openHouseHours": null,
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": false
+      },
+      "contingentListingType": null,
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://maps.googleapis.com/maps/api/staticmap?center=45.469534,-122.654178&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=l_dyrqOUEJ8fPv2mH2eKFhTU_-w="
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.469534,-122.654178&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=CedzvuNPe3Q2x85dvsGHiJ1WZO4=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.469534,-122.654178&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=WQxZr6l1JMPWqLuUqsvjKqjtSAI=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.469534,-122.654178&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=GeuUQNmCNOeScu82Fgzb7vc2SC8=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "latitude": 45.469095,
+      "longitude": -122.653789,
+      "daysOnZillow": 6836,
+      "homeStatus": "OTHER",
+      "photoCount": null,
+      "zpid": 53840701,
+      "hdpUrl": "/homedetails/1202-SE-Malden-St-Portland-OR-97202/53840701_zpid/",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "livingArea": 2646,
+      "price": 703587,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "1202 SE Malden St"
+      },
+      "openHouseHours": null,
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": false
+      },
+      "contingentListingType": null,
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://maps.googleapis.com/maps/api/staticmap?center=45.469095,-122.653789&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=M4WX8jn2wi2iO1u_ZrUD0ctJQEU="
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.469095,-122.653789&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=LjYIfCl8o9Zb3p7uFAmfE07B04Q=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.469095,-122.653789&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=XQUQHPFu6_FGFsOrXzowAfKpd-w=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.469095,-122.653789&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=Zinpdkwiz58Dw0Dkyty5o1Af1TY=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "latitude": 45.469809,
+      "longitude": -122.654178,
+      "daysOnZillow": 5440,
+      "homeStatus": "OTHER",
+      "photoCount": null,
+      "zpid": 53840717,
+      "hdpUrl": "/homedetails/1136-SE-Rex-St-Portland-OR-97202/53840717_zpid/",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "livingArea": 2832,
+      "price": 712223,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "1136 SE Rex St"
+      },
+      "openHouseHours": null,
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": false
+      },
+      "contingentListingType": null,
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://maps.googleapis.com/maps/api/staticmap?center=45.469809,-122.654178&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=r4ZVUUW290Dif8otvgOjKdjQKuo="
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.469809,-122.654178&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=v8NGUxEiXCiTydPuZ1dD21BsTi8=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.469809,-122.654178&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=JZCrwCJkL-VQcWcxRscqx7eWTSw=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.469809,-122.654178&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=RiqY2atRW9NuVAJ4KEb4g1B5xRE=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "latitude": 45.469095,
+      "longitude": -122.653594,
+      "daysOnZillow": 10643,
+      "homeStatus": "OTHER",
+      "photoCount": null,
+      "zpid": 53840700,
+      "hdpUrl": "/homedetails/1214-SE-Malden-St-Portland-OR-97202/53840700_zpid/",
+      "bedrooms": 3,
+      "bathrooms": 1.5,
+      "livingArea": 1865,
+      "price": 573504,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "1214 SE Malden St"
+      },
+      "openHouseHours": null,
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": false
+      },
+      "contingentListingType": null,
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://maps.googleapis.com/maps/api/staticmap?center=45.469095,-122.653594&zoom=17&size=316x234&maptype=satellite&key=AIzaSyARFMLB1na-BBWf7_R3-5YOQQaHqEJf6RQ&&signature=eSf69EsPe2UReNO5wI47uzJIsvs="
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.469095,-122.653594&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=KWj7C3ee-Y50W4NV3AcyCzJSVCU=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.469095,-122.653594&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=O9b0zvzzXZh936eACSI3tPWmMFg=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.469095,-122.653594&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=goU94Qr4TtidcY-EQ6rukdlowA0=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "latitude": 45.469095,
+      "longitude": -122.653984,
+      "daysOnZillow": 5985,
+      "homeStatus": "OTHER",
+      "photoCount": null,
+      "zpid": 53840702,
+      "hdpUrl": "/homedetails/1144-SE-Malden-St-Portland-OR-97202/53840702_zpid/",
+      "bedrooms": 3,
+      "bathrooms": 4,
+      "livingArea": 4187,
+      "price": 973406,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "1144 SE Malden St"
+      },
+      "openHouseHours": null,
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": false
+      },
+      "contingentListingType": null,
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://maps.googleapis.com/maps/api/staticmap?center=45.469095,-122.653984&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=EDFCLKX7x16TB9wXvANrBSlL1Ns="
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.469095,-122.653984&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=J-jn4PRpjc_dM0O0cgpkql9vieg=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.469095,-122.653984&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=-JeExgsIvjIk0x4U7mrUSxVjneY=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.469095,-122.653984&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=WshhH-e4xVNZH7kv1qY1e7ObFkY=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "latitude": 45.469163,
+      "longitude": -122.653399,
+      "daysOnZillow": null,
+      "homeStatus": "OTHER",
+      "photoCount": null,
+      "zpid": 176542028,
+      "hdpUrl": "/homedetails/1224-SE-Malden-St-Portland-OR-97202/176542028_zpid/",
+      "bedrooms": 0,
+      "bathrooms": null,
+      "livingArea": 1344,
+      "price": 479430,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "1224 SE Malden St"
+      },
+      "openHouseHours": null,
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": false
+      },
+      "contingentListingType": null,
+      "isNonOwnerOccupied": true,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://maps.googleapis.com/maps/api/staticmap?center=45.469163,-122.653399&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=exu4zCxdeOqQewuPOq9G49FXJHA="
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.469163,-122.653399&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=Uws-6PXp5twDO7lDT6A5yTIv3H8=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.469163,-122.653399&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=j3RZiNm3At6hVKWSG8I4V011Lp8=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.469163,-122.653399&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=FLjoKmAmBsvIViAX7AcPHX3jmbA=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "latitude": 45.469602,
+      "longitude": -122.653255,
+      "daysOnZillow": null,
+      "homeStatus": "OTHER",
+      "photoCount": null,
+      "zpid": 53841191,
+      "hdpUrl": "/homedetails/7629-SE-13th-Ave-Portland-OR-97202/53841191_zpid/",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "livingArea": 1942,
+      "price": 490333,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "7629 SE 13th Ave"
+      },
+      "openHouseHours": null,
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": false
+      },
+      "contingentListingType": null,
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://maps.googleapis.com/maps/api/staticmap?center=45.469602,-122.653255&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=9ZGQO-F1dpK62wqTCQi9s84wx7I="
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.469602,-122.653255&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=lDGxj9xacLwedhYyzagweg9ZA_E=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.469602,-122.653255&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=jIumh-8Vq6A-rHX1U_8OqEi2YZE=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.469602,-122.653255&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=M8oKDrqhIZ5YEHZmWVuU5GtjYNw=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "latitude": 45.469465,
+      "longitude": -122.653255,
+      "daysOnZillow": 6553,
+      "homeStatus": "OTHER",
+      "photoCount": null,
+      "zpid": 53841192,
+      "hdpUrl": "/homedetails/7637-SE-13th-Ave-Portland-OR-97202/53841192_zpid/",
+      "bedrooms": 3,
+      "bathrooms": 1,
+      "livingArea": 1542,
+      "price": 440464,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "7637 SE 13th Ave"
+      },
+      "openHouseHours": null,
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": false
+      },
+      "contingentListingType": null,
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://maps.googleapis.com/maps/api/staticmap?center=45.469465,-122.653255&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=Yvfj9YQ2AKhTAu64wDZk8uRcYlQ="
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.469465,-122.653255&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=fn67yti2uvszLxuYmuJcccL0k94=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.469465,-122.653255&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=jSFyduiip6aGDI0LhrIUqftKSpY=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.469465,-122.653255&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=m3HJjI1u_zi26C3SetjjgqxHWik=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "latitude": 45.469534,
+      "longitude": -122.654373,
+      "daysOnZillow": 6197,
+      "homeStatus": "OTHER",
+      "photoCount": null,
+      "zpid": 53840723,
+      "hdpUrl": "/homedetails/1125-SE-Malden-St-Portland-OR-97202/53840723_zpid/",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "livingArea": 1900,
+      "price": 582518,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "1125 SE Malden St"
+      },
+      "openHouseHours": null,
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": false
+      },
+      "contingentListingType": null,
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://maps.googleapis.com/maps/api/staticmap?center=45.469534,-122.654373&zoom=17&size=316x234&maptype=satellite&key=AIzaSyB27zV3MDy6oKhOscB5M44-CVmbisA-7zA&&signature=B9jwKyFoC-gNSDEB5SDhwB-rQeE="
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.469534,-122.654373&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=K2URdlwxq0TzKsRq3sxi0-lmk9o=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.469534,-122.654373&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=G81rJD-npF7fRwUdcr_VzUJnOdc=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.469534,-122.654373&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=2N3g1tMMiO2ggFNGE2kiizltJjs=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    }
+  ],
+  "homeValues": {
+    "region": {
+      "shortName": "Sellwood-Moreland",
+      "zindexSqFt": 380,
+      "zhvi": { "yoy": -1.7248062015503878, "value": 507100 },
+      "link": "/sellwood-moreland-portland-or/home-values/",
+      "regionTypeName": "neighborhood",
+      "buyerSellerIndex": { "value": 1.68316831683168 }
+    },
+    "parentRegion": {
+      "shortName": "Portland",
+      "zhvi": { "yoy": -0.6305464736104623, "value": 425500 }
+    }
+  },
+  "schools": [
+    {
+      "distance": 0.5,
+      "name": "Llewellyn Elementary School",
+      "rating": 8,
+      "level": "Elementary",
+      "studentsPerTeacher": 22,
+      "assigned": null,
+      "grades": "K-5",
+      "link": "/portland-or/schools/llewellyn-elementary-school-74729/",
+      "type": "Public",
+      "size": 522,
+      "totalCount": 1,
+      "isAssigned": true
+    },
+    {
+      "distance": 0.5,
+      "name": "Sellwood Middle School",
+      "rating": 8,
+      "level": "Middle",
+      "studentsPerTeacher": 22,
+      "assigned": null,
+      "grades": "6-8",
+      "link": "/portland-or/schools/sellwood-middle-school-74741/",
+      "type": "Public",
+      "size": 544,
+      "totalCount": 1,
+      "isAssigned": true
+    },
+    {
+      "distance": 2,
+      "name": "Cleveland High School",
+      "rating": 6,
+      "level": "High",
+      "studentsPerTeacher": 22,
+      "assigned": null,
+      "grades": "9-12",
+      "link": "/portland-or/schools/cleveland-high-school-74754/",
+      "type": "Public",
+      "size": 1518,
+      "totalCount": 1,
+      "isAssigned": true
+    }
+  ],
+  "schoolSearchUrl": { "path": "/portland-or/schools/" },
+  "isCurrentSignedInAgentResponsible": false,
+  "isListingClaimedByCurrentSignedInUser": false,
+  "highlights": { "user": null, "approved": [] },
+  "comps": [
+    {
+      "homeTags": null,
+      "description": "Charming Bungalow In the Heart of Sellwood! Large covered porch welcomes you to this 3-bed 2-bath Featuring oak hardwood flooring,gas fireplace flanked by built-ins.Updated kitchen w/sweet eat area & access to private deck & Hot Tub.Master bed w/adj bath. Lower level offers separate entrance,bath, 3rd bedroom( no legal egress) living area,shop/laundry/storage. Det.garage + carport,sweet yard.Energy Score 8 out of 10!!",
+      "latitude": 45.467601,
+      "longitude": -122.655243,
+      "daysOnZillow": 44,
+      "homeStatus": "FOR_SALE",
+      "photoCount": 29,
+      "zpid": 53840813,
+      "hdpUrl": "/homedetails/7865-SE-11th-Ave-Portland-OR-97202/53840813_zpid/",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "livingArea": 1936,
+      "price": 569900,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "7865 SE 11th Ave"
+      },
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": true
+      },
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://photos.zillowstatic.com/p_c/ISukjt1hvy5i2t0000000000.jpg"
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.467601,-122.655243&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=VVWEW3mQ7SQmC65hFLDHdtm4UGg=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.467601,-122.655243&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=MoQ46VVwtP0dUkQHCM-CW6fBXXk=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.467601,-122.655243&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=jn8JhzRR-tJiN2Mg1b9o2hY18Os=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "homeTags": null,
+      "description": "Easy living in this comfortable, spacious, tasteful home. Open floor plan. Perfect for entertaining! Upstairs 3BR/2BA  incl. luxurious master suite w/2 walk-in closets & gas fp. 4th BR potential in fin. bsment w/egress window & BA.  1BR/1BA in fully permitted ADU above OS 2 car garage. Great rental or guest qrters. Charming bkyard w/ raised beds & patio. Perfectly located in Sellwood, near cafes, restaurants & shops.",
+      "latitude": 45.466747,
+      "longitude": -122.648706,
+      "daysOnZillow": 7,
+      "homeStatus": "FOR_SALE",
+      "photoCount": 31,
+      "zpid": 2084739354,
+      "hdpUrl": "/homedetails/7924-SE-16th-Ave-Portland-OR-97202/2084739354_zpid/",
+      "bedrooms": 5,
+      "bathrooms": 4,
+      "livingArea": 3330,
+      "price": 986000,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "7924 SE 16th Ave"
+      },
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": true
+      },
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://photos.zillowstatic.com/p_c/ISmex1qdnwjj6k1000000000.jpg"
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.466747,-122.648706&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=2t9OqwNP36sqG3GsDkRwe5Man2Y=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.466747,-122.648706&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=AJ3zsvfu09XGL8RKywi2ctwd8Zo=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.466747,-122.648706&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=-A-lpkln9QZacQDaT-kSttzdghw=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "homeTags": null,
+      "description": "Best of old & new in this restored & updated Craftsman in coveted Sellwood. Integrity, charm preserved w/beautifully updated baths, kitchen, et.al. respecting the rich architecture of a true Craftsman. Huge master suite. Unique grounds alone worth the trip: new 2-car garage w/studio/ADU potential above, 2 covered porches, fenced, mature plantings, artificial turf backyard and \"Drivable Grass\" driveway. Brand new AC in 2018, [Home Energy Score = 4. HES Report at https://rpt.greenbuildingregistry.com/hes/OR10079267]",
+      "latitude": 45.461892,
+      "longitude": -122.648713,
+      "daysOnZillow": 17,
+      "homeStatus": "FOR_SALE",
+      "photoCount": 31,
+      "zpid": 53953259,
+      "hdpUrl": "/homedetails/8412-SE-16th-Ave-Portland-OR-97202/53953259_zpid/",
+      "bedrooms": 4,
+      "bathrooms": 4,
+      "livingArea": 3293,
+      "price": 855000,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "8412 SE 16th Ave"
+      },
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": true
+      },
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://photos.zillowstatic.com/p_c/ISalmw3sfc56kc0000000000.jpg"
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.461892,-122.648713&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=8mz6z6QbMXxux66pO_7AypkJ8zk=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.461892,-122.648713&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=FD3UjoSKVjmyoZmVTbz6KKQKh_s=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.461892,-122.648713&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=bhxH9ERCb3zObuxURBJuam5DBpY=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "homeTags": null,
+      "description": "Completely renovated modern oasis in the heart of Westmoreland! This exceptional home will wow you. All new features such as hardwoods, windows, paint in/out, ductless heat pump, gorgeous kitchen w/ quartz & stainless, just to name a few. Wood-burning FP, spacious BRs & light-filled dining w/ a slider outside where you'll find new easy-maintenance landscaping, an awesome new shedspace & SE PDX at your fingertips. Unbeatable location!",
+      "latitude": 45.476268,
+      "longitude": -122.650953,
+      "daysOnZillow": 16,
+      "homeStatus": "FOR_SALE",
+      "photoCount": 21,
+      "zpid": 53970240,
+      "hdpUrl": "/homedetails/6409-SE-15th-Ave-Portland-OR-97202/53970240_zpid/",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "livingArea": 1480,
+      "price": 525000,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "6409 SE 15th Ave"
+      },
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": true
+      },
+      "isNonOwnerOccupied": true,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://photos.zillowstatic.com/p_c/ISmy4x25jf87g31000000000.jpg"
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.476268,-122.650953&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=y8_XxG8o7QoYGekfwODJo-JEte8=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.476268,-122.650953&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=KPgKSzE3XLWuhQ73msDpQ47VzFM=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.476268,-122.650953&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=_jnW_43Rosa_4Ok0srFDRHdDOAY=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "homeTags": null,
+      "description": "This Sellwood Craftsman is a testament to quality construction and period details. Well maintained and updated throughout. Including a recently remodeled Kitchen with Shaker cabinets and Stainless appliances. The upstairs was a \"down to the studs\" remodel with new windows, new floors, insulation, and electrical and plumbing updates. Additional updates include New paint inside/out, a tankless hot water heater and a high eff. furnace.",
+      "latitude": 45.45962,
+      "longitude": -122.654679,
+      "daysOnZillow": 2,
+      "homeStatus": "FOR_SALE",
+      "photoCount": 31,
+      "zpid": 53952841,
+      "hdpUrl": "/homedetails/8724-SE-11th-Ave-Portland-OR-97202/53952841_zpid/",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "livingArea": 2330,
+      "price": 595000,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "8724 SE 11th Ave"
+      },
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": true
+      },
+      "isNonOwnerOccupied": true,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://photos.zillowstatic.com/p_c/IS6mwpscwh4shu0000000000.jpg"
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.45962,-122.654679&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=6YeL7d5Rdkv8kajmvVCDwBAqD9k=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.45962,-122.654679&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=rGZeX9u9qaewUJqsW653JgZaqSw=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.45962,-122.654679&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=g6LqtQaadUma5LepQS7ArEqg0pc=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "homeTags": null,
+      "description": "Delightful Sellwood bungalow with charm galore! Wonderful period details throughout including built-ins, wainscoting & hardwoods. Upper bath has clawfoot tub, skylights & laundry. Open kitchen w/sunny dining nook & tall ceilings. Living room w/gas fireplace & pocket doors that open to den, library/craft area & additional bath. Lots of potential in basement w/ office & shop area. Wonderful corner lot location close to Sellwood shops! [Home Energy Score = 1. HES Report at https://rpt.greenbuildingregistry.com/hes/OR10077246]",
+      "latitude": 45.460605,
+      "longitude": -122.651229,
+      "daysOnZillow": 29,
+      "homeStatus": "FOR_SALE",
+      "photoCount": 27,
+      "zpid": 53953032,
+      "hdpUrl": "/homedetails/8603-SE-15th-Ave-Portland-OR-97202/53953032_zpid/",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "livingArea": 1776,
+      "price": 575000,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "8603 SE 15th Ave"
+      },
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": true
+      },
+      "isNonOwnerOccupied": true,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://photos.zillowstatic.com/p_c/ISq94v2xzf2mdu1000000000.jpg"
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.460605,-122.651229&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=jVu4sz1vfAJ5nPDeb7JG63l8ZzI=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.460605,-122.651229&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=TPaCM8fnxi60lrLiePf8IWxMNfw=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.460605,-122.651229&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=aNBuCeRTB0RjdmYeq04EHBwNfJA=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "homeTags": [
+        "Sellwood-Moreland Neighborhood",
+        "Recently Built",
+        "Single Family",
+        "Three Story House"
+      ],
+      "description": "This 2935 square foot single family home has 4 bedrooms and 4.0 bathrooms. It is located at 8057 SE 19th Ave Portland, Oregon.",
+      "latitude": 45.464642,
+      "longitude": -122.645249,
+      "daysOnZillow": 203,
+      "homeStatus": "FOR_SALE",
+      "photoCount": 31,
+      "zpid": 2087477254,
+      "hdpUrl": "/homedetails/8057-SE-19th-Ave-Portland-OR-97202/2087477254_zpid/",
+      "bedrooms": 4,
+      "bathrooms": 4,
+      "livingArea": 2935,
+      "price": 819900,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "8057 SE 19th Ave"
+      },
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": true
+      },
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://photos.zillowstatic.com/p_c/ISq1ut4bndzon41000000000.jpg"
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.464642,-122.645249&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=8CZjexcz_cIB_0BIbw-b8o-qId0=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.464642,-122.645249&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=a1cHHcE7oM1Rz1zxbp6m_b6UKYU=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.464642,-122.645249&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=uFk9c73lbb3nF44ty8YD46NIfDA=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "homeTags": [
+        "Sellwood-Moreland Neighborhood",
+        "Recently Built",
+        "Single Family",
+        "Three Story House"
+      ],
+      "description": "This 2935 square foot single family home has 4 bedrooms and 4.0 bathrooms. It is located at 8067 SE 19th Ave Portland, Oregon.",
+      "latitude": 45.464597,
+      "longitude": -122.645249,
+      "daysOnZillow": 203,
+      "homeStatus": "FOR_SALE",
+      "photoCount": 32,
+      "zpid": 2087477253,
+      "hdpUrl": "/homedetails/8067-SE-19th-Ave-Portland-OR-97202/2087477253_zpid/",
+      "bedrooms": 4,
+      "bathrooms": 4,
+      "livingArea": 2935,
+      "price": 819900,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "8067 SE 19th Ave"
+      },
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": true
+      },
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://photos.zillowstatic.com/p_c/ISm28ai92w562a0000000000.jpg"
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.464597,-122.645249&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=5GqVrXJXl7U3rYMqa7wO4UfREG8=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.464597,-122.645249&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=TbqcdROaFpSZ2qwwCmh7emneLIE=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.464597,-122.645249&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=prOZfCi3pXefge2SjImnD-HUEvU=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "homeTags": null,
+      "description": "This 2968 square foot single family home has 3 bedrooms and 2.0 bathrooms. It is located at 6305 SE 22nd Ave Portland, Oregon.",
+      "latitude": 45.477512,
+      "longitude": -122.643521,
+      "daysOnZillow": 1,
+      "homeStatus": "FOR_SALE",
+      "photoCount": 27,
+      "zpid": 53984219,
+      "hdpUrl": "/homedetails/6305-SE-22nd-Ave-Portland-OR-97202/53984219_zpid/",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "livingArea": 2968,
+      "price": 725000,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "6305 SE 22nd Ave"
+      },
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": false,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": true
+      },
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://photos.zillowstatic.com/p_c/ISaphv2g187zv81000000000.jpg"
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.477512,-122.643521&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=pn0EdY4L-Rm-RgXBNhKnwtPr_9U=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.477512,-122.643521&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=DwJ9TxCL6oDXpiiKxEN2Lka4sAg=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.477512,-122.643521&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=dEhmjPxUwr8E7g-615JULeku0V8=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    },
+    {
+      "homeTags": null,
+      "description": "This 3525 square foot single family home has 4 bedrooms and 4.0 bathrooms. It is located at 1714 SE Lambert St Portland, Oregon.",
+      "latitude": 45.468108,
+      "longitude": -122.646595,
+      "daysOnZillow": 3,
+      "homeStatus": "FOR_SALE",
+      "photoCount": 31,
+      "zpid": 72259249,
+      "hdpUrl": "/homedetails/1714-SE-Lambert-St-Portland-OR-97202/72259249_zpid/",
+      "bedrooms": 4,
+      "bathrooms": 4,
+      "livingArea": 3525,
+      "price": 1175000,
+      "address": {
+        "city": "Portland",
+        "state": "OR",
+        "zipcode": "97202",
+        "streetAddress": "1714 SE Lambert St"
+      },
+      "listing_sub_type": {
+        "is_FSBO": false,
+        "is_newHome": false,
+        "is_foreclosure": false,
+        "is_bankOwned": true,
+        "is_forAuction": false,
+        "is_comingSoon": false,
+        "is_FSBA": true
+      },
+      "isNonOwnerOccupied": false,
+      "photos": [
+        {
+          "width": 316,
+          "height": 234,
+          "url": "https://photos.zillowstatic.com/p_c/ISe4c0c9jnusrx0000000000.jpg"
+        }
+      ],
+      "currency": "USD",
+      "googleStaticMapSignedUrl": "https://maps.googleapis.com/maps/api/staticmap?center=45.468108,-122.646595&zoom=16&size=400x215&maptype=satellite&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&scale=1&signature=46J0HkWTyHgC0vn9xTiEbM44R8M=",
+      "googleStreetViewImageSignedUrl": "https://maps.googleapis.com/maps/api/streetview?location=45.468108,-122.646595&size=400x215&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=lVASblQETIs_9QPmeRk86MM2B10=",
+      "googleStreetViewMetadataSignedUrl": "https://maps.googleapis.com/maps/api/streetview/metadata?location=45.468108,-122.646595&key=AIzaSyDY6ZJXL8FxBWwingKLmFPJdNF4VzD3vg4&source=outdoor&signature=zGCPGVkIAh-boG-oSoUzh84sv_8=",
+      "isPremierBuilder": false,
+      "state": "OR",
+      "isZillowOwned": false
+    }
+  ]
+}

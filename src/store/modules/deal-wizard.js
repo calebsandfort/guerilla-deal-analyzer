@@ -109,7 +109,7 @@ export const mutations = {
     state.compFilter = Object.assign({}, compFilter);
   },
   setField(state, payload) {
-    state[payload.name] = payload.v;
+    _.set(state, payload.name, payload.v);
   }
 };
 

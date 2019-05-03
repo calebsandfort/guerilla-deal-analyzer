@@ -133,6 +133,8 @@ export const defaultCompFilter = () => {
 export const newRepairEstimate = () => {
   return {
     title: "Repair Estimate",
+    totalCost: 50000,
+    quick: true,
     sections: [
       {
         selected: false,

@@ -92,7 +92,10 @@
           :loading="loading"
           :items="filteredComps"
           item-key="zillow_propertyId"
-          style="max-height: 550px; overflow: auto;"
+          :style="{
+            'max-height': `${compTableHeight}px`,
+            overflow: 'auto'
+          }"
         >
           <template slot="headers" slot-scope="props">
             <tr>
@@ -212,6 +215,7 @@ export default {
   data() {
     return {
       loading: false,
+      compTableHeight: 500,
       headers: [
         { text: "", value: "id" },
         {
@@ -256,6 +260,16 @@ export default {
         return Object.assign({}, property);
       });
     }
+  },
+  mounted() {
+    // const that = this;
+    // that.compTableHeight = window.$(window).height() - 625;
+    //
+    // window.$(window).resize(
+    //   _.debounce(function(args) {
+    //     that.compTableHeight = window.$(window).height() - 625;
+    //   })
+    // );
   },
   computed: {
     ...mapState({

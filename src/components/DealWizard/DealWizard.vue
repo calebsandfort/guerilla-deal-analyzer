@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="px-0 pt-0">
+  <v-container fluid class="pa-0">
     <Toolbar back-path="/"></Toolbar>
     <v-content>
       <v-container fluid v-if="dealWizardStore.finding">
@@ -70,9 +70,7 @@
                   <CompPackage></CompPackage>
                 </v-tab-item>
                 <v-tab-item :key="2">
-                  <v-container fluid grid-list-lg>
-                    {{ property.streetPlusZip }}
-                  </v-container>
+                  <RepairEstimator></RepairEstimator>
                 </v-tab-item>
                 <v-tab-item :key="3">
                   <v-container fluid grid-list-lg>
@@ -102,6 +100,7 @@ import { mapState, mapActions } from "vuex";
 import Toolbar from "../Toolbar";
 import PropertyDetails from "./PropertyDetailsV2";
 import CompPackage from "./CompPackageV2";
+import RepairEstimator from "./RepairEstimator/RepairEstimator";
 import PropertyGallery from "../Shared/PropertyGallery";
 import { getRequestVariables as propertyRequest } from "../../api/property";
 import * as engagements from "../../backend/enums/engagements";
@@ -111,12 +110,13 @@ export default {
   components: {
     Toolbar,
     CompPackage,
+    RepairEstimator,
     PropertyDetails,
     PropertyGallery
   },
   data() {
     return {
-      address: "1203 SE Malden St",
+      address: "6123 N Commercial Ave",
       activeGalleryRef: "",
       engagements: engagements
     };

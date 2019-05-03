@@ -226,7 +226,7 @@ export default {
     },
     image_urls_list: property => {
       if (property.image_urls) {
-        return property.image_urls.split(",");
+        return property.image_urls.split("|");
       }
 
       return [];

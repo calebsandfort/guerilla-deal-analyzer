@@ -24,6 +24,7 @@
     "accounting-js": "^1.1.1",
     "aigle": "^1.13.0",
     "apollo-boost": "^0.3.1",
+    "apollo-link-ws": "^1.0.17",
     "apollo-server": "^2.4.8",
     "apollo-server-express": "^2.4.8",
     "axios": "^0.18.0",
@@ -42,6 +43,7 @@
     "graphql": "^14.1.1",
     "graphql-iso-date": "^3.6.1",
     "is-browser": "^2.1.0",
+    "jquery": "^3.4.1",
     "jsonp": "^0.2.1",
     "lingallery": "^1.1.25",
     "lodash": "^4.17.11",
@@ -57,6 +59,7 @@
     "roboto-fontface": "*",
     "selenium-webdriver": "^4.0.0-alpha.1",
     "sequelize": "^5.1.0",
+    "subscriptions-transport-ws": "^0.9.16",
     "then-jsonp": "^1.0.3",
     "tor-request": "^3.1.0",
     "v-debounce": "^0.1.2",
@@ -80,7 +83,7 @@
     "@babel/register": "^7.0.0",
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-eslint": "^3.5.0",
-    "@vue/cli-service": "^3.5.0",
+    "@vue/cli-service": "^3.7.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "babelrc-rollup": "^3.0.0",
@@ -100,10 +103,7 @@
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^4.2.3",
     "vue-cli-plugin-vuetify": "^0.5.0",
-    "vue-template-compiler": "^2.5.21",
-    "webpack": "^4.30.0",
-    "webpack-cli": "^3.3.1",
-    "webpack-node-externals": "^1.7.2"
+    "vue-template-compiler": "^2.5.21"
   },
   "nodemonConfig": {
     "ignore": [

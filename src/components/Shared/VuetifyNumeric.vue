@@ -3,6 +3,8 @@
     :label="label"
     :placeholder="placeholder"
     :readonly="readOnly"
+    :success="success"
+    :outline="outline"
     @blur="onBlurHandler"
     @input="onInputHandler"
     @focus="onFocusHandler"
@@ -162,6 +164,24 @@ export default {
     currencySymbolPosition: {
       type: String,
       default: "prefix",
+      required: false
+    },
+
+    /**
+     * Puts the input in a manual success state.
+     */
+    success: {
+      type: Boolean,
+      default: false,
+      required: false
+    },
+
+    /**
+     * Applies the outline style to the input.
+     */
+    outline: {
+      type: Boolean,
+      default: false,
       required: false
     }
   },

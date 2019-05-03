@@ -246,7 +246,7 @@ export const findProperty = async term => {
   } else if (zillowData.small != null && zillowData.small.length > 0) {
     property.image_urls = _.map(zillowData.small, function(item) {
       return item.url;
-    }).join(",");
+    }).join("|");
   } else {
     // utilities.writeFile(
     //   FILE_PATH + "zillowData.json",
@@ -568,8 +568,84 @@ export const findComps = async ({
 
     const captcha = $("#captcha", html);
     if (captcha.length > 0 || html.indexOf("is blocked") > -1) {
+      logInfo(
+        "scrapeComps",
+        [
+          {
+            message: "tor",
+            term: "new ip"
+          }
+        ],
+        "red"
+      );
+
       await guerillaTor.newTorSession();
+      await new Promise(r => setTimeout(r, 1000 * 30));
+
+      compUrl =
+        "https://www.redfin.com/city/30772/OR/Portland/filter/sort=lo-distance,property-type=house";
+      compUrl += addCompUrlParameter("min-beds", compFilter.minBeds, -1);
+      compUrl += addCompUrlParameter("max-beds", compFilter.maxBeds, -1);
+      compUrl += addCompUrlParameter("min-baths", compFilter.minBaths, -1);
+      compUrl += addCompUrlParameter(
+        "min-sqft",
+        compFilter.minSqft - 0.05,
+        -1,
+        formatSqftForUrl,
+        property.sqft
+      );
+      compUrl += addCompUrlParameter(
+        "max-sqft",
+        compFilter.maxSqft + 0.05,
+        -1,
+        formatSqftForUrl,
+        property.sqft
+      );
+      compUrl += addCompUrlParameter(
+        "min-lot-size",
+        compFilter.minLotSqft,
+        -1,
+        formatSqftForUrl,
+        property.lotSize
+      );
+      compUrl += addCompUrlParameter(
+        "max-lot-size",
+        compFilter.maxLotSqft,
+        -1,
+        formatSqftForUrl,
+        property.lotSize
+      );
+      compUrl += addCompUrlParameter(
+        "min-year-built",
+        compFilter.minYearBuilt,
+        -1
+      );
+      compUrl += addCompUrlParameter(
+        "max-year-built",
+        compFilter.maxYearBuilt,
+        -1
+      );
+      compUrl += ",include=sold-1yr";
+      compUrl += `,viewport=${maxLat.toFixed(5)}:${minLat.toFixed(
+        5
+      )}:${maxLon.toFixed(5)}:${minLon.toFixed(5)}`;
+      compUrl += ",no-outline";
+      compUrl += `/page-${currentPage}`;
+
       html = await guerillaTor.request(options);
+    }
+
+    if (html.indexOf("is blocked") > -1) {
+      logInfo(
+        "scrapeComps",
+        [
+          {
+            message: "blocked",
+            term: "blocked"
+          }
+        ],
+        "red"
+      );
     }
 
     const results = $(
