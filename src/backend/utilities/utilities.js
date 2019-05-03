@@ -1,6 +1,7 @@
 import _ from "lodash";
 import fs from "fs";
 import * as repairEstimateSectionTypes from "../enums/repairEstimateSectionTypes";
+import { statuses } from "../enums/statuses";
 
 export const setPropertyFromObject = (
   source,
@@ -127,6 +128,43 @@ export const defaultCompFilter = () => {
     maxYearBuilt: -1,
     minBaths: -1,
     searchDistance: 1
+  };
+};
+
+export const newProperty = () => {
+  return {
+    zillow_propertyId: 0,
+    zillow_path: "",
+    zillow_url: "",
+    zillow_imageUrl: "",
+    // zillow_imageUrl: '',
+    streetAddress: "",
+    city: "",
+    state: "",
+    zipcode: "",
+    address: "",
+    price: -1,
+    // propertyTaxesAnnually: 0,
+    // propertyTaxesMonthly: 0,
+    // insuranceAnnually: 0,
+    // insuranceMonthly: 0,
+    sqft: -1,
+    //listingPriceSqft: 0,
+    beds: -1,
+    baths: -1,
+    description: "",
+    zestimate: -1,
+    price_to_zestimate: -1,
+    date_listed: -1,
+    zillow_status: "",
+    year_built: -1,
+    image_urls: "",
+    date_sold: -1,
+    latitude: -1,
+    longitude: -1,
+    notes: "",
+    status: statuses.ACTIVE.value,
+    compCache: ""
   };
 };
 

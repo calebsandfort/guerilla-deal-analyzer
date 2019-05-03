@@ -6,7 +6,11 @@ import moment from "moment";
 import * as statuses from "../enums/statuses";
 import * as engagements from "../enums/engagements";
 import { logInfo } from "../utilities/logging";
-import { getDistance, tryParseNumber } from "../utilities/utilities";
+import {
+  getDistance,
+  tryParseNumber,
+  newProperty
+} from "../utilities/utilities";
 
 //region Query
 //region properties
@@ -124,9 +128,11 @@ const findComps = async (
 
   let compTerms = [];
   const compCache = _.get(property, "compCache", "");
+  let pulledFromCache = false;
 
   if (useCompCache && compCache != null && compCache != "") {
     compTerms = compCache.split(",");
+    pulledFromCache = true;
   } else {
     compTerms = await zillowScraper.findComps({
       property: property,
@@ -134,25 +140,35 @@ const findComps = async (
     });
   }
 
-  const comps = await findProperties(
-    parent,
-    {
-      terms: compTerms,
-      tag: `COMP ${property.streetAddress}`,
-      status: statuses.statuses.COMP.value,
-      persist: persist
-    },
-    { models }
-  );
+  let comps = [];
 
-  if (comps.length > 0) {
-    const updateProperty = await models.Property.findByPk(property.id);
-    await updateProperty.update({
-      compCache: _.map(comps, function(c) {
-        return c.id;
-      }).join()
+  if (pulledFromCache) {
+    comps = await findProperties(
+      parent,
+      {
+        terms: compTerms,
+        tag: `COMP ${property.streetAddress}`,
+        status: statuses.statuses.COMP.value,
+        persist: persist
+      },
+      { models }
+    );
+  } else {
+    comps = _.map(compTerms, function(ct) {
+      const tempComp = newProperty();
+      tempComp.streetAddress = ct;
+      return tempComp;
     });
   }
+
+  // if (comps.length > 0) {
+  //   const updateProperty = await models.Property.findByPk(property.id);
+  //   await updateProperty.update({
+  //     compCache: _.map(comps, function(c) {
+  //       return c.id;
+  //     }).join()
+  //   });
+  // }
 
   return comps;
 };

@@ -2,6 +2,7 @@ import { apolloClient } from "../../apollo";
 import * as propertyApi from "../../api/property";
 import _ from "lodash";
 import * as utilities from "../../backend/utilities/utilities";
+import * as statuses from "../../backend/enums/statuses";
 
 const state = {
   item: null,
@@ -102,6 +103,9 @@ export const mutations = {
   setComps(state, list) {
     state.comps = list;
   },
+  pushComp(state, comp) {
+    state.comps.push(Object.assign({}, comp));
+  },
   setDealComps(state, list) {
     state.dealComps = list;
   },
@@ -172,10 +176,35 @@ export const actions = {
       apolloClient,
       requestVariables
     );
-    commit("setComps", response.data.findComps);
 
-    if (!requestVariables.fromAction) {
-      commit("setFinding", false);
+    debugger;
+    const comps = response.data.findComps;
+
+    if (comps.length > 0 && comps[0].zillow_propertyId == 0) {
+      if (!requestVariables.fromAction) {
+        commit("setFinding", false);
+      }
+
+      for (let i = 0; i < comps.length; i++) {
+        const term = comps[i].streetAddress;
+        const findPropertyRequest = propertyApi.getRequestVariables();
+        findPropertyRequest.term = term;
+        findPropertyRequest.tag = `COMP ${term}`;
+        findPropertyRequest.status = statuses.statuses.COMP.value;
+        findPropertyRequest.persist = true;
+
+        const comp = await propertyApi.findProperty(
+          apolloClient,
+          findPropertyRequest
+        );
+        commit("pushComp", comp);
+      }
+    } else {
+      commit("setComps", response.data.findComps);
+
+      if (!requestVariables.fromAction) {
+        commit("setFinding", false);
+      }
     }
   },
   setField({ commit }, payload) {
