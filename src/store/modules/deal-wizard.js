@@ -14,6 +14,7 @@ const state = {
   compFilter: utilities.defaultCompFilter(),
   finding: false,
   findingComps: false,
+  pullingCompsFromCache: false,
   compLog: [],
   search_keywords: [
     "remodel",
@@ -95,6 +96,9 @@ export const mutations = {
   },
   setFindingComps(state, findingComps) {
     state.findingComps = findingComps;
+  },
+  setPullingCompsFromCache(state, pullingCompsFromCache) {
+    state.pullingCompsFromCache = pullingCompsFromCache;
   },
   setItem(state, item) {
     state.item = item;
@@ -211,6 +215,7 @@ export const actions = {
 
   async findCompsV2({ dispatch, commit, state }, findCompsRequest) {
     if (findCompsRequest.useCompCache && state.item.compCacheArray.length > 0) {
+      commit("setPullingCompsFromCache", true);
       if (state.item.compFilterJson) {
         commit("setCompFilter", JSON.parse(state.item.compFilterJson));
       }
@@ -225,7 +230,9 @@ export const actions = {
         apolloClient,
         compCacheRequest
       );
+
       commit("setComps", response.data.findProperties);
+      commit("setPullingCompsFromCache", false);
     } else {
       commit("setFindingComps", true);
 

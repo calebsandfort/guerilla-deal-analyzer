@@ -62,8 +62,24 @@
                   Report
                 </v-tab>
                 <v-tab-item :key="1">
-                  <CompLog
+                  <v-container
                     v-if="
+                      dealWizardStore.finding ||
+                        dealWizardStore.setPullingCompsFromCache
+                    "
+                    fluid
+                    grid-list-lg
+                  >
+                    <v-layout row text-xs-center wrap>
+                      <v-flex xs12>
+                        <v-progress-linear
+                          :indeterminate="true"
+                        ></v-progress-linear>
+                      </v-flex>
+                    </v-layout>
+                  </v-container>
+                  <CompLog
+                    v-else-if="
                       dealWizardStore.finding || dealWizardStore.findingComps
                     "
                   ></CompLog>
@@ -116,31 +132,6 @@ export default {
     PropertyDetails,
     PropertyGallery,
     CompLog
-  },
-  mounted() {
-    // debugger;
-    // const body = window.$("body");
-    // const redfinIframe = window.$(
-    //   "<iframe id='redfinIframe' is='x-frame-bypass'></iframe>"
-    // );
-    // redfinIframe.attr(
-    //   "src",
-    //   "https://www.redfin.com/city/30772/OR/Portland/filter/max-sqft=2175-sqft,min-beds=3,max-beds=3,min-baths=1,sort=lo-distance,property-type=house,include=sold-1yr,min-sqft=1597-sqft,viewport=45.48433:45.45561:-122.63292:-122.67201,no-outline/page-1"
-    // );
-    // body.append(redfinIframe);
-    //
-    // setTimeout(function() {
-    //   console.log(redfinIframe.attr("srcdoc"));
-    //   redfinIframe.remove();
-    // }, 5000);
-    // const that = this;
-    // that.compTableHeight = window.$(window).height() - 625;
-    //
-    // window.$(window).resize(
-    //   _.debounce(function(args) {
-    //     that.compTableHeight = window.$(window).height() - 625;
-    //   })
-    // );
   },
   data() {
     return {
