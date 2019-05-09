@@ -14,7 +14,7 @@ module.exports = {
       repo: "git@github.com:calebsandfort/guerilla-deal-analyzer.git",
       path: "/home/ubuntu/cspdealtools",
       "post-deploy":
-        "npm install && npm run build:backend && pm2 startOrRestart ecosystem.config.js"
+        "npm install && npm run build:backend && git-stash && pm2 startOrRestart ecosystem.config.js"
     }
   }
 };
