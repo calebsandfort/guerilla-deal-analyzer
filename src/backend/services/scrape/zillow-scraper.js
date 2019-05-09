@@ -90,17 +90,32 @@ export const findProperty = async term => {
         //html = await rp(options);
         //utilities.writeFile(FILE_PATH + "zillow.html", html);
 
-        zillowData = JSON.parse(
-          $("script#hdpApolloPreloadedData", html)
-            .first()
-            .html()
-        );
+        const hdpApolloPreloadedData = $("script#hdpApolloPreloadedData", html)
+          .first()
+          .html();
+        const data = JSON.parse(hdpApolloPreloadedData);
+        const apiCache = _.get(data, "apiCache", "");
+
+        let dataIndex = 0;
+
+        if (apiCache != "") {
+          zillowData = JSON.parse(apiCache);
+          dataIndex = 1;
+        } else {
+          zillowData = data;
+        }
+
+        // zillowData = JSON.parse(
+        //   $("script#hdpApolloPreloadedData", html)
+        //     .first()
+        //     .html()
+        // );
 
         if (zillowData == null) {
           await guerillaTor.newTorSession();
         }
 
-        zillowData = zillowData[Object.keys(zillowData)[0]].property;
+        zillowData = zillowData[Object.keys(zillowData)[dataIndex]].property;
 
         // utilities.writeFile(
         //   FILE_PATH + "zillowData.json",
@@ -209,7 +224,7 @@ export const findProperty = async term => {
   ) {
     property.image_urls = _.map(zillowData.responsivePhotos, function(item) {
       return item.mixedSources.jpeg[2].url;
-    }).join(",");
+    }).join("|");
   } else if (zillowData.small != null && zillowData.small.length > 0) {
     property.image_urls = _.map(zillowData.small, function(item) {
       return item.url;
@@ -402,30 +417,6 @@ export const findComps = async ({
     property = await findProperty(term);
   }
 
-  // const minBeds = property.beds > 3 ? property.beds - 1 : property.beds;
-  // const maxBeds = property.beds > 3 ? property.beds + 1 : property.beds;
-  const minBeds = property.beds;
-  const maxBeds = property.beds;
-  const daysSinceSold = 180;
-  const minSqft = property.sqft - property.sqft * 0.15;
-  const maxSqft = property.sqft + property.sqft * 0.15;
-
-  const longitudeOffset = (1 / 49) * compFilter.searchDistance;
-  const maxLon = property.longitude + longitudeOffset;
-  const minLon = property.longitude - longitudeOffset;
-
-  const latitudeOffset = (1 / 69) * compFilter.searchDistance;
-  const maxLat = property.latitude + latitudeOffset;
-  const minLat = property.latitude - latitudeOffset;
-
-  const poly = [
-    { lon: maxLon, lat: maxLat },
-    { lon: maxLon, lat: minLat },
-    { lon: minLon, lat: minLat },
-    { lon: minLon, lat: maxLat },
-    { lon: maxLon, lat: maxLat }
-  ];
-
   //min-year-built=1950
   //max-year-built=2019
   //min-lot-size=4.5k-sqft
@@ -455,73 +446,27 @@ export const findComps = async ({
   let hasMorePages = true;
 
   while (hasMorePages) {
-    let compUrl =
-      "https://www.redfin.com/city/30772/OR/Portland/filter/sort=lo-distance,property-type=house";
-    compUrl += addCompUrlParameter("min-beds", compFilter.minBeds, -1);
-    compUrl += addCompUrlParameter("max-beds", compFilter.maxBeds, -1);
-    compUrl += addCompUrlParameter("min-baths", compFilter.minBaths, -1);
-    compUrl += addCompUrlParameter(
-      "min-sqft",
-      compFilter.minSqft,
-      -1,
-      formatSqftForUrl,
-      property.sqft
+    let compUrl = utilities.buildRedfinCompUrl(
+      property,
+      compFilter,
+      currentPage
     );
-    compUrl += addCompUrlParameter(
-      "max-sqft",
-      compFilter.maxSqft,
-      -1,
-      formatSqftForUrl,
-      property.sqft
-    );
-    compUrl += addCompUrlParameter(
-      "min-lot-size",
-      compFilter.minLotSqft,
-      -1,
-      formatSqftForUrl,
-      property.lotSize
-    );
-    compUrl += addCompUrlParameter(
-      "max-lot-size",
-      compFilter.maxLotSqft,
-      -1,
-      formatSqftForUrl,
-      property.lotSize
-    );
-    compUrl += addCompUrlParameter(
-      "min-year-built",
-      compFilter.minYearBuilt,
-      -1
-    );
-    compUrl += addCompUrlParameter(
-      "max-year-built",
-      compFilter.maxYearBuilt,
-      -1
-    );
-    compUrl += ",include=sold-1yr";
-    compUrl += `,viewport=${maxLat.toFixed(5)}:${minLat.toFixed(
-      5
-    )}:${maxLon.toFixed(5)}:${minLon.toFixed(5)}`;
-    compUrl += ",no-outline";
-    compUrl += `/page-${currentPage}`;
-
-    // logRows.push({
-    //   message: "record",
-    //   term: `${collectionInfo.current} of ${collectionInfo.total}`
-    // });
-
-    //logInfo("findPropertyHelper", logRows, property == null ? "red" : "green");
 
     logInfo(
       "scrapeComps",
       [
         {
-          message: "page",
+          message: `page`,
           term: currentPage
         }
       ],
       "magenta"
     );
+
+    // if (compUrl != "") {
+    //   console.log(compUrl);
+    //   return;
+    // }
 
     const options = {
       uri: compUrl,
@@ -547,57 +492,10 @@ export const findComps = async ({
       );
 
       await guerillaTor.newTorSession();
-      await new Promise(r => setTimeout(r, 1000 * 30));
+      await new Promise(r => setTimeout(r, 1000 * 15));
 
-      compUrl =
-        "https://www.redfin.com/city/30772/OR/Portland/filter/sort=lo-distance,property-type=house";
-      compUrl += addCompUrlParameter("min-beds", compFilter.minBeds, -1);
-      compUrl += addCompUrlParameter("max-beds", compFilter.maxBeds, -1);
-      compUrl += addCompUrlParameter("min-baths", compFilter.minBaths, -1);
-      compUrl += addCompUrlParameter(
-        "min-sqft",
-        compFilter.minSqft - 0.05,
-        -1,
-        formatSqftForUrl,
-        property.sqft
-      );
-      compUrl += addCompUrlParameter(
-        "max-sqft",
-        compFilter.maxSqft + 0.05,
-        -1,
-        formatSqftForUrl,
-        property.sqft
-      );
-      compUrl += addCompUrlParameter(
-        "min-lot-size",
-        compFilter.minLotSqft,
-        -1,
-        formatSqftForUrl,
-        property.lotSize
-      );
-      compUrl += addCompUrlParameter(
-        "max-lot-size",
-        compFilter.maxLotSqft,
-        -1,
-        formatSqftForUrl,
-        property.lotSize
-      );
-      compUrl += addCompUrlParameter(
-        "min-year-built",
-        compFilter.minYearBuilt,
-        -1
-      );
-      compUrl += addCompUrlParameter(
-        "max-year-built",
-        compFilter.maxYearBuilt,
-        -1
-      );
-      compUrl += ",include=sold-1yr";
-      compUrl += `,viewport=${maxLat.toFixed(5)}:${minLat.toFixed(
-        5
-      )}:${maxLon.toFixed(5)}:${minLon.toFixed(5)}`;
-      compUrl += ",no-outline";
-      compUrl += `/page-${currentPage}`;
+      compUrl = utilities.buildRedfinCompUrl(property, compFilter, currentPage);
+      options.uri = compUrl;
 
       html = await guerillaTor.request(options);
     }
@@ -643,26 +541,60 @@ export const findComps = async ({
   return comps;
 };
 
-const addCompUrlParameter = (
-  paramName,
-  paramValue,
-  ignoreValue = -1,
-  formatFunc = null,
-  formatParam = null
-) => {
-  if (paramValue != ignoreValue) {
-    if (formatFunc != null) {
-      paramValue = formatFunc(formatParam, paramValue);
-    }
-    return `,${paramName}=${paramValue}`;
-  } else {
-    return "";
-  }
+const buildEstatelyCompUrl = (property, compFilter, currentPage) => {
+  //https://www.estately.com/45.4571,-122.6825,45.4811,-122.6247?
+  // max_days_listed=365
+  // &max_feet=2000
+  // &max_feet_lot=87120
+  // &max_year_built=2018
+  // &min_bath=1
+  // &min_bed=2
+  // &min_feet=1400
+  // &min_feet_lot=2000
+  // &min_year_built=1900
+  // &only_sold=sold
+  // &property_type=house
 };
 
-const formatSqftForUrl = (val, multiplier) => {
-  const adjVal = val + val * multiplier;
-  return `${adjVal.toFixed(0)}-sqft`;
+const buildRealtorCompUrl = (property, compFilter, currentPage) => {
+  //$("#srp-list .listing-street-address").length
+
+  //https://www.realtor.com/soldhomeprices
+  // /97202/beds-2-3
+  // /baths-1
+  // /type-single-family-home
+  // /sqft-1442-3000
+  // /age-100+
+  // /radius-1
+  // /pg-2?pos=45.432711,-122.724643,45.527917,-122.565428,13
+
+  //region Coords
+  const longitudeOffset = (1 / 49) * compFilter.searchDistance;
+  const longitudeRandomOffset = longitudeOffset / 10;
+
+  const maxLon =
+    property.longitude +
+    longitudeOffset +
+    _.random(0, longitudeRandomOffset, true);
+  const minLon =
+    property.longitude -
+    longitudeOffset +
+    _.random(0, longitudeRandomOffset, true);
+
+  const latitudeOffset = (1 / 69) * compFilter.searchDistance;
+  const latitudeRandomOffset = longitudeOffset / 10;
+
+  const maxLat =
+    property.latitude +
+    latitudeOffset +
+    _.random(0, latitudeRandomOffset, true);
+  const minLat =
+    property.latitude -
+    latitudeOffset +
+    _.random(0, latitudeRandomOffset, true);
+  //endregion
+
+  let compUrl = `https://www.realtor.com/soldhomeprices/`;
 };
 
 const setPrice = (property, zillowData) => {

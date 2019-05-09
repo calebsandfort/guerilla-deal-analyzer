@@ -26,6 +26,7 @@ export default gql`
       compFilter: CompFilter
       useCompCache: Boolean
     ): [Property]
+    findCompAddresses(id: ID!, compFilter: CompFilter!): [String]
   }
   extend type Mutation {
     createProperty(input: PropertyInput!): Property!
@@ -34,6 +35,7 @@ export default gql`
       id: ID!
       input: ExpandoPropertyUpdateInput!
     ): Property!
+    compCacheUpdate(id: ID!, input: CompCacheUpdateInput!): Property!
     deleteProperty(id: ID!): Boolean!
   }
   type Property {
@@ -77,6 +79,8 @@ export default gql`
     distance_set(coord: CoordInput): Boolean
     engagement: Int
     pricePerSqft: Float
+    compCacheArray: [String]
+    compFilterJson: String
   }
   input PropertyInput {
     zillow_propertyId: Int!
@@ -106,6 +110,10 @@ export default gql`
   input ExpandoPropertyUpdateInput {
     notes: String
     status: Int!
+  }
+  input CompCacheUpdateInput {
+    compCache: String
+    compFilterJson: String
   }
   input CoordInput {
     latitude: Float!

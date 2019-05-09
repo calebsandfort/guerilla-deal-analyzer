@@ -9,30 +9,49 @@
       </v-card-title>
       <v-card-text>
         <v-container grid-list-md class="py-0">
-          <MinMaxRow
+          <MinMaxRowSelect
             label="Beds"
             :min.sync="localCompFilter.minBeds"
             :max.sync="localCompFilter.maxBeds"
             :items="dealWizardStore.listItems.amenityCount"
-          ></MinMaxRow>
-          <MinMaxRow
-            label="Sqft"
-            :min.sync="localCompFilter.minSqft"
-            :max.sync="localCompFilter.maxSqft"
-            :items="dealWizardStore.listItems.percentages"
-          ></MinMaxRow>
-          <MinMaxRow
+          ></MinMaxRowSelect>
+          <v-layout row>
+            <v-flex xs6>
+              <VuetifyNumeric
+                field="minSqft"
+                label="Min Sqft"
+                :value="localCompFilter.minSqft"
+                v-on:input="fieldChangedNumber"
+              >
+              </VuetifyNumeric>
+            </v-flex>
+            <v-flex xs6>
+              <VuetifyNumeric
+                field="maxSqft"
+                label="Max Sqft"
+                :value="localCompFilter.maxSqft"
+                v-on:input="fieldChangedNumber"
+              >
+              </VuetifyNumeric>
+            </v-flex>
+          </v-layout>
+          <!--          <MinMaxRowNumeric-->
+          <!--            label="Sqft"-->
+          <!--            :min.sync="localCompFilter.minSqft"-->
+          <!--            :max.sync="localCompFilter.maxSqft"-->
+          <!--          ></MinMaxRowNumeric>-->
+          <MinMaxRowSelect
             label="Lot Size"
             :min.sync="localCompFilter.minLotSqft"
             :max.sync="localCompFilter.maxLotSqft"
             :items="dealWizardStore.listItems.percentages"
-          ></MinMaxRow>
-          <MinMaxRow
+          ></MinMaxRowSelect>
+          <MinMaxRowSelect
             label="Year Built"
             :min.sync="localCompFilter.minYearBuilt"
             :max.sync="localCompFilter.maxYearBuilt"
             :items="dealWizardStore.listItems.years"
-          ></MinMaxRow>
+          ></MinMaxRowSelect>
           <v-layout row>
             <v-flex xs6>
               <v-select
@@ -70,13 +89,18 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
-import * as utilities from "../../../backend/utilities/utilities";
-import MinMaxRow from "./MinMaxRow";
+import * as utilities from "../../../../backend/utilities/utilities";
+import MinMaxRowSelect from "./MinMaxRowSelect";
+import MinMaxRowNumeric from "./MinMaxRowNumeric";
+import VuetifyNumeric from "../../../Shared/VuetifyNumeric";
+import _ from "lodash";
 
 export default {
   name: "CompFiltersDialog",
   components: {
-    MinMaxRow
+    MinMaxRowSelect,
+    MinMaxRowNumeric,
+    VuetifyNumeric
   },
   data() {
     return {
@@ -85,6 +109,11 @@ export default {
       min: 0
     };
   },
+  // mounted() {
+  //   console.log("***********************");
+  //   console.log(this.localCompFilter.minYearBuilt);
+  //   console.log("***********************");
+  // },
   watch: {
     dialog: function(val) {
       this.localCompFilter = Object.assign({}, this.compFilter);
@@ -109,7 +138,10 @@ export default {
     apply: function() {
       this.dialog = false;
       this.setCompFilter(this.localCompFilter);
-    }
+    },
+    fieldChangedNumber: _.debounce(function(args) {
+      _.set(this.localCompFilter, args.field, args.value);
+    }, 1000)
   }
 };
 </script>

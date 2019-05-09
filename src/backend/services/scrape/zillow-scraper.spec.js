@@ -33,17 +33,28 @@ describe("zillow-scraper", () => {
   //       expect(response).to.eql(expectedResult);
   //     });
   // });
-  it("finds a property for the given address", function() {
-    this.timeout(10 * 60 * 1000);
-
-    const expectedResult = getSimpleExpectedProperty();
-
-    return zillowScraper
-      .findProperty(ADDRESS + " Portland Or")
-      .then(function(response) {
-        expect(castToSimpleProperty(response)).to.eql(expectedResult);
-      });
-  });
+  // it("finds comps for a property id", function() {
+  //   this.timeout(10 * 60 * 1000);
+  //
+  //   //const expectedResult = getSimpleExpectedProperty();
+  //
+  //   return zillowScraper
+  //     .findComps(ADDRESS + " Portland Or")
+  //     .then(function(response) {
+  //       expect(castToSimpleProperty(response)).to.eql(expectedResult);
+  //     });
+  // });
+  // it("finds a property for the given address", function() {
+  //   this.timeout(10 * 60 * 1000);
+  //
+  //   const expectedResult = getSimpleExpectedProperty();
+  //
+  //   return zillowScraper
+  //     .findProperty(ADDRESS + " Portland Or")
+  //     .then(function(response) {
+  //       expect(castToSimpleProperty(response)).to.eql(expectedResult);
+  //     });
+  // });
   //
   // it("finds a property for the given address with no city/state", function() {
   //   this.timeout(10 * 60 * 1000);
@@ -54,7 +65,6 @@ describe("zillow-scraper", () => {
   //     expect(castToSimpleProperty(response)).to.eql(expectedResult);
   //   });
   // });
-
   // it("finds a property for the given url", function() {
   //   this.timeout(10 * 60 * 1000);
   //
@@ -136,8 +146,8 @@ describe("zillow-scraper", () => {
   //
   //   return zillowScraper
   //     .trialScrape(
-  //       `https://multcoproptax.com/Property-Search?searchtext=4544%20N%20Kerby%20Ave`,
-  //       "multcoproptax_search"
+  //       `https://www.estately.com/45.4451,-122.7113,45.4931,-122.5959?only_sold=sold&order=days_desc`,
+  //       "estately"
   //     )
   //     .then(function(response) {
   //       expect(response.length).to.eql(expectedResult);

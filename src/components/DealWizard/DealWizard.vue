@@ -2,19 +2,11 @@
   <v-container fluid class="pa-0">
     <Toolbar back-path="/"></Toolbar>
     <v-content>
-      <v-container fluid v-if="dealWizardStore.finding">
-        <v-layout row text-xs-center wrap>
-          <v-flex xs12>
-            <v-progress-circular
-              :width="7"
-              :size="70"
-              color="green"
-              indeterminate
-            ></v-progress-circular>
-          </v-flex>
-        </v-layout>
-      </v-container>
-      <v-container v-if="!property" fluid grid-list-lg>
+      <v-container
+        v-if="!property && !dealWizardStore.finding"
+        fluid
+        grid-list-lg
+      >
         <v-layout row>
           <v-flex xs12>
             <v-text-field label="Address" v-model="address">
@@ -25,14 +17,17 @@
           </v-flex>
         </v-layout>
       </v-container>
-      <v-container
-        v-else-if="property && !dealWizardStore.finding"
-        fluid
-        grid-list-lg
-      >
+      <v-container v-else-if="dealWizardStore.finding" fluid grid-list-lg>
+        <v-layout row text-xs-center wrap>
+          <v-flex xs12>
+            <v-progress-linear :indeterminate="true"></v-progress-linear>
+          </v-flex>
+        </v-layout>
+      </v-container>
+      <v-container fluid grid-list-lg>
         <v-layout row>
           <v-flex xs4>
-            <v-layout row>
+            <v-layout v-if="property" row>
               <v-flex xs12>
                 <PropertyDetails
                   ref="mainPropertyDetails"
@@ -51,7 +46,7 @@
               </v-flex>
             </v-layout>
           </v-flex>
-          <v-flex xs8>
+          <v-flex xs8 v-if="property && !dealWizardStore.finding">
             <v-card>
               <v-tabs color="pink" dark slider-color="yellow">
                 <v-tab :key="1" ripple>
@@ -67,7 +62,12 @@
                   Report
                 </v-tab>
                 <v-tab-item :key="1">
-                  <CompPackage></CompPackage>
+                  <CompLog
+                    v-if="
+                      dealWizardStore.finding || dealWizardStore.findingComps
+                    "
+                  ></CompLog>
+                  <CompPackage v-else></CompPackage>
                 </v-tab-item>
                 <v-tab-item :key="2">
                   <RepairEstimator></RepairEstimator>
@@ -92,6 +92,7 @@
       ref="propertyGallery"
       v-on:closed="propertyGalleryClosed"
     ></PropertyGallery>
+    <!--    <ScrapeFrame></ScrapeFrame>-->
   </v-container>
 </template>
 
@@ -99,11 +100,12 @@
 import { mapState, mapActions } from "vuex";
 import Toolbar from "../Toolbar";
 import PropertyDetails from "./PropertyDetailsV2";
-import CompPackage from "./CompPackageV2";
+import CompPackage from "./CompPackage/CompPackageV2";
 import RepairEstimator from "./RepairEstimator/RepairEstimator";
 import PropertyGallery from "../Shared/PropertyGallery";
 import { getRequestVariables as propertyRequest } from "../../api/property";
 import * as engagements from "../../backend/enums/engagements";
+import CompLog from "./CompPackage/CompLog";
 
 export default {
   name: "DealWizard",
@@ -112,11 +114,37 @@ export default {
     CompPackage,
     RepairEstimator,
     PropertyDetails,
-    PropertyGallery
+    PropertyGallery,
+    CompLog
+  },
+  mounted() {
+    // debugger;
+    // const body = window.$("body");
+    // const redfinIframe = window.$(
+    //   "<iframe id='redfinIframe' is='x-frame-bypass'></iframe>"
+    // );
+    // redfinIframe.attr(
+    //   "src",
+    //   "https://www.redfin.com/city/30772/OR/Portland/filter/max-sqft=2175-sqft,min-beds=3,max-beds=3,min-baths=1,sort=lo-distance,property-type=house,include=sold-1yr,min-sqft=1597-sqft,viewport=45.48433:45.45561:-122.63292:-122.67201,no-outline/page-1"
+    // );
+    // body.append(redfinIframe);
+    //
+    // setTimeout(function() {
+    //   console.log(redfinIframe.attr("srcdoc"));
+    //   redfinIframe.remove();
+    // }, 5000);
+    // const that = this;
+    // that.compTableHeight = window.$(window).height() - 625;
+    //
+    // window.$(window).resize(
+    //   _.debounce(function(args) {
+    //     that.compTableHeight = window.$(window).height() - 625;
+    //   })
+    // );
   },
   data() {
     return {
-      address: "6123 N Commercial Ave",
+      address: "3117 NE 33rd Ave",
       activeGalleryRef: "",
       engagements: engagements
     };
@@ -141,7 +169,7 @@ export default {
   methods: {
     ...mapActions({
       fetchProperty: "dealWizard/fetchItem",
-      findProperty: "dealWizard/findItem"
+      findProperty: "dealWizard/findProperty"
     }),
     findPropertyClick: function() {
       const request = propertyRequest();

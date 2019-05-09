@@ -98,6 +98,19 @@ const findProperties = async (
 };
 //endregion
 
+//region findCompAddresses
+const findCompAddresses = async (parent, { id, compFilter }, { models }) => {
+  let property = await models.Property.findByPk(id);
+
+  let compTerms = await zillowScraper.findComps({
+    property: property,
+    compFilter: compFilter
+  });
+
+  return compTerms;
+};
+//endregion
+
 //region findComps
 const findComps = async (
   parent,
@@ -182,7 +195,8 @@ export default {
     property,
     findProperty,
     findProperties,
-    findComps
+    findComps,
+    findCompAddresses
   },
 
   Mutation: {
@@ -200,6 +214,11 @@ export default {
     },
 
     expandoPropertyUpdate: async (parent, { id, input }, { models }) => {
+      const property = await models.Property.findByPk(id);
+      return await property.update(input);
+    },
+
+    compCacheUpdate: async (parent, { id, input }, { models }) => {
       const property = await models.Property.findByPk(id);
       return await property.update(input);
     },
@@ -265,6 +284,13 @@ export default {
     },
     pricePerSqft: property => {
       return Math.round(property.price / property.sqft);
+    },
+    compCacheArray: property => {
+      if (property.compCache) {
+        return _.uniq(property.compCache.split(","));
+      }
+
+      return [];
     }
   }
 };

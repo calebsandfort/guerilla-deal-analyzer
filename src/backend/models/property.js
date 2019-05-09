@@ -187,6 +187,11 @@ const property = (sequelize, DataTypes) => {
       compCache: {
         type: DataTypes.TEXT,
         allowNull: true
+      },
+      compFilterJson: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+        defaultValue: ""
       }
     },
     {

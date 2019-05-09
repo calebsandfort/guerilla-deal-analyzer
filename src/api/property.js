@@ -42,6 +42,8 @@ export const fragments = {
       distance_set(coord: $coord)
       engagement
       pricePerSqft
+      compCacheArray
+      compFilterJson
     }
   `
 };
@@ -90,7 +92,14 @@ const FIND_PROPERTY = gql`
 `;
 
 const FIND_PROPERTIES = gql`
-  query($terms: [String!]!, $tag: String!, $status: Int, $persist: Boolean) {
+  query(
+    $terms: [String!]!
+    $tag: String!
+    $status: Int
+    $persist: Boolean
+    $search_keywords: [String]
+    $coord: CoordInput
+  ) {
     findProperties(
       terms: $terms
       tag: $tag
@@ -130,6 +139,12 @@ const FIND_COMPS = gql`
   ${fragments.simple}
 `;
 
+const FIND_COMP_ADDRESSES = gql`
+  query($id: ID!, $compFilter: CompFilter!) {
+    findCompAddresses(id: $id, compFilter: $compFilter)
+  }
+`;
+
 const CREATE = gql`
   mutation($input: PropertyInput!) {
     createProperty(input: $input) {
@@ -151,6 +166,20 @@ const UPDATE = gql`
 const EXPANDO_UPDATE = gql`
   mutation($id: ID!, $input: ExpandoPropertyUpdateInput!) {
     expandoPropertyUpdate(id: $id, input: $input) {
+      ...SimpleProperty
+    }
+  }
+  ${fragments.simple}
+`;
+
+const COMP_CACHE_UPDATE = gql`
+  mutation(
+    $id: ID!
+    $input: CompCacheUpdateInput!
+    $search_keywords: [String]
+    $coord: CoordInput
+  ) {
+    compCacheUpdate(id: $id, input: $input) {
       ...SimpleProperty
     }
   }
@@ -233,6 +262,14 @@ export const findComps = async (client, variables) =>
     })
     .catch(errorHandler);
 
+export const findCompAddresses = async (client, variables) =>
+  client
+    .query({
+      query: FIND_COMP_ADDRESSES,
+      variables: variables
+    })
+    .catch(errorHandler);
+
 export const create = async (client, variables) =>
   client
     .mutate({
@@ -253,6 +290,14 @@ export const expandoUpdate = async (client, variables) =>
   client
     .mutate({
       mutation: EXPANDO_UPDATE,
+      variables: variables
+    })
+    .catch(errorHandler);
+
+export const compCacheUpdate = async (client, variables) =>
+  client
+    .mutate({
+      mutation: COMP_CACHE_UPDATE,
       variables: variables
     })
     .catch(errorHandler);

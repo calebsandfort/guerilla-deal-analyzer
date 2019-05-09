@@ -2,6 +2,7 @@ import _ from "lodash";
 import fs from "fs";
 import * as repairEstimateSectionTypes from "../enums/repairEstimateSectionTypes";
 import { statuses } from "../enums/statuses";
+import querystring from "querystring";
 
 export const setPropertyFromObject = (
   source,
@@ -1986,3 +1987,257 @@ export const newRepairEstimate = () => {
     ]
   };
 };
+
+export const pause = seconds => {
+  return new Promise(r => setTimeout(r, 1000 * seconds));
+};
+
+export const getBounds = (property, compFilter) => {
+  const longitudeOffset = (1 / 49) * compFilter.searchDistance;
+  const longitudeRandomOffset = longitudeOffset / 10;
+
+  const maxLon =
+    property.longitude +
+    longitudeOffset +
+    _.random(0, longitudeRandomOffset, true);
+  const minLon =
+    property.longitude -
+    longitudeOffset +
+    _.random(0, longitudeRandomOffset, true);
+
+  const latitudeOffset = (1 / 69) * compFilter.searchDistance;
+  const latitudeRandomOffset = longitudeOffset / 10;
+
+  const maxLat =
+    property.latitude +
+    latitudeOffset +
+    _.random(0, latitudeRandomOffset, true);
+  const minLat =
+    property.latitude -
+    latitudeOffset +
+    _.random(0, latitudeRandomOffset, true);
+
+  return {
+    maxLon,
+    minLon,
+    maxLat,
+    minLat
+  };
+};
+
+//region buildZillowCompUrl
+export const buildZillowCompUrl = (property, compFilter, currentPage) => {
+  let compUrl = "https://www.zillow.com/homes/?searchQueryState=";
+
+  const bounds = getBounds(property, compFilter);
+  const searchQueryState = {
+    mapBounds: {
+      west: bounds.minLon,
+      east: bounds.maxLon,
+      south: bounds.minLat,
+      north: bounds.maxLat
+    },
+    isListVisible: true,
+    filterState: {
+      doz: {
+        value: "12m"
+      }
+    }
+  };
+
+  if (currentPage > 1) {
+    searchQueryState.pagination = {
+      currentPage: currentPage
+    };
+  }
+
+  addZillowBooleanFilter(searchQueryState, "isRecentlySold", true);
+  addZillowBooleanFilter(searchQueryState, "isComingSoon", false);
+  addZillowBooleanFilter(searchQueryState, "isCondo", false);
+  addZillowBooleanFilter(searchQueryState, "isForSaleByAgent", false);
+  addZillowBooleanFilter(searchQueryState, "isForSaleByOwner", false);
+  addZillowBooleanFilter(searchQueryState, "isForSaleForeclosure", false);
+  addZillowBooleanFilter(searchQueryState, "isLotLand", false);
+  addZillowBooleanFilter(searchQueryState, "isMakeMeMove", false);
+  addZillowBooleanFilter(searchQueryState, "isManufactured", false);
+  addZillowBooleanFilter(searchQueryState, "isMultiFamily", false);
+  addZillowBooleanFilter(searchQueryState, "isNewConstruction", false);
+  addZillowBooleanFilter(searchQueryState, "isPreMarketForeclosure", false);
+  addZillowBooleanFilter(searchQueryState, "isPreMarketPreForeclosure", false);
+  addZillowBooleanFilter(searchQueryState, "isTownhouse", false);
+
+  addZillowMinMaxFilter(
+    searchQueryState,
+    "beds",
+    compFilter.minBeds,
+    compFilter.maxBeds
+  );
+
+  addZillowMinMaxFilter(
+    searchQueryState,
+    "baths",
+    compFilter.minBaths,
+    compFilter.maxBaths
+  );
+
+  addZillowMinMaxFilter(
+    searchQueryState,
+    "sqft",
+    compFilter.minSqft,
+    compFilter.maxSqft
+  );
+
+  addZillowMinMaxFilter(
+    searchQueryState,
+    "lotSize",
+    compFilter.minLotSqft,
+    compFilter.maxLotSqft
+  );
+
+  addZillowMinMaxFilter(
+    searchQueryState,
+    "built",
+    compFilter.minYearBuilt,
+    compFilter.maxYearBuilt
+  );
+
+  compUrl += encodeURIComponent(JSON.stringify(searchQueryState));
+
+  return compUrl;
+};
+
+const addZillowMinMaxFilter = (searchQueryState, propName, min, max) => {
+  if (min > -1) {
+    _.set(searchQueryState, `filterState.${propName}.min`, min);
+  }
+
+  if (max > -1) {
+    _.set(searchQueryState, `filterState.${propName}.max`, max);
+  }
+};
+
+const addZillowBooleanFilter = (searchQueryState, propName, val) => {
+  _.set(searchQueryState, `filterState.${propName}`, {
+    value: val
+  });
+};
+//endregion
+
+//region Redfin Comp Url
+export const buildRedfinCompUrl = (property, compFilter, currentPage) => {
+  //region Coords
+  const bounds = getBounds(property, compFilter);
+  //endregion
+
+  // const sqftRandomOffset = 0.02;
+  const sqftRandomOffset = 25;
+
+  const urlParameters = [];
+
+  let compUrl = "https://www.redfin.com/city/30772/OR/Portland/filter/";
+
+  urlParameters.push("sort=lo-distance");
+  urlParameters.push("property-type=house");
+
+  urlParameters.push(addCompUrlParameter("min-beds", compFilter.minBeds, -1));
+  urlParameters.push(addCompUrlParameter("max-beds", compFilter.maxBeds, -1));
+  urlParameters.push(addCompUrlParameter("min-baths", compFilter.minBaths, -1));
+
+  urlParameters.push(
+    addCompUrlParameter(
+      "min-sqft",
+      compFilter.minSqft + _.random(-sqftRandomOffset, sqftRandomOffset, false),
+      -1
+    )
+  );
+  urlParameters.push(
+    addCompUrlParameter(
+      "max-sqft",
+      compFilter.maxSqft + _.random(-sqftRandomOffset, sqftRandomOffset, false),
+      -1
+    )
+  );
+
+  // urlParameters.push(
+  //   addCompUrlParameter(
+  //     "min-sqft",
+  //     compFilter.minSqft + _.random(0, sqftRandomOffset, true),
+  //     -1,
+  //     formatSqftForUrl,
+  //     property.sqft
+  //   )
+  // );
+  // urlParameters.push(
+  //   addCompUrlParameter(
+  //     "max-sqft",
+  //     compFilter.maxSqft + _.random(0, sqftRandomOffset, true),
+  //     -1,
+  //     formatSqftForUrl,
+  //     property.sqft
+  //   )
+  // );
+
+  urlParameters.push(
+    addCompUrlParameter(
+      "min-lot-size",
+      compFilter.minLotSqft,
+      -1,
+      formatSqftForUrl,
+      property.lotSize
+    )
+  );
+  urlParameters.push(
+    addCompUrlParameter(
+      "max-lot-size",
+      compFilter.maxLotSqft,
+      -1,
+      formatSqftForUrl,
+      property.lotSize
+    )
+  );
+  urlParameters.push(
+    addCompUrlParameter("min-year-built", compFilter.minYearBuilt, -1)
+  );
+  urlParameters.push(
+    addCompUrlParameter("max-year-built", compFilter.maxYearBuilt, -1)
+  );
+  urlParameters.push("include=sold-1yr");
+  urlParameters.push(
+    `viewport=${bounds.maxLat.toFixed(5)}:${bounds.minLat.toFixed(
+      5
+    )}:${bounds.maxLon.toFixed(5)}:${bounds.minLon.toFixed(5)}`
+  );
+  urlParameters.push("no-outline");
+
+  const shuffledUrlParameters = _.shuffle(urlParameters);
+  compUrl += _.filter(shuffledUrlParameters, function(i) {
+    return i != "";
+  }).join(",");
+
+  compUrl += `/page-${currentPage}`;
+
+  return compUrl;
+};
+
+const addCompUrlParameter = (
+  paramName,
+  paramValue,
+  ignoreValue = -1,
+  formatFunc = null,
+  formatParam = null
+) => {
+  if (paramValue != ignoreValue) {
+    if (formatFunc != null) {
+      paramValue = formatFunc(formatParam, paramValue);
+    }
+    return `${paramName}=${paramValue}`;
+  } else {
+    return "";
+  }
+};
+
+const formatSqftForUrl = (val, multiplier) => {
+  const adjVal = val + val * multiplier;
+  return `${adjVal.toFixed(0)}-sqft`;
+};
+//endregion

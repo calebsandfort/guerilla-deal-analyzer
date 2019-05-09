@@ -3,6 +3,8 @@ import * as propertyApi from "../../api/property";
 import _ from "lodash";
 import * as utilities from "../../backend/utilities/utilities";
 import * as statuses from "../../backend/enums/statuses";
+import colors from "vuetify/es5/util/colors";
+import uuidv4 from "uuid/v4";
 
 const state = {
   item: null,
@@ -11,6 +13,8 @@ const state = {
   dealComps: [],
   compFilter: utilities.defaultCompFilter(),
   finding: false,
+  findingComps: false,
+  compLog: [],
   search_keywords: [
     "remodel",
     "update",
@@ -89,6 +93,9 @@ export const mutations = {
   setFinding(state, finding) {
     state.finding = finding;
   },
+  setFindingComps(state, findingComps) {
+    state.findingComps = findingComps;
+  },
   setItem(state, item) {
     state.item = item;
   },
@@ -114,6 +121,12 @@ export const mutations = {
   },
   setField(state, payload) {
     _.set(state, payload.name, payload.v);
+  },
+  addCompLogMessage(state, payload) {
+    state.compLog = [payload, ...state.compLog];
+  },
+  clearCompLog(state) {
+    state.compLog = [];
   }
 };
 
@@ -148,14 +161,272 @@ export const actions = {
       compFilter.minBeds = property.beds;
       compFilter.maxBeds = property.beds;
       compFilter.minBaths = 1;
-      compFilter.minSqft = -0.15;
-      compFilter.maxSqft = 0.15;
+
+      // prettier-ignore
+      compFilter.minSqft = parseInt((property.sqft - (property.sqft * 0.15)).toFixed(0));
+
+      // prettier-ignore
+      compFilter.maxSqft = parseInt((property.sqft + (property.sqft * 0.15)).toFixed(0));
+
       commit("setCompFilter", compFilter);
 
-      await dispatch("findComps", findCompsRequest);
+      await dispatch("findCompsV2", findCompsRequest);
     }
 
     commit("setFinding", false);
+  },
+
+  async findProperty({ dispatch, commit, state }, requestVariables) {
+    commit("setFinding", true);
+    const findProperty = await propertyApi.findProperty(
+      apolloClient,
+      requestVariables
+    );
+
+    const property = findProperty.data.findProperty;
+
+    commit("setItem", property);
+    commit("setFinding", false);
+
+    if (requestVariables.triggerFindComps) {
+      const compFilter = utilities.defaultCompFilter();
+      compFilter.minBeds = property.beds;
+      compFilter.maxBeds = property.beds;
+      compFilter.minBaths = 1;
+
+      // prettier-ignore
+      compFilter.minSqft = parseInt((property.sqft - (property.sqft * 0.15)).toFixed(0));
+
+      // prettier-ignore
+      compFilter.maxSqft = parseInt((property.sqft + (property.sqft * 0.15)).toFixed(0));
+
+      commit("setCompFilter", compFilter);
+
+      const findCompsRequest = propertyApi.getRequestVariables();
+      findCompsRequest.useCompCache = true;
+
+      await dispatch("findCompsV2", findCompsRequest);
+    }
+  },
+
+  async findCompsV2({ dispatch, commit, state }, findCompsRequest) {
+    if (findCompsRequest.useCompCache && state.item.compCacheArray.length > 0) {
+      if (state.item.compFilterJson) {
+        commit("setCompFilter", JSON.parse(state.item.compFilterJson));
+      }
+
+      const compCacheRequest = propertyApi.getRequestVariables();
+      compCacheRequest.terms = state.item.compCacheArray;
+      compCacheRequest.search_keywords = state.search_keywords;
+      compCacheRequest.coord.latitude = state.item.latitude;
+      compCacheRequest.coord.longitude = state.item.longitude;
+
+      const response = await propertyApi.findProperties(
+        apolloClient,
+        compCacheRequest
+      );
+      commit("setComps", response.data.findProperties);
+    } else {
+      commit("setFindingComps", true);
+
+      commit("addCompLogMessage", {
+        key: uuidv4(),
+        color: colors.indigo.accent4,
+        title: "Initiating comp search",
+        subTitle: "Contacting Zillow..."
+      });
+
+      //region Zillow
+      // const zillowHtml = window.$(window.$(zillowIframe[0]).attr("srcdoc"));
+      //$($(zillowIframe[0]).attr("srcdoc")).find(".list-card-addr").length
+      //$($(zillowIframe[0]).attr("srcdoc")).find(".zsg-pagination-next").length
+
+      let currentPage = 1;
+      let hasMorePages = true;
+      let compAddresses = [];
+
+      const body = window.$("body");
+
+      while (hasMorePages) {
+        commit("addCompLogMessage", {
+          key: uuidv4(),
+          color: colors.indigo.accent4,
+          title: "Retrieving comp addresses from Zillow",
+          subTitle: `Page ${currentPage}...`
+        });
+
+        let compUrl = utilities.buildZillowCompUrl(
+          state.item,
+          state.compFilter,
+          currentPage
+        );
+
+        const zillowIframe = window.$(
+          "<iframe id='zillowIframe' is='x-frame-bypass'></iframe>"
+        );
+
+        zillowIframe.attr("src", compUrl);
+
+        body.append(zillowIframe);
+
+        await utilities.pause(15);
+
+        // const zillowHtml = window.$(window.$(zillowIframe[0]).attr("srcdoc"));
+        zillowIframe.remove();
+
+        let results = window
+          .$(window.$(zillowIframe[0]).attr("srcdoc"))
+          .find(".zsg-photo-card-address");
+
+        if (results.length == 0) {
+          results = window
+            .$(window.$(zillowIframe[0]).attr("srcdoc"))
+            .find(".list-card-addr");
+        }
+
+        compAddresses = _.concat(
+          compAddresses,
+          _.map(results, function(item) {
+            return window.$(item).html();
+          })
+        );
+
+        const nextPage = window
+          .$(window.$(zillowIframe[0]).attr("srcdoc"))
+          .find(".zsg-pagination-next");
+        if (nextPage.length > 0) {
+          currentPage += 1;
+        } else {
+          hasMorePages = false;
+        }
+      }
+
+      commit("addCompLogMessage", {
+        key: uuidv4(),
+        color: colors.indigo.accent4,
+        title: "Completed Zillow comp search",
+        subTitle: `Found ${compAddresses.length} comps`
+      });
+      //endregion
+
+      //region Redfin Iframe comp work
+      // let currentPage = 1;
+      // let hasMorePages = true;
+      // let compAddresses = [];
+      //
+      // const body = window.$("body");
+      //
+      // while (hasMorePages) {
+      //   commit("addCompLogMessage", {
+      //     key: uuidv4(),
+      //     color: colors.pink.accent4,
+      //     title: "Retrieving comp addresses from Redfin",
+      //     subTitle: `Page ${currentPage}...`
+      //   });
+      //
+      //   let compUrl = utilities.buildRedfinCompUrl(
+      //     state.item,
+      //     state.compFilter,
+      //     currentPage
+      //   );
+      //
+      //   const redfinIframe = window.$(
+      //     "<iframe id='redfinIframe' is='x-frame-bypass'></iframe>"
+      //   );
+      //
+      //   redfinIframe.attr("src", compUrl);
+      //
+      //   body.append(redfinIframe);
+      //
+      //   await utilities.pause(15);
+      //
+      //   const redfinHtml = window.$(redfinIframe.attr("srcdoc"));
+      //   redfinIframe.remove();
+      //
+      //   const results = redfinHtml.find(
+      //     ".HomeViews .HomeCardContainer > .HomeCard > .v2 > a"
+      //   );
+      //   compAddresses = _.concat(
+      //     compAddresses,
+      //     _.map(results, function(item) {
+      //       return window.$(item).attr("title");
+      //     })
+      //   );
+      //
+      //   const nextPage = redfinHtml.find(
+      //     ".PagingControls button:not(.disabled) .slide-next"
+      //   );
+      //   if (nextPage.length > 0) {
+      //     currentPage += 1;
+      //   } else {
+      //     hasMorePages = false;
+      //   }
+      // }
+      //
+      // commit("addCompLogMessage", {
+      //   key: uuidv4(),
+      //   color: colors.pink.accent4,
+      //   title: "Completed Redfin comp search",
+      //   subTitle: `Found ${compAddresses.length} comps`
+      // });
+
+      //endregion
+
+      commit("addCompLogMessage", {
+        key: uuidv4(),
+        color: colors.pink.darken1,
+        title: "Retrieving individual comp info",
+        subTitle: `Contacting Zillow...`
+      });
+
+      const comps = [];
+
+      for (let i = 0; i < compAddresses.length; i++) {
+        commit("addCompLogMessage", {
+          key: uuidv4(),
+          color: colors.pink.darken1,
+          title: `Retrieving comp ${i + 1} of ${compAddresses.length}`,
+          subTitle: `${compAddresses[i]}`
+        });
+
+        const pr = propertyApi.getRequestVariables();
+        pr.term = compAddresses[i];
+        pr.search_keywords = state.search_keywords;
+        pr.tag = `COMP ${state.item.streetAddress}`;
+        pr.status = statuses.statuses.COMP.value;
+        pr.persist = findCompsRequest.persist;
+        pr.coord.latitude = state.item.latitude;
+        pr.coord.longitude = state.item.longitude;
+
+        const r = await propertyApi.findProperty(apolloClient, pr);
+
+        if (
+          _.findIndex(comps, function(c) {
+            return c.id == r.data.findProperty.id;
+          }) == -1
+        ) {
+          comps.push(r.data.findProperty);
+        }
+      }
+
+      commit("setComps", comps);
+      commit("setFindingComps", false);
+      commit("clearCompLog");
+
+      const compCacheUpdateRequest = propertyApi.getRequestVariables();
+      compCacheUpdateRequest.id = parseInt(state.item.id);
+      compCacheUpdateRequest.search_keywords = state.search_keywords;
+      compCacheUpdateRequest.input = {
+        compCache: _.uniq(
+          _.map(comps, function(c) {
+            return c.id;
+          })
+        ).join(","),
+        compFilterJson: JSON.stringify(state.compFilter)
+      };
+
+      dispatch("compCacheUpdate", compCacheUpdateRequest);
+    }
   },
 
   async findComps({ commit, state }, requestVariables) {
@@ -177,7 +448,6 @@ export const actions = {
       requestVariables
     );
 
-    debugger;
     const comps = response.data.findComps;
 
     if (comps.length > 0 && comps[0].zillow_propertyId == 0) {
@@ -207,8 +477,17 @@ export const actions = {
       }
     }
   },
+
   setField({ commit }, payload) {
     commit("setField", payload);
+  },
+
+  async compCacheUpdate({ commit }, requestVariables) {
+    const response = await propertyApi.compCacheUpdate(
+      apolloClient,
+      requestVariables
+    );
+    commit("setItem", response.data.compCacheUpdate);
   }
 };
 

@@ -191,17 +191,17 @@
 <script>
 import _ from "lodash";
 import { mapState, mapMutations, mapActions } from "vuex";
-import { getRequestVariables as propertyRequest } from "../../api/property";
+import { getRequestVariables as propertyRequest } from "../../../api/property";
 import formatMoney from "accounting-js/lib/formatMoney";
 import formatNumber from "accounting-js/lib/formatNumber";
-import * as statuses from "../../backend/enums/statuses";
-import * as engagements from "../../backend/enums/engagements";
-import * as utilities from "../../backend/utilities/utilities";
-import ExpandoProperty from "../Property/ExpandoProperty";
-import PropertyDetails from "../Property/PropertyDetails";
+import * as statuses from "../../../backend/enums/statuses";
+import * as engagements from "../../../backend/enums/engagements";
+import * as utilities from "../../../backend/utilities/utilities";
+import ExpandoProperty from "../../Property/ExpandoProperty";
+import PropertyDetails from "../../Property/PropertyDetails";
 import CompFiltersDialog from "./CompFilters/CompFiltersDialog";
 import colors from "vuetify/es5/util/colors";
-import VuetifyNumeric from "../Shared/VuetifyNumeric";
+import VuetifyNumeric from "../../Shared/VuetifyNumeric";
 
 export default {
   name: "CompPackageV2",
@@ -262,14 +262,14 @@ export default {
     }
   },
   mounted() {
-    // const that = this;
-    // that.compTableHeight = window.$(window).height() - 625;
-    //
-    // window.$(window).resize(
-    //   _.debounce(function(args) {
-    //     that.compTableHeight = window.$(window).height() - 625;
-    //   })
-    // );
+    const that = this;
+    that.compTableHeight = window.$(window).height() - 625;
+
+    window.$(window).resize(
+      _.debounce(function(args) {
+        that.compTableHeight = window.$(window).height() - 625;
+      })
+    );
   },
   computed: {
     ...mapState({
@@ -384,7 +384,7 @@ export default {
     }),
     ...mapActions({
       setField: "dealWizard/setField",
-      findComps: "dealWizard/findComps"
+      findComps: "dealWizard/findCompsV2"
     }),
     formatMoney: formatMoney,
     formatNumber: formatNumber,
