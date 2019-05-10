@@ -15,31 +15,31 @@
             :max.sync="localCompFilter.maxBeds"
             :items="dealWizardStore.listItems.amenityCount"
           ></MinMaxRowSelect>
-          <v-layout row>
-            <v-flex xs6>
-              <VuetifyNumeric
-                field="minSqft"
-                label="Min Sqft"
-                :value="localCompFilter.minSqft"
-                v-on:input="fieldChangedNumber"
-              >
-              </VuetifyNumeric>
-            </v-flex>
-            <v-flex xs6>
-              <VuetifyNumeric
-                field="maxSqft"
-                label="Max Sqft"
-                :value="localCompFilter.maxSqft"
-                v-on:input="fieldChangedNumber"
-              >
-              </VuetifyNumeric>
-            </v-flex>
-          </v-layout>
-          <!--          <MinMaxRowNumeric-->
-          <!--            label="Sqft"-->
-          <!--            :min.sync="localCompFilter.minSqft"-->
-          <!--            :max.sync="localCompFilter.maxSqft"-->
-          <!--          ></MinMaxRowNumeric>-->
+          <!--          <v-layout row>-->
+          <!--            <v-flex xs6>-->
+          <!--              <VuetifyNumeric-->
+          <!--                field="minSqft"-->
+          <!--                label="Min Sqft"-->
+          <!--                :value="localCompFilter.minSqft"-->
+          <!--                v-on:input="fieldChangedNumber"-->
+          <!--              >-->
+          <!--              </VuetifyNumeric>-->
+          <!--            </v-flex>-->
+          <!--            <v-flex xs6>-->
+          <!--              <VuetifyNumeric-->
+          <!--                field="maxSqft"-->
+          <!--                label="Max Sqft"-->
+          <!--                :value="localCompFilter.maxSqft"-->
+          <!--                v-on:input="fieldChangedNumber"-->
+          <!--              >-->
+          <!--              </VuetifyNumeric>-->
+          <!--            </v-flex>-->
+          <!--          </v-layout>-->
+          <MinMaxRowNumeric
+            label="Sqft"
+            :min.sync="localCompFilter.minSqft"
+            :max.sync="localCompFilter.maxSqft"
+          ></MinMaxRowNumeric>
           <MinMaxRowSelect
             label="Lot Size"
             :min.sync="localCompFilter.minLotSqft"

@@ -2,7 +2,7 @@
   <v-text-field
     :label="label"
     :placeholder="placeholder"
-    :readonly="readOnly"
+    :readonly="readonly"
     :success="success"
     :outline="outline"
     @blur="onBlurHandler"
@@ -143,7 +143,6 @@ export default {
      * v-model value.
      */
     value: {
-      type: [Number, String],
       default: 0,
       required: true
     },
@@ -151,7 +150,7 @@ export default {
     /**
      * Hide input and show value in text only.
      */
-    readOnly: {
+    readonly: {
       type: Boolean,
       default: false,
       required: false

@@ -276,7 +276,7 @@ export const actions = {
 
         body.append(zillowIframe);
 
-        await utilities.pause(15);
+        await utilities.pause(45);
 
         // const zillowHtml = window.$(window.$(zillowIframe[0]).attr("srcdoc"));
         zillowIframe.remove();
@@ -420,19 +420,21 @@ export const actions = {
       commit("setFindingComps", false);
       commit("clearCompLog");
 
-      const compCacheUpdateRequest = propertyApi.getRequestVariables();
-      compCacheUpdateRequest.id = parseInt(state.item.id);
-      compCacheUpdateRequest.search_keywords = state.search_keywords;
-      compCacheUpdateRequest.input = {
-        compCache: _.uniq(
-          _.map(comps, function(c) {
-            return c.id;
-          })
-        ).join(","),
-        compFilterJson: JSON.stringify(state.compFilter)
-      };
+      if (comps.length > 0) {
+        const compCacheUpdateRequest = propertyApi.getRequestVariables();
+        compCacheUpdateRequest.id = parseInt(state.item.id);
+        compCacheUpdateRequest.search_keywords = state.search_keywords;
+        compCacheUpdateRequest.input = {
+          compCache: _.uniq(
+            _.map(comps, function(c) {
+              return c.id;
+            })
+          ).join(","),
+          compFilterJson: JSON.stringify(state.compFilter)
+        };
 
-      dispatch("compCacheUpdate", compCacheUpdateRequest);
+        dispatch("compCacheUpdate", compCacheUpdateRequest);
+      }
     }
   },
 

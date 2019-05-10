@@ -4,7 +4,7 @@
       <v-flex xs8>
         <GmapMap
           :center="map_center"
-          :zoom="14"
+          :zoom="13"
           map-type-id="roadmap"
           :style="{
             width: '100%',
@@ -49,6 +49,7 @@
               field="arv_average"
               label="Avg Sale Price"
               currency="$"
+              :readonly="true"
               :value="arv_average"
             >
             </VuetifyNumeric>
@@ -58,6 +59,7 @@
               field="arv_pricePerSqft"
               label="Avg Price Per Sqft"
               currency="$"
+              :readonly="true"
               :value="arv_pricePerSqft"
             >
             </VuetifyNumeric>

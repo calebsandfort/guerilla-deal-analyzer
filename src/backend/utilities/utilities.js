@@ -1999,6 +1999,9 @@ export const buildZillowCompUrl = (property, compFilter, currentPage) => {
     filterState: {
       doz: {
         value: "12m"
+      },
+      sortSelection: {
+        value: "days"
       }
     }
   };
@@ -2038,11 +2041,13 @@ export const buildZillowCompUrl = (property, compFilter, currentPage) => {
     compFilter.maxBaths
   );
 
+  const sqftRandomOffset = 25;
+
   addZillowMinMaxFilter(
     searchQueryState,
     "sqft",
-    compFilter.minSqft,
-    compFilter.maxSqft
+    compFilter.minSqft + _.random(-sqftRandomOffset, sqftRandomOffset, false),
+    compFilter.maxSqft + _.random(-sqftRandomOffset, sqftRandomOffset, false)
   );
 
   addZillowMinMaxFilter(

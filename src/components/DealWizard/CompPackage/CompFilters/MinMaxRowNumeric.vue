@@ -2,7 +2,7 @@
   <v-layout row>
     <v-flex xs6>
       <VuetifyNumeric
-        @input="$emit('update:min', $event)"
+        @input="$emit('update:min', $event.value)"
         :label="minLabel"
         :value="min"
       >
@@ -10,7 +10,7 @@
     </v-flex>
     <v-flex xs6>
       <VuetifyNumeric
-        @input="$emit('update:max', $event)"
+        @input="$emit('update:max', $event.value)"
         :label="minLabel"
         :value="max"
       >
@@ -32,11 +32,11 @@ export default {
       type: String
     },
     min: {
-      type: Number,
+      required: true,
       default: -1
     },
     max: {
-      type: Number,
+      required: true,
       default: -1
     }
   },
