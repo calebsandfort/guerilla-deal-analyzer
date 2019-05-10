@@ -6,6 +6,7 @@ import compPackageSchema from "./compPackage";
 import compSchema from "./comp";
 import repairEstimateSchema from "./repairEstimate";
 import repairEstimateSectionSchema from "./repairEstimateSection";
+import repairEstimateSubSectionSchema from "./repairEstimateSubSection";
 import repairEstimateLineItemSchema from "./repairEstimateLineItem";
 import entityQuerySchema from "./entityQuery";
 
@@ -31,6 +32,7 @@ export default [
   compSchema,
   repairEstimateSchema,
   repairEstimateSectionSchema,
+  repairEstimateSubSectionSchema,
   repairEstimateLineItemSchema,
   entityQuerySchema
 ];

@@ -26,7 +26,7 @@ const repairEstimateLineItem = (sequelize, DataTypes) => {
       defaultValue: 0,
       allowNull: false
     },
-    repairCost: {
+    totalCost: {
       type: DataTypes.FLOAT,
       defaultValue: 0,
       allowNull: false
@@ -34,7 +34,7 @@ const repairEstimateLineItem = (sequelize, DataTypes) => {
   });
 
   RepairEstimateLineItem.associate = models => {
-    RepairEstimateLineItem.belongsTo(models.RepairEstimateSection, {
+    RepairEstimateLineItem.belongsTo(models.RepairEstimateSubSection, {
       onDelete: "CASCADE"
     });
   };

@@ -27,15 +27,13 @@ export default gql`
     selected: Boolean
     title: String
     totalCost: Float
-    sectionType: Int
-    lineItems: [RepairEstimateLineItem]
+    subSections: [RepairEstimateSubSection]
   }
   input RepairEstimateSectionInput {
     repairEstimateSectionId: ID!
     selected: Boolean
     title: String
     totalCost: Float
-    sectionType: Int
-    lineItems: [RepairEstimateLineItemInput]
+    subSections: [RepairEstimateSubSectionInput]
   }
 `;

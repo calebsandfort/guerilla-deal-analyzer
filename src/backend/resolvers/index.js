@@ -6,6 +6,7 @@ import dealAnalysisResolvers from "./dealAnalysis";
 import compResolvers from "./comp";
 import repairEstimateResolvers from "./repairEstimate";
 import repairEstimateSectionResolvers from "./repairEstimateSection";
+import repairEstimateSubSectionResolvers from "./repairEstimateSubSection";
 import repairEstimateLineItemResolvers from "./repairEstimateLineItem";
 // import {scalarResolverMap} from './scalars'
 
@@ -22,5 +23,6 @@ export default [
   compResolvers,
   repairEstimateResolvers,
   repairEstimateSectionResolvers,
+  repairEstimateSubSectionResolvers,
   repairEstimateLineItemResolvers
 ];

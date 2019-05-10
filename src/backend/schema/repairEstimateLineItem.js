@@ -29,7 +29,7 @@ export default gql`
     quantity: Float
     unit: Int
     unitCost: Float
-    repairCost: Float
+    totalCost: Float
   }
   input RepairEstimateLineItemInput {
     repairEstimateLineItemId: ID!
@@ -37,7 +37,7 @@ export default gql`
     name: String
     quantity: Float
     unit: Int
-    unitCost: Float
+    totalCost: Float
     repairCost: Float
   }
 `;

@@ -5,12 +5,6 @@ const repairEstimateSection = (sequelize, DataTypes) => {
       defaultValue: false,
       allowNull: false
     },
-    title: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      length: 100,
-      defaultValue: ""
-    },
     totalCost: {
       type: DataTypes.FLOAT,
       defaultValue: 0,

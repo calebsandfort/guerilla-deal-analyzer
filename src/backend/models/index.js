@@ -18,6 +18,7 @@ const models = {
   DealAnalysis: sequelize.import("./dealAnalysis"),
   RepairEstimate: sequelize.import("./repairEstimate"),
   RepairEstimateSection: sequelize.import("./repairEstimateSection"),
+  RepairEstimateSubSection: sequelize.import("./repairEstimateSubSection"),
   RepairEstimateLineItem: sequelize.import("./repairEstimateLineItem")
 };
 

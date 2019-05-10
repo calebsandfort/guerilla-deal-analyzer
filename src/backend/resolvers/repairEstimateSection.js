@@ -50,10 +50,10 @@ export default {
   },
 
   RepairEstimateSection: {
-    lineItems: async (repairEstimateSection, args, { models }) => {
-      return await models.RepairEstimateLineItem.findAll({
+    subSections: async (repairEstimateSection, args, { models }) => {
+      return await models.RepairEstimateSubSection.findAll({
         where: {
-          repairEstimateSectionId: repairEstimateSection.id
+          repairEstimateSubSectionId: repairEstimateSection.id
         }
       });
     }
