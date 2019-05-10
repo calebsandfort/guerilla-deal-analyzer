@@ -24,7 +24,7 @@
           </v-flex>
         </v-layout>
       </v-container>
-      <v-container fluid grid-list-lg>
+      <v-container fluid grid-list-lg class="pa-3">
         <v-layout row>
           <v-flex xs4>
             <v-layout v-if="property" row>

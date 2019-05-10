@@ -1,12 +1,15 @@
 <template>
-  <v-container fluid grid-list-lg>
+  <v-container fluid grid-list-lg class="pa-3">
     <v-layout row>
       <v-flex xs8>
         <GmapMap
           :center="map_center"
-          :zoom="13"
+          :zoom="14"
           map-type-id="roadmap"
-          style="width: 100%; height: 400px"
+          :style="{
+            width: '100%',
+            height: `${mapHeight}px`
+          }"
         >
           <GmapPolyline
             :path="search_path"
@@ -215,7 +218,8 @@ export default {
   data() {
     return {
       loading: false,
-      compTableHeight: 500,
+      mapHeight: 300,
+      compTableHeight: 300,
       headers: [
         { text: "", value: "id" },
         {
@@ -263,11 +267,16 @@ export default {
   },
   mounted() {
     const that = this;
-    that.compTableHeight = window.$(window).height() - 625;
+    const availableHeight = window.$(window).height() - 195;
+    that.mapHeight = that.compTableHeight = Math.max(300, availableHeight / 2);
 
     window.$(window).resize(
       _.debounce(function(args) {
-        that.compTableHeight = window.$(window).height() - 625;
+        const availableHeight = window.$(window).height() - 195;
+        that.mapHeight = that.compTableHeight = Math.max(
+          300,
+          availableHeight / 2
+        );
       })
     );
   },
@@ -460,4 +469,15 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+table.v-table tbody td:first-child,
+table.v-table tbody td:not(:first-child),
+table.v-table tbody th:first-child,
+table.v-table tbody th:not(:first-child),
+table.v-table thead td:first-child,
+table.v-table thead td:not(:first-child),
+table.v-table thead th:first-child,
+table.v-table thead th:not(:first-child) {
+  padding: 0 12px;
+}
+</style>
