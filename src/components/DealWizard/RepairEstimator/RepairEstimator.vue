@@ -4,10 +4,66 @@
       <v-flex xs8>
         <v-layout row>
           <v-flex shrink align-self-center>
-            Quick Estimates
+            Quick Estimate
           </v-flex>
           <v-flex shrink>
-            <v-switch :value="repairEstimate.quick" class="pl-4"></v-switch>
+            <v-switch
+              :value="repairEstimate.quick"
+              class="pl-4"
+              v-on:change="
+                setField({
+                  name: 'repairEstimate.quick',
+                  v: $event
+                })
+              "
+            ></v-switch>
+          </v-flex>
+        </v-layout>
+        <v-layout row>
+          <v-flex xs12>
+            <v-stepper non-linear>
+              <v-stepper-header>
+                <template
+                  v-for="(repairEstimateSection,
+                  idx) in repairEstimate.sections"
+                >
+                  <v-stepper-step
+                    :key="`${idx}-step`"
+                    :step="repairEstimateSection.sectionType"
+                    complete
+                    editable
+                  >
+                    {{
+                      repairEstimateSectionTypes.getDisplayForValue(
+                        repairEstimateSection.sectionType
+                      )
+                    }}
+                  </v-stepper-step>
+                  <v-divider
+                    :key="`${idx}-divider`"
+                    v-if="idx < repairEstimate.sections.length - 1"
+                  ></v-divider>
+                </template>
+              </v-stepper-header>
+              <v-stepper-items>
+                <template
+                  v-for="(repairEstimateSection,
+                  idx) in repairEstimate.sections"
+                >
+                  <v-stepper-content
+                    :key="`${idx}-step-content`"
+                    :step="repairEstimateSection.sectionType"
+                    editable
+                  >
+                    {{
+                      repairEstimateSectionTypes.getDisplayForValue(
+                        repairEstimateSection.sectionType
+                      )
+                    }}
+                  </v-stepper-content>
+                </template>
+              </v-stepper-items>
+            </v-stepper>
           </v-flex>
         </v-layout>
       </v-flex>
@@ -44,6 +100,7 @@ import _ from "lodash";
 import { mapState, mapMutations, mapActions } from "vuex";
 import * as utilities from "../../../backend/utilities/utilities";
 import VuetifyNumeric from "../../Shared/VuetifyNumeric";
+import * as repairEstimateSectionTypes from "../../../backend/enums/repairEstimateSectionTypes";
 
 export default {
   name: "RepairEstimator",
@@ -59,6 +116,11 @@ export default {
     //     that.compTableHeight = window.$(window).height() - 625;
     //   })
     // );
+  },
+  data() {
+    return {
+      repairEstimateSectionTypes
+    };
   },
   computed: {
     ...mapState({

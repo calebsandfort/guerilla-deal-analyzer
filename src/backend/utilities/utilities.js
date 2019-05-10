@@ -4,28 +4,42 @@ import * as repairEstimateSectionTypes from "../enums/repairEstimateSectionTypes
 import { statuses } from "../enums/statuses";
 import querystring from "querystring";
 
-export const setPropertyFromObject = (
-  source,
-  sourcePath,
-  target,
-  targetPath,
-  defaultValue
-) => {
-  let propValue = _.get(source, sourcePath, defaultValue);
-  if (propValue == null) {
-    propValue = defaultValue;
-  }
-  _.set(target, targetPath, propValue);
-};
-
-export const writeFile = (fileName, content) => {
-  fs.writeFile(fileName, content, err => {
-    // throws an error, you could also catch it here
-    if (err) throw err;
-
-    // success case, the file was saved
-    console.log(`${fileName} saved.`);
-  });
+//region Property Functions
+export const newProperty = () => {
+  return {
+    zillow_propertyId: 0,
+    zillow_path: "",
+    zillow_url: "",
+    zillow_imageUrl: "",
+    // zillow_imageUrl: '',
+    streetAddress: "",
+    city: "",
+    state: "",
+    zipcode: "",
+    address: "",
+    price: -1,
+    // propertyTaxesAnnually: 0,
+    // propertyTaxesMonthly: 0,
+    // insuranceAnnually: 0,
+    // insuranceMonthly: 0,
+    sqft: -1,
+    //listingPriceSqft: 0,
+    beds: -1,
+    baths: -1,
+    description: "",
+    zestimate: -1,
+    price_to_zestimate: -1,
+    date_listed: -1,
+    zillow_status: "",
+    year_built: -1,
+    image_urls: "",
+    date_sold: -1,
+    latitude: -1,
+    longitude: -1,
+    notes: "",
+    status: statuses.ACTIVE.value,
+    compCache: ""
+  };
 };
 
 export const setKeywordsForList = (list, textPath, search_keywords) => {
@@ -105,70 +119,22 @@ export const haversineDistance = function(coords1, coords2, isMiles) {
   return d;
 };
 
-export const tryParseNumber = function(str, defaultValue) {
-  var retValue = defaultValue;
-  if (str !== null) {
-    if (str.length > 0) {
-      if (!isNaN(str)) {
-        retValue = parseFloat(str);
-      }
-    }
+export const setPropertyFromObject = (
+  source,
+  sourcePath,
+  target,
+  targetPath,
+  defaultValue
+) => {
+  let propValue = _.get(source, sourcePath, defaultValue);
+  if (propValue == null) {
+    propValue = defaultValue;
   }
-  return retValue;
+  _.set(target, targetPath, propValue);
 };
+//endregion
 
-export const defaultCompFilter = () => {
-  return {
-    minBeds: -1,
-    maxBeds: -1,
-    minSqft: -1,
-    maxSqft: -1,
-    minLotSqft: -1,
-    maxLotSqft: -1,
-    minYearBuilt: -1,
-    maxYearBuilt: -1,
-    minBaths: -1,
-    searchDistance: 1
-  };
-};
-
-export const newProperty = () => {
-  return {
-    zillow_propertyId: 0,
-    zillow_path: "",
-    zillow_url: "",
-    zillow_imageUrl: "",
-    // zillow_imageUrl: '',
-    streetAddress: "",
-    city: "",
-    state: "",
-    zipcode: "",
-    address: "",
-    price: -1,
-    // propertyTaxesAnnually: 0,
-    // propertyTaxesMonthly: 0,
-    // insuranceAnnually: 0,
-    // insuranceMonthly: 0,
-    sqft: -1,
-    //listingPriceSqft: 0,
-    beds: -1,
-    baths: -1,
-    description: "",
-    zestimate: -1,
-    price_to_zestimate: -1,
-    date_listed: -1,
-    zillow_status: "",
-    year_built: -1,
-    image_urls: "",
-    date_sold: -1,
-    latitude: -1,
-    longitude: -1,
-    notes: "",
-    status: statuses.ACTIVE.value,
-    compCache: ""
-  };
-};
-
+//region Repair Estimate Functions
 export const newRepairEstimate = () => {
   return {
     title: "Repair Estimate",
@@ -1946,8 +1912,33 @@ export const newRepairEstimate = () => {
   };
 };
 
-export const pause = seconds => {
-  return new Promise(r => setTimeout(r, 1000 * seconds));
+export const reconcileRepairEstimate = repairEstimate => {
+  _.each(repairEstimate.sections, function(section) {
+    _.each(section.subSections, function(subSection) {
+      _.each(subSection.lineItems, function(lineItem) {
+        if (lineItem.selected) {
+          lineItem.totalCost = lineItem.quantity * lineItem.unitCost;
+        }
+      });
+    });
+  });
+};
+//endregion
+
+//region Comp Functions
+export const defaultCompFilter = () => {
+  return {
+    minBeds: -1,
+    maxBeds: -1,
+    minSqft: -1,
+    maxSqft: -1,
+    minLotSqft: -1,
+    maxLotSqft: -1,
+    minYearBuilt: -1,
+    maxYearBuilt: -1,
+    minBaths: -1,
+    searchDistance: 1
+  };
 };
 
 export const getBounds = (property, compFilter) => {
@@ -2202,5 +2193,34 @@ const addCompUrlParameter = (
 const formatSqftForUrl = (val, multiplier) => {
   const adjVal = val + val * multiplier;
   return `${adjVal.toFixed(0)}-sqft`;
+};
+//endregion
+//endregion
+
+//region Misc Functions
+export const pause = seconds => {
+  return new Promise(r => setTimeout(r, 1000 * seconds));
+};
+
+export const writeFile = (fileName, content) => {
+  fs.writeFile(fileName, content, err => {
+    // throws an error, you could also catch it here
+    if (err) throw err;
+
+    // success case, the file was saved
+    console.log(`${fileName} saved.`);
+  });
+};
+
+export const tryParseNumber = function(str, defaultValue) {
+  var retValue = defaultValue;
+  if (str !== null) {
+    if (str.length > 0) {
+      if (!isNaN(str)) {
+        retValue = parseFloat(str);
+      }
+    }
+  }
+  return retValue;
 };
 //endregion

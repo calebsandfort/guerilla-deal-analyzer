@@ -37,7 +37,7 @@ export default gql`
     name: String
     quantity: Float
     unit: Int
+    unitCost: Float
     totalCost: Float
-    repairCost: Float
   }
 `;
