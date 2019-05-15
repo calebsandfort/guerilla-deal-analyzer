@@ -1,7 +1,7 @@
 <template>
   <v-container fluid grid-list-lg class="pa-3">
     <v-layout row>
-      <v-flex xs8>
+      <v-flex xs9>
         <GmapMap
           :center="map_center"
           :zoom="13"
@@ -42,7 +42,7 @@
           />
         </GmapMap>
       </v-flex>
-      <v-flex xs4>
+      <v-flex xs3>
         <v-layout row wrap>
           <v-flex xs12>
             <VuetifyNumeric
@@ -97,6 +97,7 @@
           :loading="loading"
           :items="filteredComps"
           item-key="zillow_propertyId"
+          class="condensed-table"
           :style="{
             'max-height': `${compTableHeight}px`,
             overflow: 'auto'
@@ -143,7 +144,7 @@
                   engagements.engagements.SPOTLIGHT.value
               }"
             >
-              <td class="text-xs-left">
+              <td class="text-xs-left" style="width: 10px;">
                 <v-layout row>
                   <v-flex xs3 align-self-center>
                     <v-checkbox
@@ -471,15 +472,4 @@ export default {
 };
 </script>
 
-<style scoped>
-table.v-table tbody td:first-child,
-table.v-table tbody td:not(:first-child),
-table.v-table tbody th:first-child,
-table.v-table tbody th:not(:first-child),
-table.v-table thead td:first-child,
-table.v-table thead td:not(:first-child),
-table.v-table thead th:first-child,
-table.v-table thead th:not(:first-child) {
-  padding: 0 12px;
-}
-</style>
+<style scoped></style>

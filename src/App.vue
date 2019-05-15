@@ -21,3 +21,25 @@ export default {
   }
 };
 </script>
+
+<style>
+.hide-text-field-details .v-text-field__details {
+  display: none;
+}
+
+.small-text-field {
+  font-size: 14px;
+  padding: 0 4px;
+}
+
+.condensed-table table.v-table tbody td:first-child,
+.condensed-table table.v-table tbody td:not(:first-child),
+.condensed-table table.v-table tbody th:first-child,
+.condensed-table table.v-table tbody th:not(:first-child),
+.condensed-table table.v-table thead td:first-child,
+.condensed-table table.v-table thead td:not(:first-child),
+.condensed-table table.v-table thead th:first-child,
+.condensed-table table.v-table thead th:not(:first-child) {
+  padding: 0 12px;
+}
+</style>

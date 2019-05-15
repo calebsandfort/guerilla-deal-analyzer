@@ -10,6 +10,7 @@
     @focus="onFocusHandler"
     ref="numeric"
     v-model="amount"
+    :class="cssClass"
   ></v-text-field>
 </template>
 
@@ -34,7 +35,11 @@ export default {
       default: "",
       required: false
     },
-
+    cssClass: {
+      type: String,
+      default: "",
+      required: false
+    },
     /**
      * Currency symbol.
      */
@@ -186,7 +191,8 @@ export default {
   },
 
   data: () => ({
-    amount: ""
+    amount: "",
+    mountedFinished: false
   }),
 
   computed: {
@@ -285,6 +291,7 @@ export default {
       setTimeout(() => {
         this.process(this.valueNumber);
         this.amount = this.format(this.valueNumber);
+        this.mountedFinished = true;
       }, 500);
     }
   },
@@ -347,10 +354,13 @@ export default {
         this.outputType.toLowerCase() === "string"
           ? fixedValue
           : Number(fixedValue);
-      this.$emit("input", {
-        field: this.field,
-        value: output
-      });
+
+      if (this.mountedFinished) {
+        this.$emit("input", {
+          field: this.field,
+          value: output
+        });
+      }
     },
 
     /**

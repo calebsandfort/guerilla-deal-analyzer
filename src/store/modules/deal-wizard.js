@@ -131,6 +131,22 @@ export const mutations = {
   },
   clearCompLog(state) {
     state.compLog = [];
+  },
+  setRepairEstimateSqft(state) {
+    const re = utilities.newRepairEstimate();
+    utilities.setRepairEstimateSqft(re, state.item.sqft);
+    state.repairEstimate = re;
+  },
+  updateRepairEstimateLineItem(state, payload) {
+    const temp = Object.assign({}, state.repairEstimate);
+    utilities.updateRepairEstimateLineItem(
+      temp,
+      payload.key,
+      payload.field,
+      payload.val
+    );
+
+    state.repairEstimate = temp;
   }
 };
 
@@ -190,6 +206,7 @@ export const actions = {
     const property = findProperty.data.findProperty;
 
     commit("setItem", property);
+    commit("setRepairEstimateSqft");
     commit("setFinding", false);
 
     if (requestVariables.triggerFindComps) {

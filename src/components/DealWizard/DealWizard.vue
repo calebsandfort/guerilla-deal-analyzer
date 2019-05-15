@@ -135,7 +135,7 @@ export default {
   },
   data() {
     return {
-      address: "3117 NE 33rd Ave",
+      address: "11335 SE Pine St",
       activeGalleryRef: "",
       engagements: engagements
     };

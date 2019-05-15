@@ -1,7 +1,59 @@
 <template>
-  <v-container fluid grid-list-lg>
+  <v-container fluid grid-list-lg class="pa-3">
     <v-layout row>
-      <v-flex xs8>
+      <v-flex xs9>
+        <v-layout row v-if="!repairEstimate.quick">
+          <v-flex xs12>
+            <v-stepper non-linear>
+              <v-stepper-header>
+                <template
+                  v-for="(repairEstimateSection,
+                  idx) in repairEstimate.sections"
+                >
+                  <v-stepper-step
+                    :key="`${idx}-step`"
+                    :step="repairEstimateSection.sectionType"
+                    editable
+                  >
+                    {{
+                      repairEstimateSectionTypes.getDisplayForValue(
+                        repairEstimateSection.sectionType
+                      )
+                    }}
+                  </v-stepper-step>
+                  <v-divider
+                    :key="`${idx}-divider`"
+                    v-if="idx < repairEstimate.sections.length - 1"
+                  ></v-divider>
+                </template>
+              </v-stepper-header>
+              <v-stepper-items
+                :style="{
+                  'max-height': `${stepperHeight}px`,
+                  overflow: 'auto'
+                }"
+              >
+                <template
+                  v-for="(repairEstimateSection,
+                  idx) in repairEstimate.sections"
+                >
+                  <v-stepper-content
+                    :key="`${idx}-step-content`"
+                    :step="repairEstimateSection.sectionType"
+                    editable
+                    class="pa-2"
+                  >
+                    <RepairEstimateSection
+                      :section-type="repairEstimateSection.sectionType"
+                    ></RepairEstimateSection>
+                  </v-stepper-content>
+                </template>
+              </v-stepper-items>
+            </v-stepper>
+          </v-flex>
+        </v-layout>
+      </v-flex>
+      <v-flex xs3>
         <v-layout row>
           <v-flex shrink align-self-center>
             Quick Estimate
@@ -19,55 +71,6 @@
             ></v-switch>
           </v-flex>
         </v-layout>
-        <v-layout row>
-          <v-flex xs12>
-            <v-stepper non-linear>
-              <v-stepper-header>
-                <template
-                  v-for="(repairEstimateSection,
-                  idx) in repairEstimate.sections"
-                >
-                  <v-stepper-step
-                    :key="`${idx}-step`"
-                    :step="repairEstimateSection.sectionType"
-                    complete
-                    editable
-                  >
-                    {{
-                      repairEstimateSectionTypes.getDisplayForValue(
-                        repairEstimateSection.sectionType
-                      )
-                    }}
-                  </v-stepper-step>
-                  <v-divider
-                    :key="`${idx}-divider`"
-                    v-if="idx < repairEstimate.sections.length - 1"
-                  ></v-divider>
-                </template>
-              </v-stepper-header>
-              <v-stepper-items>
-                <template
-                  v-for="(repairEstimateSection,
-                  idx) in repairEstimate.sections"
-                >
-                  <v-stepper-content
-                    :key="`${idx}-step-content`"
-                    :step="repairEstimateSection.sectionType"
-                    editable
-                  >
-                    {{
-                      repairEstimateSectionTypes.getDisplayForValue(
-                        repairEstimateSection.sectionType
-                      )
-                    }}
-                  </v-stepper-content>
-                </template>
-              </v-stepper-items>
-            </v-stepper>
-          </v-flex>
-        </v-layout>
-      </v-flex>
-      <v-flex xs4>
         <v-layout row wrap>
           <v-flex xs12>
             <v-text-field
@@ -75,15 +78,42 @@
               label="Title"
               :value="repairEstimate.title"
               v-on:keyup="fieldChangedText"
+              class="hide-text-field-details"
             ></v-text-field>
           </v-flex>
-          <v-flex xs12 v-if="repairEstimate.quick">
+          <template
+            v-for="(repairEstimateSection, idx) in repairEstimate.sections"
+          >
+            <v-flex
+              :key="`${idx}-side-display`"
+              xs12
+              v-if="!repairEstimate.quick"
+            >
+              <VuetifyNumeric
+                :label="
+                  repairEstimateSectionTypes.getDisplayForValue(
+                    repairEstimateSection.sectionType
+                  )
+                "
+                css-class="hide-text-field-details"
+                currency="$"
+                :precision="2"
+                :readonly="true"
+                :value="repairEstimateSection.totalCost"
+              >
+              </VuetifyNumeric>
+            </v-flex>
+          </template>
+          <v-flex xs12>
             <VuetifyNumeric
               field="repairEstimate.totalCost"
               label="Total"
+              css-class="hide-text-field-details"
               currency="$"
+              :precision="2"
               :outline="true"
               :success="true"
+              :readonly="!repairEstimate.quick"
               :value="repairEstimate.totalCost"
               v-on:input="fieldChangedNumber"
             >
@@ -101,25 +131,28 @@ import { mapState, mapMutations, mapActions } from "vuex";
 import * as utilities from "../../../backend/utilities/utilities";
 import VuetifyNumeric from "../../Shared/VuetifyNumeric";
 import * as repairEstimateSectionTypes from "../../../backend/enums/repairEstimateSectionTypes";
+import RepairEstimateSection from "./RepairEstimateSection";
 
 export default {
   name: "RepairEstimator",
   components: {
-    VuetifyNumeric
+    VuetifyNumeric,
+    RepairEstimateSection
   },
   mounted() {
-    // const that = this;
-    // that.compTableHeight = window.$(window).height() - 625;
-    //
-    // window.$(window).resize(
-    //   _.debounce(function(args) {
-    //     that.compTableHeight = window.$(window).height() - 625;
-    //   })
-    // );
+    const that = this;
+    that.stepperHeight = window.$(window).height() - 250;
+
+    window.$(window).resize(
+      _.debounce(function(args) {
+        that.stepperHeight = window.$(window).height() - 250;
+      })
+    );
   },
   data() {
     return {
-      repairEstimateSectionTypes
+      repairEstimateSectionTypes,
+      stepperHeight: 400
     };
   },
   computed: {

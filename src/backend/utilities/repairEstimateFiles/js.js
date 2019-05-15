@@ -40,7 +40,7 @@ $(function() {
     selected: false,
     totalCost: 0,
     sectionType:
-      repairEstimateSectionTypes.repairEstimateSectionTypes.EXTERIOR.value,
+      "|repairEstimateSectionTypes.repairEstimateSectionTypes.EXTERIOR.value|",
     subSections: []
   };
 
@@ -48,7 +48,7 @@ $(function() {
     selected: false,
     totalCost: 0,
     sectionType:
-      repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value,
+      "|repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value|",
     subSections: []
   };
 
@@ -56,7 +56,7 @@ $(function() {
     selected: false,
     totalCost: 0,
     sectionType:
-      repairEstimateSectionTypes.repairEstimateSectionTypes.MECHANICALS.value,
+      "|repairEstimateSectionTypes.repairEstimateSectionTypes.MECHANICALS.value|",
     subSections: []
   };
 
@@ -64,7 +64,7 @@ $(function() {
     selected: false,
     totalCost: 0,
     sectionType:
-      repairEstimateSectionTypes.repairEstimateSectionTypes.OTHER.value,
+      "|repairEstimateSectionTypes.repairEstimateSectionTypes.OTHER.value|",
     subSections: []
   };
 
@@ -78,6 +78,7 @@ $(function() {
     var subSectionDescription = headerRow.find(".itemnametext").text();
 
     var repairSection = {
+      key: "|uuidv4()|",
       selected: false,
       title: subSectionDescription,
       totalCost: 0,
@@ -125,6 +126,7 @@ $(function() {
       }
 
       var repairEstimateLineItem = {
+        key: "|uuidv4()|",
         selected: false,
         name: repairType,
         quantity: 0,
