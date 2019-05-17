@@ -7,7 +7,7 @@ export const getAsArray = enumObj => {
     }),
     [
       function(item) {
-        return item.display;
+        return item.value;
       }
     ],
     ["asc"]

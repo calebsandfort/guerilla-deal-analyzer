@@ -26,6 +26,10 @@ const state = {
   ],
   arv: 0,
   repairEstimate: utilities.newRepairEstimate(),
+  dealAnalysis: utilities.newDealAnalysis(),
+  dealAnalysisSections: utilities.dealAnalysisSections(
+    utilities.newDealAnalysis()
+  ),
   listItems: {
     // prettier-ignore
     amenityCount: [
@@ -91,14 +95,9 @@ const state = {
 const getters = {};
 
 export const mutations = {
+  //region Property Mutations
   setFinding(state, finding) {
     state.finding = finding;
-  },
-  setFindingComps(state, findingComps) {
-    state.findingComps = findingComps;
-  },
-  setPullingCompsFromCache(state, pullingCompsFromCache) {
-    state.pullingCompsFromCache = pullingCompsFromCache;
   },
   setItem(state, item) {
     state.item = item;
@@ -110,6 +109,15 @@ export const mutations = {
         return c.id == id;
       })
     );
+  },
+  //endregion
+
+  //region Comp Mutations
+  setFindingComps(state, findingComps) {
+    state.findingComps = findingComps;
+  },
+  setPullingCompsFromCache(state, pullingCompsFromCache) {
+    state.pullingCompsFromCache = pullingCompsFromCache;
   },
   setComps(state, list) {
     state.comps = list;
@@ -123,15 +131,15 @@ export const mutations = {
   setCompFilter(state, compFilter) {
     state.compFilter = Object.assign({}, compFilter);
   },
-  setField(state, payload) {
-    _.set(state, payload.name, payload.v);
-  },
   addCompLogMessage(state, payload) {
     state.compLog = [payload, ...state.compLog];
   },
   clearCompLog(state) {
     state.compLog = [];
   },
+  //endregion
+
+  //region Repair Estimate Mutations
   setRepairEstimateSqft(state) {
     const re = utilities.newRepairEstimate();
     utilities.setRepairEstimateSqft(re, state.item.sqft);
@@ -147,10 +155,40 @@ export const mutations = {
     );
 
     state.repairEstimate = temp;
+  },
+  //endregion
+
+  //region Deal Analysis Mutations
+  updateDealAnalysisForProperty(state) {
+    const temp = Object.assign({}, state.dealAnalysis);
+    utilities.updateDealAnalysisForProperty(temp, state.item);
+
+    state.dealAnalysis = temp;
+  },
+  //endregion
+
+  //region Misc Mutations
+  setField(state, payload) {
+    const names = payload.name.split(",");
+
+    for (let i = 0; i < names.length; i++) {
+      _.set(state, names[i], payload.v);
+    }
+
+    const pairs = _.map(names, function(x) {
+      return { field: x, val: payload.v };
+    });
+
+    const temp = Object.assign({}, state.dealAnalysis);
+    if (utilities.setDealAnalysisField(temp, pairs)) {
+      state.dealAnalysis = temp;
+    }
   }
+  //endregion
 };
 
 export const actions = {
+  //region Property Actions
   async fetchItem({ dispatch, commit, state }, requestVariables) {
     commit("setFinding", true);
     const response = await propertyApi.get(apolloClient, requestVariables);
@@ -207,6 +245,7 @@ export const actions = {
 
     commit("setItem", property);
     commit("setRepairEstimateSqft");
+    commit("updateDealAnalysisForProperty");
     commit("setFinding", false);
 
     if (requestVariables.triggerFindComps) {
@@ -229,7 +268,9 @@ export const actions = {
       await dispatch("findCompsV2", findCompsRequest);
     }
   },
+  //endregion
 
+  //region Comp Actions
   async findCompsV2({ dispatch, commit, state }, findCompsRequest) {
     if (findCompsRequest.useCompCache && state.item.compCacheArray.length > 0) {
       commit("setPullingCompsFromCache", true);
@@ -504,17 +545,20 @@ export const actions = {
     }
   },
 
-  setField({ commit }, payload) {
-    commit("setField", payload);
-  },
-
   async compCacheUpdate({ commit }, requestVariables) {
     const response = await propertyApi.compCacheUpdate(
       apolloClient,
       requestVariables
     );
     commit("setItem", response.data.compCacheUpdate);
+  },
+  //endregion
+
+  //region Misc Actions
+  setField({ commit }, payload) {
+    commit("setField", payload);
   }
+  //endregion
 };
 
 export default {

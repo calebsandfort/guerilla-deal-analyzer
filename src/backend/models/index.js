@@ -13,6 +13,7 @@ const sequelize = new Sequelize(
 
 const models = {
   Property: sequelize.import("./property"),
+  DealWizard: sequelize.import("./dealWizard"),
   Comp: sequelize.import("./comp"),
   CompPackage: sequelize.import("./compPackage"),
   DealAnalysis: sequelize.import("./dealAnalysis"),

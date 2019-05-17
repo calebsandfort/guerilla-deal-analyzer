@@ -2,9 +2,14 @@ import _ from "lodash";
 import fs from "fs";
 import * as repairEstimateSectionTypes from "../enums/repairEstimateSectionTypes";
 import * as unitTypes from "../enums/unitTypes";
+import * as loanTypes from "../enums/loanTypes";
+import * as dealAnalysisSectionTypes from "../enums/dealAnalysisSectionTypes";
 import { statuses } from "../enums/statuses";
 import querystring from "querystring";
 import uuidv4 from "uuid/v4";
+import dealAnalysis from "../models/dealAnalysis";
+import * as math from "mathjs";
+import dealAnalysisUtilities from "./dealAnalysisUtilities";
 
 //region Property Functions
 export const newProperty = () => {
@@ -13,19 +18,13 @@ export const newProperty = () => {
     zillow_path: "",
     zillow_url: "",
     zillow_imageUrl: "",
-    // zillow_imageUrl: '',
     streetAddress: "",
     city: "",
     state: "",
     zipcode: "",
     address: "",
     price: -1,
-    // propertyTaxesAnnually: 0,
-    // propertyTaxesMonthly: 0,
-    // insuranceAnnually: 0,
-    // insuranceMonthly: 0,
     sqft: -1,
-    //listingPriceSqft: 0,
     beds: -1,
     baths: -1,
     description: "",
@@ -40,7 +39,11 @@ export const newProperty = () => {
     longitude: -1,
     notes: "",
     status: statuses.ACTIVE.value,
-    compCache: ""
+    compCache: "",
+    propertyTaxesAnnually: 0,
+    propertyTaxesMonthly: 0,
+    insuranceAnnually: 0,
+    insuranceMonthly: 0
   };
 };
 
@@ -133,6 +136,146 @@ export const setPropertyFromObject = (
     propValue = defaultValue;
   }
   _.set(target, targetPath, propValue);
+};
+//endregion
+
+//region Deal Analysis Functions
+export const newDealAnalysis = () => {
+  return {
+    //region Deal Factos
+    DF_ARV: 0,
+    DF_Ask: 0,
+    DF_RepairCosts: 50000,
+    DF_PurchasePrice: 0,
+    DF_HoldTime: 6,
+    PVP_TotalCost: 0,
+    //endregion
+
+    //region Holding Costs
+    HC_PropertyTaxesAnnually: 0,
+    HC_PropertyTaxesMonthly: 0,
+    HC_InsuranceAnnually: 0,
+    HC_InsuranceMonthly: 0,
+    HC_HOAMonthly: 0,
+    HC_Gas: 100,
+    HC_Water: 100,
+    HC_Electricity: 100,
+    HC_OtherUtilities: 0,
+    HC_UtilitiesMonthly: 0,
+    HC_MiscMonthly: 0,
+    HC_TotalCostMonthly: 0,
+    HC_TotalCost: 0,
+    //endregion
+
+    //region Financing Costs
+    FC_LoanType: loanTypes.loanTypes.PURCHASE_PLUS_REHAB.value,
+
+    FC_LoanAmount: 0,
+    FC_FirstMortgageAmount: 0.9,
+    FC_FirstMortgagePoints: 3,
+    FC_FirstMortgageInterest: 0.12,
+    FC_FirstMortgageAmount_Cost: 0,
+    FC_FirstMortgagePoints_Cost: 0,
+    FC_FirstMortgageInterest_Cost: 0,
+    FC_FirstMortgagePayment: 0,
+
+    FC_SecondMortgageAmount: 0.1,
+    FC_SecondMortgagePoints: 2,
+    FC_SecondMortgageInterest: 12,
+    FC_SecondMortgageAmount_Cost: 0,
+    FC_SecondMortgagePoints_Cost: 0,
+    FC_SecondMortgageInterest_Cost: 0,
+    FC_SecondMortgagePayment: 0,
+
+    FC_MiscMortgageAmount: 0,
+    FC_MiscMortgagePoints: 0,
+    FC_MiscMortgageInterest: 0,
+    FC_MiscMortgageAmount_Cost: 0,
+    FC_MiscMortgagePoints_Cost: 0,
+    FC_MiscMortgageInterest_Cost: 0,
+    FC_MiscMortgagePayment: 0,
+
+    FC_MiscCost: 0,
+    FC_TotalCost: 0,
+    //endregion
+
+    //region Buying Transaction Costs
+    BTC_TitleInsuranceSearch: 0.01,
+    BTC_TitleInsuranceSearch_Cost: 0,
+    BTC_EscrowAttorney: 1000,
+    BTC_Misc: 0,
+    BTC_TotalCost: 0,
+    //endregion
+
+    //region Selling Transaction Costs
+    STC_RealtorFees: 0.045,
+    STC_RealtorFees_Cost: 0,
+    STC_TransferConveyenceFees: 0.01,
+    STC_TransferConveyenceFees_Cost: 0,
+    STC_Misc: 0,
+    STC_Staging: 1500,
+    STC_EscrowAttorney: 0,
+    STC_SellingRecording: 500,
+    STC_HomeWarranty: 500,
+    STC_Marketing: 1000,
+    STC_TotalCost: 0,
+    //endregion
+
+    //region Snapshot
+    SNAP_Profit: 0,
+    SNAP_ROI: 0.15,
+    SNAP_DownPayment: 0,
+    SNAP_CommittedCapital: 0
+    //endregion
+  };
+};
+
+export const updateDealAnalysisForProperty = (dealAnalysis, property) => {
+  const proxy = new dealAnalysisUtilities.dealAnalysisProxy(dealAnalysis);
+  proxy.setField([
+    {
+      field: "DF_Ask",
+      val: property.price
+    },
+    {
+      field: "DF_PurchasePrice",
+      val: property.price
+    },
+    {
+      field: "HC_PropertyTaxesAnnually",
+      val: property.propertyTaxesAnnually
+    },
+    {
+      field: "HC_InsuranceAnnually",
+      val: property.insuranceAnnually
+    }
+  ]);
+};
+
+export const dealAnalysisSections = dealAnalysis => {
+  return [
+    {
+      sectionType:
+        dealAnalysisSectionTypes.dealAnalysisSectionTypes.FINANCING_COSTS
+    },
+    {
+      sectionType:
+        dealAnalysisSectionTypes.dealAnalysisSectionTypes.BUYING_COSTS
+    },
+    {
+      sectionType:
+        dealAnalysisSectionTypes.dealAnalysisSectionTypes.HOLDING_COSTS
+    },
+    {
+      sectionType:
+        dealAnalysisSectionTypes.dealAnalysisSectionTypes.SELLING_COSTS
+    }
+  ];
+};
+
+export const setDealAnalysisField = (dealAnalysis, pairs) => {
+  const proxy = new dealAnalysisUtilities.dealAnalysisProxy(dealAnalysis);
+  return proxy.setField(pairs);
 };
 //endregion
 

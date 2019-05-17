@@ -12,6 +12,8 @@ import qs from "qs";
 Aigle.mixin(_);
 
 const FILE_PATH = "src/backend/services/scrape/files/";
+const PROPERTY_TAX_RATE = 0.0112;
+const INSURANCE_RATE = 0.0042;
 
 String.prototype.replaceAll = function(search, replacement) {
   var target = this;
@@ -164,6 +166,12 @@ export const findProperty = async term => {
 
   utilities.setPropertyFromObject(zillowData, "price", property, "price", -1);
   utilities.setPropertyFromObject(zillowData, "bedrooms", property, "beds", -1);
+
+  property.propertyTaxesAnnually = property.price * PROPERTY_TAX_RATE;
+  property.propertyTaxesMonthly = property.propertyTaxesAnnually / 12;
+
+  property.insuranceAnnually = property.price * INSURANCE_RATE;
+  property.insuranceMonthly = property.insuranceAnnually / 12;
 
   if (property.beds == 0) {
     const bedSpan = $(".ds-bed-bath-living-area > span", html);

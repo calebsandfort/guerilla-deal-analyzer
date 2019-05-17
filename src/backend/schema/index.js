@@ -1,6 +1,7 @@
 import { gql } from "apollo-server-express";
 
 import propertySchema from "./property";
+import dealWizardSchema from "./dealAnalysis";
 import dealAnalysisSchema from "./dealAnalysis";
 import compPackageSchema from "./compPackage";
 import compSchema from "./comp";
@@ -27,6 +28,7 @@ const linkSchema = gql`
 export default [
   linkSchema,
   propertySchema,
+  dealWizardSchema,
   dealAnalysisSchema,
   compPackageSchema,
   compSchema,

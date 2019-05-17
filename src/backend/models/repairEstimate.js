@@ -19,7 +19,7 @@ const repairEstimate = (sequelize, DataTypes) => {
   });
 
   RepairEstimate.associate = models => {
-    RepairEstimate.belongsTo(models.DealAnalysis, {
+    RepairEstimate.hasOne(models.DealWizard, {
       onDelete: "CASCADE"
     });
   };

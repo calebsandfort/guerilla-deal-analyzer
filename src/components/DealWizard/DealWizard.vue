@@ -89,9 +89,7 @@
                   <RepairEstimator></RepairEstimator>
                 </v-tab-item>
                 <v-tab-item :key="3">
-                  <v-container fluid grid-list-lg>
-                    {{ property.streetPlusZip }}
-                  </v-container>
+                  <DealAnalyzer></DealAnalyzer>
                 </v-tab-item>
                 <v-tab-item :key="4">
                   <v-container fluid grid-list-lg>
@@ -118,6 +116,7 @@ import Toolbar from "../Toolbar";
 import PropertyDetails from "./PropertyDetailsV2";
 import CompPackage from "./CompPackage/CompPackageV2";
 import RepairEstimator from "./RepairEstimator/RepairEstimator";
+import DealAnalyzer from "./DealAnalyzer/DealAnalyzer";
 import PropertyGallery from "../Shared/PropertyGallery";
 import { getRequestVariables as propertyRequest } from "../../api/property";
 import * as engagements from "../../backend/enums/engagements";
@@ -131,7 +130,8 @@ export default {
     RepairEstimator,
     PropertyDetails,
     PropertyGallery,
-    CompLog
+    CompLog,
+    DealAnalyzer
   },
   data() {
     return {

@@ -66,7 +66,7 @@
           </v-flex>
           <v-flex xs12>
             <VuetifyNumeric
-              field="arv"
+              field="arv,dealAnalysis.DF_ARV"
               label="ARV"
               currency="$"
               :value="arv"
@@ -467,7 +467,7 @@ export default {
         name: args.field,
         v: args.value
       });
-    }, 1000)
+    }, 500)
   }
 };
 </script>

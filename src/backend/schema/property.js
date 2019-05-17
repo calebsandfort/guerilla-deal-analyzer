@@ -81,6 +81,10 @@ export default gql`
     pricePerSqft: Float
     compCacheArray: [String]
     compFilterJson: String
+    propertyTaxesAnnually: Float
+    propertyTaxesMonthly: Float
+    insuranceAnnually: Float
+    insuranceMonthly: Float
   }
   input PropertyInput {
     zillow_propertyId: Int!

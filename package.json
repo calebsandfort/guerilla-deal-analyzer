@@ -48,6 +48,7 @@
     "lingallery": "^1.1.25",
     "lodash": "^4.17.11",
     "material-design-icons-iconfont": "^3.0.3",
+    "mathjs": "^5.10.0",
     "moment": "^2.24.0",
     "papaparse": "^4.6.3",
     "pg": "^7.10.0",

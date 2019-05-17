@@ -44,6 +44,10 @@ export const fragments = {
       pricePerSqft
       compCacheArray
       compFilterJson
+      propertyTaxesAnnually
+      propertyTaxesMonthly
+      insuranceAnnually
+      insuranceMonthly
     }
   `
 };

@@ -1,7 +1,7 @@
 import { statuses } from "../enums/statuses";
 
 const property = (sequelize, DataTypes) => {
-  const property = sequelize.define(
+  const Property = sequelize.define(
     "property",
     {
       zillow_propertyId: {
@@ -192,6 +192,26 @@ const property = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true,
         defaultValue: ""
+      },
+      propertyTaxesAnnually: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+        defaultValue: 0
+      },
+      propertyTaxesMonthly: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+        defaultValue: 0
+      },
+      insuranceAnnually: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+        defaultValue: 0
+      },
+      insuranceMonthly: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+        defaultValue: 0
       }
     },
     {
@@ -199,14 +219,13 @@ const property = (sequelize, DataTypes) => {
     }
   );
 
-  property.associate = models => {
-    //     property.hasMany(models.Play, { onDelete: 'CASCADE' });
-    //     property.hasMany(models.ScoreBar, { onDelete: 'CASCADE' });
-    //     property.belongsTo(models.Season, { onDelete: 'CASCADE' });
-    //     property.belongsTo(models.SeasonMonth, { onDelete: 'CASCADE' });
+  Property.associate = models => {
+    Property.hasMany(models.DealWizard, {
+      onDelete: "CASCADE"
+    });
   };
 
-  return property;
+  return Property;
 };
 
 export default property;

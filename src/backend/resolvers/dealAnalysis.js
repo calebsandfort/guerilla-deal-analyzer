@@ -34,29 +34,6 @@ export default {
     createDealAnalysis: async (parent, { input }, { models }) => {
       const dealAnalysis = await models.DealAnalysis.create(input);
 
-      if (dealAnalysis.compPackage != null) {
-        input.compPackage.dealAnalysisId = dealAnalysisId;
-        dealAnalysis.compPackage = await models.CompPackage.create(
-          input.compPackage
-        );
-
-        const collectionPromises = [];
-
-        if (
-          typeof input.compPackage.comps != "undefined" &&
-          input.compPackage.comps.length > 0
-        ) {
-          input.compPackage.comps.forEach(function(comp) {
-            comp.compPackageId = dealAnalysis.compPackage.id;
-            collectionPromises.push(models.Comp.create(comp));
-          });
-        }
-
-        if (collectionPromises.length > 0) {
-          input.compPackage.comps = await Promise.all(collectionPromises);
-        }
-      }
-
       return dealAnalysis;
     },
 
@@ -72,20 +49,5 @@ export default {
     }
   },
 
-  DealAnalysis: {
-    compPackages: async (dealAnalysis, args, { models }) => {
-      return await models.CompPackage.findAll({
-        where: {
-          dealAnalysisId: dealAnalysis.id
-        }
-      });
-    },
-    repairEstimates: async (dealAnalysis, args, { models }) => {
-      return await models.RepairEstimate.findAll({
-        where: {
-          dealAnalysisId: dealAnalysis.id
-        }
-      });
-    }
-  }
+  DealAnalysis: {}
 };
