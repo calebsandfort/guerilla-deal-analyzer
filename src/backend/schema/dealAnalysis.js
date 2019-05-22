@@ -87,6 +87,7 @@ export default gql`
     SNAP_ROI: Float
     SNAP_DownPayment: Float
     SNAP_CommittedCapital: Float
+    SNAP_TotalCost: Float
   }
   input DealAnalysisInput {
     DF_ARV: Float

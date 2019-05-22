@@ -2,13 +2,7 @@
   <v-container fluid grid-list-lg class="pa-3">
     <v-layout row wrap>
       <v-flex xs6 md3>
-        <VuetifyNumeric
-          field="arv,dealAnalysis.DF_ARV"
-          label="ARV"
-          currency="$"
-          :value="dealAnalysis.DF_ARV"
-          v-on:input="fieldChangedNumber"
-        >
+        <VuetifyNumeric field="arv,dealAnalysis.DF_ARV" label="ARV" currency="$" :value="dealAnalysis.DF_ARV" :precision="2" v-on:input="fieldChangedNumber">
         </VuetifyNumeric>
       </v-flex>
       <v-flex xs6 md3>
@@ -18,16 +12,7 @@
           currency="$"
           :value="dealAnalysis.DF_RepairCosts"
           :readonly="true"
-        >
-        </VuetifyNumeric>
-      </v-flex>
-      <v-flex xs6 md3>
-        <VuetifyNumeric
-          field="dealAnalysis.SNAP_ROI"
-          label="ROI"
-          :precision="3"
-          :value="dealAnalysis.SNAP_ROI"
-          v-on:input="fieldChangedNumber"
+          :precision="2"
         >
         </VuetifyNumeric>
       </v-flex>
@@ -42,6 +27,18 @@
         >
         </VuetifyNumeric>
       </v-flex>
+      <v-flex xs6 md3>
+        <VuetifyNumeric
+          field="dealAnalysis.SNAP_ROI"
+          label="ROI"
+          :precision="2"
+          currency="%"
+          currency-symbol-position="suffix"
+          :value="dealAnalysis.SNAP_ROI * 100"
+          v-on:input="fieldChangedNumber"
+        >
+        </VuetifyNumeric>
+      </v-flex>
     </v-layout>
     <v-layout row wrap>
       <v-flex xs6 md3>
@@ -50,19 +47,26 @@
           item-text="display"
           item-value="value"
           :value="dealAnalysis.FC_LoanType"
-          @input="setField({ name: 'FC_LoanType', v: $event })"
+          @input="setField({ name: 'dealAnalysis.FC_LoanType', v: $event })"
           label="Loan Type"
         ></v-select>
       </v-flex>
       <v-flex xs6 md3>
+        <VuetifyNumeric field="dealAnalysis.DF_HoldTime" label="Hold Time" :value="dealAnalysis.DF_HoldTime" v-on:input="fieldChangedNumber"> </VuetifyNumeric>
+      </v-flex>
+      <v-flex xs6 md3>
         <VuetifyNumeric
-          field="dealAnalysis.FC_LoanAmount"
-          label="Loan Amount"
+          field="dealAnalysis.SNAP_TotalCost"
+          label="Total Cost"
           currency="$"
           :readonly="true"
           :precision="2"
-          :value="dealAnalysis.FC_LoanAmount"
+          :value="dealAnalysis.SNAP_TotalCost"
         >
+        </VuetifyNumeric>
+      </v-flex>
+      <v-flex xs6 md3>
+        <VuetifyNumeric field="dealAnalysis.SNAP_Profit" label="Profit" currency="$" :readonly="true" :precision="2" :value="dealAnalysis.SNAP_Profit">
         </VuetifyNumeric>
       </v-flex>
     </v-layout>
@@ -70,20 +74,10 @@
       <v-flex xs12>
         <v-expansion-panel>
           <template v-for="dealAnalysisSection in dealAnalysisSections">
-            <v-expansion-panel-content
-              :key="
-                `dealAnalysisSection_${dealAnalysisSection.sectionType.value}`
-              "
-            >
-              <template v-slot:header>
-                <div>{{ dealAnalysisSection.sectionType.display }}</div>
-              </template>
-              <v-card>
-                <v-card-text class="pt-0">
-                  <DealAnalysisSection></DealAnalysisSection>
-                </v-card-text>
-              </v-card>
-            </v-expansion-panel-content>
+            <DealAnalysisSection
+              :key="`dealAnalysisSection_${dealAnalysisSection.sectionType.value}`"
+              :deal-analysis-section="dealAnalysisSection"
+            ></DealAnalysisSection>
           </template>
         </v-expansion-panel>
       </v-flex>
@@ -98,6 +92,8 @@ import VuetifyNumeric from "../../Shared/VuetifyNumeric";
 import DealAnalysisSection from "./DealAnalysisSection";
 import * as utilities from "../../../backend/utilities/utilities";
 import * as loanTypes from "../../../backend/enums/loanTypes";
+import * as dealAnalysisSectionTypes from "../../../backend/enums/dealAnalysisSectionTypes";
+import formatMoney from "accounting-js/lib/formatMoney";
 
 export default {
   name: "DealAnalyzer",
@@ -108,7 +104,8 @@ export default {
   props: {},
   data() {
     return {
-      loanTypes: loanTypes
+      loanTypes: loanTypes,
+      dealAnalysisSectionTypes: dealAnalysisSectionTypes
     };
   },
   computed: {
@@ -128,6 +125,7 @@ export default {
     ...mapActions({
       setField: "dealWizard/setField"
     }),
+    formatMoney: formatMoney,
     fieldChangedNumber: _.debounce(function(args) {
       this.setField({
         name: args.field,

@@ -52,20 +52,9 @@ export const findProperty = async address => {
 
   const findData = parseResponse(findResponse);
 
-  if (
-    findData &&
-    findData.errorMessage == "Success" &&
-    findData.payload &&
-    findData.payload.exactMatch
-  ) {
+  if (findData && findData.errorMessage == "Success" && findData.payload && findData.payload.exactMatch) {
     property.redfin_propertyId = getPropertyId(findData.payload.exactMatch.id);
-    utilities.setPropertyFromObject(
-      findData,
-      "payload.exactMatch.url",
-      property,
-      "redfin_path",
-      ""
-    );
+    utilities.setPropertyFromObject(findData, "payload.exactMatch.url", property, "redfin_path", "");
     property.redfin_url = `https://www.redfin.com${property.redfin_path}`;
   }
 
@@ -82,20 +71,8 @@ export const findProperty = async address => {
       });
 
     const initialInfoData = parseResponse(initialInfoResponse);
-    utilities.setPropertyFromObject(
-      initialInfoData,
-      "payload.listingId",
-      property,
-      "redfin_listingId",
-      0
-    );
-    utilities.setPropertyFromObject(
-      initialInfoData,
-      "payload.preloadImageUrl",
-      property,
-      "redfin_imageUrl",
-      ""
-    );
+    utilities.setPropertyFromObject(initialInfoData, "payload.listingId", property, "redfin_listingId", 0);
+    utilities.setPropertyFromObject(initialInfoData, "payload.preloadImageUrl", property, "redfin_imageUrl", "");
 
     if (property.redfin_listingId > 0) {
       const belowTheFoldResponse = await ai
@@ -113,31 +90,11 @@ export const findProperty = async address => {
         });
 
       const belowTheFoldData = parseResponse(belowTheFoldResponse);
-      utilities.setPropertyFromObject(
-        belowTheFoldData,
-        "payload.publicRecordsInfo.mortgageCalculatorInfo.listingPrice",
-        property,
-        "listingPrice",
-        0
-      );
-      utilities.setPropertyFromObject(
-        belowTheFoldData,
-        "payload.publicRecordsInfo.taxInfo.taxesDue",
-        property,
-        "propertyTaxesAnnually",
-        0
-      );
-      property.propertyTaxesMonthly = Math.ceil(
-        property.propertyTaxesAnnually / 12
-      );
+      utilities.setPropertyFromObject(belowTheFoldData, "payload.publicRecordsInfo.mortgageCalculatorInfo.listingPrice", property, "listingPrice", 0);
+      utilities.setPropertyFromObject(belowTheFoldData, "payload.publicRecordsInfo.taxInfo.taxesDue", property, "propertyTaxesAnnually", 0);
+      property.propertyTaxesMonthly = Math.ceil(property.propertyTaxesAnnually / 12);
       property.insuranceAnnually = Math.ceil(
-        (property.listingPrice *
-          _.get(
-            belowTheFoldData,
-            "payload.publicRecordsInfo.mortgageCalculatorInfo.homeInsuranceRate",
-            0
-          )) /
-          100
+        (property.listingPrice * _.get(belowTheFoldData, "payload.publicRecordsInfo.mortgageCalculatorInfo.homeInsuranceRate", 0)) / 100
       );
       property.insuranceMonthly = Math.ceil(property.insuranceAnnually / 12);
 
@@ -155,30 +112,10 @@ export const findProperty = async address => {
         });
 
       const avmData = parseResponse(avmResponse);
-      utilities.setPropertyFromObject(
-        avmData,
-        "payload.sqFt.value",
-        property,
-        "sqft",
-        0
-      );
-      property.listingPriceSqft = parseFloat(
-        (property.listingPrice / property.sqft).toFixed(2)
-      );
-      utilities.setPropertyFromObject(
-        avmData,
-        "payload.numBeds",
-        property,
-        "beds",
-        0
-      );
-      utilities.setPropertyFromObject(
-        avmData,
-        "payload.numBaths",
-        property,
-        "baths",
-        0
-      );
+      utilities.setPropertyFromObject(avmData, "payload.sqFt.value", property, "sqft", 0);
+      property.listingPriceSqft = parseFloat((property.listingPrice / property.sqft).toFixed(2));
+      utilities.setPropertyFromObject(avmData, "payload.numBeds", property, "beds", 0);
+      utilities.setPropertyFromObject(avmData, "payload.numBaths", property, "baths", 0);
 
       //extract comparables here
     }
@@ -192,36 +129,18 @@ export const scrapeProperty = async p => {
 
   const html = await rp(property.url);
 
-  property.price = parseNumberFromElement(
-    $(".statsValue > div > span", getByRfTestId("abp-price", html)).last(),
-    parseFloat
-  );
-  property.beds = parseNumberFromElement(
-    $(".statsValue", getByRfTestId("abp-beds", html)).last(),
-    parseFloat
-  );
-  property.baths = parseNumberFromElement(
-    $(".statsValue", getByRfTestId("abp-baths", html)).last(),
-    parseFloat
-  );
-  property.sqft = parseNumberFromElement(
-    $(".statsValue", getByRfTestId("abp-sqFt", html)).last(),
-    parseFloat
-  );
+  property.price = parseNumberFromElement($(".statsValue > div > span", getByRfTestId("abp-price", html)).last(), parseFloat);
+  property.beds = parseNumberFromElement($(".statsValue", getByRfTestId("abp-beds", html)).last(), parseFloat);
+  property.baths = parseNumberFromElement($(".statsValue", getByRfTestId("abp-baths", html)).last(), parseFloat);
+  property.sqft = parseNumberFromElement($(".statsValue", getByRfTestId("abp-sqFt", html)).last(), parseFloat);
   property.psqft = Math.floor(property.price / property.sqft);
 
   const mortageCalculatorRows = $("#MortgageCalculator .value", html);
 
-  property.propertyTaxesMonthly = parseNumberFromElement(
-    mortageCalculatorRows.eq(1),
-    parseFloat
-  );
+  property.propertyTaxesMonthly = parseNumberFromElement(mortageCalculatorRows.eq(1), parseFloat);
   property.propertyTaxesAnnually = property.propertyTaxesMonthly * 12;
 
-  property.insuranceMonthly = parseNumberFromElement(
-    mortageCalculatorRows.eq(2),
-    parseFloat
-  );
+  property.insuranceMonthly = parseNumberFromElement(mortageCalculatorRows.eq(2), parseFloat);
   property.insuranceAnnually = property.propertyTaxesMonthly * 12;
 
   return property;

@@ -49,13 +49,7 @@ describe("utilities", () => {
 
     const target = {};
 
-    utilities.setPropertyFromObject(
-      data,
-      "level1.level2",
-      target,
-      "level1.level2",
-      0
-    );
+    utilities.setPropertyFromObject(data, "level1.level2", target, "level1.level2", 0);
 
     expect(target).to.eql(expected);
   });

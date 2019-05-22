@@ -27,20 +27,14 @@ export const actions = {
   async fetchItem({ commit }, requestVariables) {
     commit("setFinding", true);
 
-    const response = await propertyApi.findProperty(
-      apolloClient,
-      requestVariables
-    );
+    const response = await propertyApi.findProperty(apolloClient, requestVariables);
     commit("setItem", response.data.findProperty);
   },
 
   async findComps({ commit }, requestVariables) {
     commit("setFinding", true);
 
-    const response = await propertyApi.findComps(
-      apolloClient,
-      requestVariables
-    );
+    const response = await propertyApi.findComps(apolloClient, requestVariables);
     commit("setComps", response.data.findComps);
   }
 };

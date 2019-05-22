@@ -6,25 +6,11 @@
           <v-flex xs12>
             <v-stepper non-linear>
               <v-stepper-header>
-                <template
-                  v-for="(repairEstimateSection,
-                  idx) in repairEstimate.sections"
-                >
-                  <v-stepper-step
-                    :key="`${idx}-step`"
-                    :step="repairEstimateSection.sectionType"
-                    editable
-                  >
-                    {{
-                      repairEstimateSectionTypes.getDisplayForValue(
-                        repairEstimateSection.sectionType
-                      )
-                    }}
+                <template v-for="(repairEstimateSection, idx) in repairEstimate.sections">
+                  <v-stepper-step :key="`${idx}-step`" :step="repairEstimateSection.sectionType" editable>
+                    {{ repairEstimateSectionTypes.getDisplayForValue(repairEstimateSection.sectionType) }}
                   </v-stepper-step>
-                  <v-divider
-                    :key="`${idx}-divider`"
-                    v-if="idx < repairEstimate.sections.length - 1"
-                  ></v-divider>
+                  <v-divider :key="`${idx}-divider`" v-if="idx < repairEstimate.sections.length - 1"></v-divider>
                 </template>
               </v-stepper-header>
               <v-stepper-items
@@ -33,19 +19,9 @@
                   overflow: 'auto'
                 }"
               >
-                <template
-                  v-for="(repairEstimateSection,
-                  idx) in repairEstimate.sections"
-                >
-                  <v-stepper-content
-                    :key="`${idx}-step-content`"
-                    :step="repairEstimateSection.sectionType"
-                    editable
-                    class="pa-2"
-                  >
-                    <RepairEstimateSection
-                      :section-type="repairEstimateSection.sectionType"
-                    ></RepairEstimateSection>
+                <template v-for="(repairEstimateSection, idx) in repairEstimate.sections">
+                  <v-stepper-content :key="`${idx}-step-content`" :step="repairEstimateSection.sectionType" editable class="pa-2">
+                    <RepairEstimateSection :section-type="repairEstimateSection.sectionType"></RepairEstimateSection>
                   </v-stepper-content>
                 </template>
               </v-stepper-items>
@@ -81,20 +57,10 @@
               class="hide-text-field-details"
             ></v-text-field>
           </v-flex>
-          <template
-            v-for="(repairEstimateSection, idx) in repairEstimate.sections"
-          >
-            <v-flex
-              :key="`${idx}-side-display`"
-              xs12
-              v-if="!repairEstimate.quick"
-            >
+          <template v-for="(repairEstimateSection, idx) in repairEstimate.sections">
+            <v-flex :key="`${idx}-side-display`" xs12 v-if="!repairEstimate.quick">
               <VuetifyNumeric
-                :label="
-                  repairEstimateSectionTypes.getDisplayForValue(
-                    repairEstimateSection.sectionType
-                  )
-                "
+                :label="repairEstimateSectionTypes.getDisplayForValue(repairEstimateSection.sectionType)"
                 css-class="hide-text-field-details"
                 currency="$"
                 :precision="2"
@@ -106,7 +72,7 @@
           </template>
           <v-flex xs12>
             <VuetifyNumeric
-              field="repairEstimate.totalCost"
+              field="repairEstimate.totalCost,dealAnalysis.DF_RepairCosts"
               label="Total"
               css-class="hide-text-field-details"
               currency="$"

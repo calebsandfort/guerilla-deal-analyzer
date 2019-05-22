@@ -6,8 +6,7 @@ import * as zillowScraper from "./zillow-scraper";
 
 use(chaiExclude);
 
-const ZILLOW_PROPERTY_URL =
-  "https://www.zillow.com/homedetails/608-NE-Going-St-Portland-OR-97211/53879348_zpid/";
+const ZILLOW_PROPERTY_URL = "https://www.zillow.com/homedetails/608-NE-Going-St-Portland-OR-97211/53879348_zpid/";
 const ADDRESS = "1203 SE Malden St";
 
 describe("zillow-scraper", () => {
@@ -219,10 +218,8 @@ const castToSimpleProperty = property => {
 const getSimpleExpectedProperty = () => {
   return {
     zillow_propertyId: 176565162,
-    zillow_path:
-      "/homedetails/124-SW-Woods-St-Portland-OR-97201/176565162_zpid/",
-    zillow_url:
-      "https://www.zillow.com/homedetails/124-SW-Woods-St-Portland-OR-97201/176565162_zpid/?fullpage=true",
+    zillow_path: "/homedetails/124-SW-Woods-St-Portland-OR-97201/176565162_zpid/",
+    zillow_url: "https://www.zillow.com/homedetails/124-SW-Woods-St-Portland-OR-97201/176565162_zpid/?fullpage=true",
     streetAddress: "124 SW Woods St"
   };
 };
@@ -231,12 +228,9 @@ const getExpectedProperty = () => {
   return {
     zillow_propertyId: 53854858,
     // zillow_listingId: 0,
-    zillow_path:
-      "/homedetails/7416-N-Seneca-St-Portland-OR-97203/53854858_zpid/",
-    zillow_url:
-      "https://www.zillow.com/homedetails/7416-N-Seneca-St-Portland-OR-97203/53854858_zpid/?fullpage=true",
-    zillow_imageUrl:
-      "https://photos.zillowstatic.com/p_d/IS2naalpbd56r71000000000.jpg",
+    zillow_path: "/homedetails/7416-N-Seneca-St-Portland-OR-97203/53854858_zpid/",
+    zillow_url: "https://www.zillow.com/homedetails/7416-N-Seneca-St-Portland-OR-97203/53854858_zpid/?fullpage=true",
+    zillow_imageUrl: "https://photos.zillowstatic.com/p_d/IS2naalpbd56r71000000000.jpg",
     address: "7416 N Seneca St Portland, OR 97203",
     price: 175000,
     // propertyTaxesAnnually: 0,

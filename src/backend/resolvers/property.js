@@ -6,19 +6,11 @@ import moment from "moment";
 import * as statuses from "../enums/statuses";
 import * as engagements from "../enums/engagements";
 import { logInfo } from "../utilities/logging";
-import {
-  getDistance,
-  tryParseNumber,
-  newProperty
-} from "../utilities/utilities";
+import { getDistance, tryParseNumber, newProperty } from "../utilities/utilities";
 
 //region Query
 //region properties
-const properties = async (
-  parent,
-  { offset = 0, limit = 0, order = "id DESC" },
-  { models }
-) => {
+const properties = async (parent, { offset = 0, limit = 0, order = "id DESC" }, { models }) => {
   const params = {};
 
   if (limit > 0) {
@@ -48,11 +40,7 @@ const property = async (parent, { id }, { models }) => {
 //endregion
 
 //region findProperty
-const findProperty = async (
-  parent,
-  { term, tag, status = statuses.statuses.ACTIVE.value, persist = true },
-  { models }
-) => {
+const findProperty = async (parent, { term, tag, status = statuses.statuses.ACTIVE.value, persist = true }, { models }) => {
   let property = await findPropertyHelper(term, models, tag, status, persist);
 
   return property;
@@ -60,27 +48,16 @@ const findProperty = async (
 //endregion
 
 //region findProperties
-const findProperties = async (
-  parent,
-  { terms, tag, status = statuses.statuses.ACTIVE.value, persist = true },
-  { models }
-) => {
+const findProperties = async (parent, { terms, tag, status = statuses.statuses.ACTIVE.value, persist = true }, { models }) => {
   const properties = [];
   let counter = 0;
 
   for (let i = 0; i < terms.length; i++) {
     const term = terms[i];
-    let property = await findPropertyHelper(
-      term,
-      models,
-      tag,
-      status,
-      persist,
-      {
-        current: i + 1,
-        total: terms.length
-      }
-    );
+    let property = await findPropertyHelper(term, models, tag, status, persist, {
+      current: i + 1,
+      total: terms.length
+    });
 
     if (property) {
       properties.push(property);
@@ -112,31 +89,13 @@ const findCompAddresses = async (parent, { id, compFilter }, { models }) => {
 //endregion
 
 //region findComps
-const findComps = async (
-  parent,
-  {
-    id,
-    term,
-    tag,
-    status = statuses.statuses.ACTIVE.value,
-    persist = true,
-    compFilter,
-    useCompCache = true
-  },
-  { models }
-) => {
+const findComps = async (parent, { id, term, tag, status = statuses.statuses.ACTIVE.value, persist = true, compFilter, useCompCache = true }, { models }) => {
   let property = null;
 
   if (id > 0) {
     property = await models.Property.findByPk(id);
   } else if (term != "") {
-    property = await findPropertyHelper(
-      term,
-      models,
-      "FIND_COMPS",
-      status,
-      persist
-    );
+    property = await findPropertyHelper(term, models, "FIND_COMPS", status, persist);
   }
 
   let compTerms = [];
@@ -232,10 +191,7 @@ export default {
 
   Property: {
     streetPlusZip: property => `${property.streetAddress}, ${property.zipcode}`,
-    fullAddress: property =>
-      `${property.streetAddress}, ${property.city}, ${property.state} ${
-        property.zipcode
-      }`,
+    fullAddress: property => `${property.streetAddress}, ${property.city}, ${property.state} ${property.zipcode}`,
     keywords: (property, { search_keywords = [] }) => {
       const lowerCaseDescription = property.description.toLowerCase();
       return _.filter(search_keywords, function(skw) {
@@ -255,9 +211,7 @@ export default {
       return moment().diff(moment(property.date_listed, "x"), "days");
     },
     days_since_sold: property => {
-      return property.date_sold > 0
-        ? moment().diff(moment(property.date_sold, "x"), "days")
-        : -1;
+      return property.date_sold > 0 ? moment().diff(moment(property.date_sold, "x"), "days") : -1;
     },
     image_urls_list: property => {
       if (property.image_urls) {
@@ -296,14 +250,7 @@ export default {
 };
 
 //region Helpers
-const findPropertyHelper = async (
-  term,
-  models,
-  tag,
-  status = statuses.statuses.ACTIVE.value,
-  persist = true,
-  collectionInfo = null
-) => {
+const findPropertyHelper = async (term, models, tag, status = statuses.statuses.ACTIVE.value, persist = true, collectionInfo = null) => {
   const logRows = [];
 
   if (collectionInfo) {
@@ -331,11 +278,7 @@ const findPropertyHelper = async (
 
     property = await models.Property.findOne({
       where: {
-        [Sequelize.Op.or]: [
-          { zillow_path: term },
-          { streetAddress: term },
-          { address: term }
-        ]
+        [Sequelize.Op.or]: [{ zillow_path: term }, { streetAddress: term }, { address: term }]
       }
     });
 
@@ -348,11 +291,7 @@ const findPropertyHelper = async (
 
       property = await models.Property.findOne({
         where: {
-          [Sequelize.Op.or]: [
-            { zillow_url: zillowUrl + "?fullpage=true" },
-            { zillow_url: zillowUrl },
-            { address: term }
-          ]
+          [Sequelize.Op.or]: [{ zillow_url: zillowUrl + "?fullpage=true" }, { zillow_url: zillowUrl }, { address: term }]
         }
       });
 

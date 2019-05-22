@@ -77,20 +77,12 @@ export const setDistanceForList = (list, property) => {
 };
 
 export const setDistance = (prop1, prop2) => {
-  prop1.distance = haversineDistance(
-    [prop1.longitude, prop1.latitude],
-    [prop2.longitude, prop2.latitude],
-    true
-  );
+  prop1.distance = haversineDistance([prop1.longitude, prop1.latitude], [prop2.longitude, prop2.latitude], true);
   prop1.distance_set = true;
 };
 
 export const getDistance = (prop1, prop2) => {
-  return haversineDistance(
-    [prop1.longitude, prop1.latitude],
-    [prop2.longitude, prop2.latitude],
-    true
-  );
+  return haversineDistance([prop1.longitude, prop1.latitude], [prop2.longitude, prop2.latitude], true);
 };
 
 export const haversineDistance = function(coords1, coords2, isMiles) {
@@ -110,12 +102,7 @@ export const haversineDistance = function(coords1, coords2, isMiles) {
   var dLat = toRad(x1);
   var x2 = lon2 - lon1;
   var dLon = toRad(x2);
-  var a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(toRad(lat1)) *
-      Math.cos(toRad(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
+  var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c;
 
@@ -124,13 +111,7 @@ export const haversineDistance = function(coords1, coords2, isMiles) {
   return d;
 };
 
-export const setPropertyFromObject = (
-  source,
-  sourcePath,
-  target,
-  targetPath,
-  defaultValue
-) => {
+export const setPropertyFromObject = (source, sourcePath, target, targetPath, defaultValue) => {
   let propValue = _.get(source, sourcePath, defaultValue);
   if (propValue == null) {
     propValue = defaultValue;
@@ -181,7 +162,7 @@ export const newDealAnalysis = () => {
 
     FC_SecondMortgageAmount: 0.1,
     FC_SecondMortgagePoints: 2,
-    FC_SecondMortgageInterest: 12,
+    FC_SecondMortgageInterest: 0.12,
     FC_SecondMortgageAmount_Cost: 0,
     FC_SecondMortgagePoints_Cost: 0,
     FC_SecondMortgageInterest_Cost: 0,
@@ -225,72 +206,412 @@ export const newDealAnalysis = () => {
     SNAP_Profit: 0,
     SNAP_ROI: 0.15,
     SNAP_DownPayment: 0,
-    SNAP_CommittedCapital: 0
+    SNAP_CommittedCapital: 0,
+    SNAP_TotalCost: 0
     //endregion
   };
-};
-
-export const updateDealAnalysisForProperty = (dealAnalysis, property) => {
-  const proxy = new dealAnalysisUtilities.dealAnalysisProxy(dealAnalysis);
-  proxy.setField([
-    {
-      field: "DF_Ask",
-      val: property.price
-    },
-    {
-      field: "DF_PurchasePrice",
-      val: property.price
-    },
-    {
-      field: "HC_PropertyTaxesAnnually",
-      val: property.propertyTaxesAnnually
-    },
-    {
-      field: "HC_InsuranceAnnually",
-      val: property.insuranceAnnually
-    }
-  ]);
 };
 
 export const dealAnalysisSections = dealAnalysis => {
   return [
     {
-      sectionType:
-        dealAnalysisSectionTypes.dealAnalysisSectionTypes.FINANCING_COSTS
+      sectionType: dealAnalysisSectionTypes.dealAnalysisSectionTypes.FINANCING_COSTS,
+      headers: [{ text: "Title", align: "left", sortable: false }, { text: "", align: "left", sortable: false }, { text: "", align: "left", sortable: false }],
+      items: [
+        {
+          key: uuidv4(),
+          title: "First Mortgage/Lien Amount",
+          field1: "FC_FirstMortgageAmount",
+          readonly1: false,
+          currency1: "%",
+          field2: "FC_FirstMortgageAmount_Cost",
+          readonly2: true,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "First Mortgage Points",
+          field1: "FC_FirstMortgagePoints",
+          readonly1: false,
+          currency1: "",
+          field2: "FC_FirstMortgagePoints_Cost",
+          readonly2: true,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "First Mortgage Interest",
+          field1: "FC_FirstMortgageInterest",
+          readonly1: false,
+          currency1: "%",
+          field2: "FC_FirstMortgageInterest_Cost",
+          readonly2: true,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "First Mortgage Payment",
+          field1: "",
+          readonly1: false,
+          currency1: "",
+          field2: "FC_FirstMortgagePayment",
+          readonly2: true,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Second Mortgage/Lien Amount",
+          field1: "FC_SecondMortgageAmount",
+          readonly1: false,
+          currency1: "%",
+          field2: "FC_SecondMortgageAmount_Cost",
+          readonly2: true,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Second Mortgage Points",
+          field1: "FC_SecondMortgagePoints",
+          readonly1: false,
+          currency1: "",
+          field2: "FC_SecondMortgagePoints_Cost",
+          readonly2: true,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Second Mortgage Interest",
+          field1: "FC_SecondMortgageInterest",
+          readonly1: false,
+          currency1: "%",
+          field2: "FC_SecondMortgageInterest_Cost",
+          readonly2: true,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Second Mortgage Payment",
+          field1: "",
+          readonly1: false,
+          currency1: "",
+          field2: "FC_SecondMortgagePayment",
+          readonly2: true,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Misc Mortgage/Lien Amount",
+          field1: "FC_MiscMortgageAmount",
+          readonly1: false,
+          currency1: "%",
+          field2: "FC_MiscMortgageAmount_Cost",
+          readonly2: true,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Misc Mortgage Points",
+          field1: "FC_MiscMortgagePoints",
+          readonly1: false,
+          currency1: "",
+          field2: "FC_MiscMortgagePoints_Cost",
+          readonly2: true,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Misc Mortgage Interest",
+          field1: "FC_MiscMortgageInterest",
+          readonly1: false,
+          currency1: "%",
+          field2: "FC_MiscMortgageInterest_Cost",
+          readonly2: true,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Misc Mortgage Payment",
+          field1: "",
+          readonly1: false,
+          currency1: "",
+          field2: "FC_MiscMortgagePayment",
+          readonly2: true,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Misc Financing Costs",
+          field1: "",
+          readonly1: false,
+          currency1: "",
+          field2: "FC_MiscCost",
+          readonly2: false,
+          currency2: "$"
+        }
+      ]
     },
     {
-      sectionType:
-        dealAnalysisSectionTypes.dealAnalysisSectionTypes.BUYING_COSTS
+      sectionType: dealAnalysisSectionTypes.dealAnalysisSectionTypes.BUYING_COSTS,
+      headers: [
+        { text: "Title", align: "left", sortable: false },
+        { text: "% of Purchase", align: "left", sortable: false },
+        { text: "Total", align: "left", sortable: false }
+      ],
+      items: [
+        {
+          key: uuidv4(),
+          title: "Escrow/Attorney Fees",
+          field1: "",
+          readonly1: false,
+          currency1: "",
+          field2: "BTC_EscrowAttorney",
+          readonly2: false,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Title Insurance/Search Costs",
+          field1: "BTC_TitleInsuranceSearch",
+          readonly1: false,
+          currency1: "%",
+          field2: "BTC_TitleInsuranceSearch_Cost",
+          readonly2: true,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Misc. Buying Costs",
+          field1: "",
+          readonly1: false,
+          currency1: "",
+          field2: "BTC_Misc",
+          readonly2: false,
+          currency2: "$"
+        }
+      ]
     },
     {
-      sectionType:
-        dealAnalysisSectionTypes.dealAnalysisSectionTypes.HOLDING_COSTS
+      sectionType: dealAnalysisSectionTypes.dealAnalysisSectionTypes.HOLDING_COSTS,
+      headers: [
+        { text: "Title", align: "left", sortable: false },
+        { text: "Annually", align: "left", sortable: false },
+        { text: "Monthly", align: "left", sortable: false }
+      ],
+      items: [
+        {
+          key: uuidv4(),
+          title: "Property Taxes",
+          field1: "HC_PropertyTaxesAnnually",
+          readonly1: false,
+          currency1: "$",
+          field2: "HC_PropertyTaxesMonthly",
+          readonly2: true,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Insurance",
+          field1: "HC_InsuranceAnnually",
+          readonly1: false,
+          currency1: "$",
+          field2: "HC_InsuranceMonthly",
+          readonly2: true,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "HOA Fees",
+          field1: "",
+          readonly1: false,
+          currency1: "",
+          field2: "HC_HOAMonthly",
+          readonly2: false,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Gas",
+          field1: "",
+          readonly1: false,
+          currency1: "",
+          field2: "HC_Gas",
+          readonly2: false,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Water",
+          field1: "",
+          readonly1: false,
+          currency1: "",
+          field2: "HC_Water",
+          readonly2: false,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Electricity",
+          field1: "",
+          readonly1: false,
+          currency1: "",
+          field2: "HC_Electricity",
+          readonly2: false,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Other Utils",
+          field1: "",
+          readonly1: false,
+          currency1: "",
+          field2: "HC_OtherUtilities",
+          readonly2: false,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Utils Monthly",
+          field1: "",
+          readonly1: false,
+          currency1: "",
+          field2: "HC_UtilitiesMonthly",
+          readonly2: true,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Misc Monthly",
+          field1: "",
+          readonly1: false,
+          currency1: "",
+          field2: "HC_MiscMonthly",
+          readonly2: false,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Total Monthly",
+          field1: "",
+          readonly1: false,
+          currency1: "",
+          field2: "HC_TotalCostMonthly",
+          readonly2: true,
+          currency2: "$"
+        }
+      ]
     },
     {
-      sectionType:
-        dealAnalysisSectionTypes.dealAnalysisSectionTypes.SELLING_COSTS
+      sectionType: dealAnalysisSectionTypes.dealAnalysisSectionTypes.SELLING_COSTS,
+      headers: [
+        { text: "Title", align: "left", sortable: false },
+        { text: "% of ARV", align: "left", sortable: false },
+        { text: "Total", align: "left", sortable: false }
+      ],
+      items: [
+        {
+          key: uuidv4(),
+          title: "Escrow/Attorney Fees",
+          field1: "",
+          readonly1: false,
+          currency1: "",
+          field2: "STC_EscrowAttorney",
+          readonly2: false,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Selling Recording Fees",
+          field1: "",
+          readonly1: false,
+          currency1: "",
+          field2: "STC_SellingRecording",
+          readonly2: false,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Realtor Fees",
+          field1: "STC_RealtorFees",
+          readonly1: false,
+          currency1: "%",
+          field2: "STC_RealtorFees_Cost",
+          readonly2: true,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Transfer & Conveyance Fees",
+          field1: "STC_TransferConveyenceFees",
+          readonly1: false,
+          currency1: "%",
+          field2: "STC_TransferConveyenceFees_Cost",
+          readonly2: true,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Home Warranty",
+          field1: "",
+          readonly1: false,
+          currency1: "",
+          field2: "STC_HomeWarranty",
+          readonly2: false,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Staging Costs",
+          field1: "",
+          readonly1: false,
+          currency1: "",
+          field2: "STC_Staging",
+          readonly2: false,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Marketing Costs",
+          field1: "",
+          readonly1: false,
+          currency1: "",
+          field2: "STC_Marketing",
+          readonly2: false,
+          currency2: "$"
+        },
+        {
+          key: uuidv4(),
+          title: "Misc. Selling Costs",
+          field1: "",
+          readonly1: false,
+          currency1: "",
+          field2: "STC_Misc",
+          readonly2: false,
+          currency2: "$"
+        }
+      ]
     }
   ];
 };
 
-export const setDealAnalysisField = (dealAnalysis, pairs) => {
-  const proxy = new dealAnalysisUtilities.dealAnalysisProxy(dealAnalysis);
-  return proxy.setField(pairs);
-};
+//sections
+//3 columns
+//Title, val1 header, val2 header
+//Data items
+//Title, val 1 field, val 2 field, val 1 formatter, val 2 formatter, val 1 editable, val 2 editable
+
 //endregion
 
 //region Repair Estimate Functions
 export const newRepairEstimate = () => {
   return {
     title: "Repair Estimate",
-    totalCost: 0,
-    quick: false,
+    totalCost: 50000,
+    quick: true,
     sections: [
       {
         selected: false,
         totalCost: 0,
-        sectionType:
-          repairEstimateSectionTypes.repairEstimateSectionTypes.EXTERIOR.value,
+        sectionType: repairEstimateSectionTypes.repairEstimateSectionTypes.EXTERIOR.value,
         subSections: [
           {
             key: uuidv4(),
@@ -310,8 +631,7 @@ export const newRepairEstimate = () => {
               {
                 key: uuidv4(),
                 selected: false,
-                name:
-                  "Rollover (add a layer of shingles) - Architectual Shingle",
+                name: "Rollover (add a layer of shingles) - Architectual Shingle",
                 quantity: 0,
                 unit: 1,
                 unitCost: 2.5,
@@ -1013,8 +1333,7 @@ export const newRepairEstimate = () => {
       {
         selected: false,
         totalCost: 0,
-        sectionType:
-          repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value,
+        sectionType: repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value,
         subSections: [
           {
             key: uuidv4(),
@@ -1599,8 +1918,7 @@ export const newRepairEstimate = () => {
               {
                 key: uuidv4(),
                 selected: false,
-                name:
-                  "Drywall, tape & skimcoat walls/ceilings in entire house when gutted ",
+                name: "Drywall, tape & skimcoat walls/ceilings in entire house when gutted ",
                 quantity: 0,
                 unit: 1,
                 unitCost: 6,
@@ -1662,8 +1980,7 @@ export const newRepairEstimate = () => {
               {
                 key: uuidv4(),
                 selected: false,
-                name:
-                  "New interior doors, closet doors, & trim (3000 sq ft house)",
+                name: "New interior doors, closet doors, & trim (3000 sq ft house)",
                 quantity: 0,
                 unit: 2,
                 unitCost: 4000,
@@ -1672,8 +1989,7 @@ export const newRepairEstimate = () => {
               {
                 key: uuidv4(),
                 selected: false,
-                name:
-                  "New interior doors, closet doors, & trim (1500 sq ft house)",
+                name: "New interior doors, closet doors, & trim (1500 sq ft house)",
                 quantity: 0,
                 unit: 2,
                 unitCost: 2000,
@@ -1700,8 +2016,7 @@ export const newRepairEstimate = () => {
               {
                 key: uuidv4(),
                 selected: false,
-                name:
-                  "Exterior front door - single door w/ hardware & dead bolt ",
+                name: "Exterior front door - single door w/ hardware & dead bolt ",
                 quantity: 0,
                 unit: 2,
                 unitCost: 150,
@@ -1790,8 +2105,7 @@ export const newRepairEstimate = () => {
               {
                 key: uuidv4(),
                 selected: false,
-                name:
-                  "Install french drains (estimate depending on condition - length x width)",
+                name: "Install french drains (estimate depending on condition - length x width)",
                 quantity: 0,
                 unit: 1,
                 unitCost: 25,
@@ -1880,8 +2194,7 @@ export const newRepairEstimate = () => {
               {
                 key: uuidv4(),
                 selected: false,
-                name:
-                  "Repair existing foundation -  stair mud jacking (will vary)",
+                name: "Repair existing foundation -  stair mud jacking (will vary)",
                 quantity: 0,
                 unit: 2,
                 unitCost: 500,
@@ -1890,8 +2203,7 @@ export const newRepairEstimate = () => {
               {
                 key: uuidv4(),
                 selected: false,
-                name:
-                  "Repair existing foundation - bowing walls support with I beams",
+                name: "Repair existing foundation - bowing walls support with I beams",
                 quantity: 0,
                 unit: 2,
                 unitCost: 500,
@@ -1900,8 +2212,7 @@ export const newRepairEstimate = () => {
               {
                 key: uuidv4(),
                 selected: false,
-                name:
-                  "Repair existing foundation - settled walls support w/ concrete piers",
+                name: "Repair existing foundation - settled walls support w/ concrete piers",
                 quantity: 0,
                 unit: 2,
                 unitCost: 850,
@@ -1914,9 +2225,7 @@ export const newRepairEstimate = () => {
       {
         selected: false,
         totalCost: 0,
-        sectionType:
-          repairEstimateSectionTypes.repairEstimateSectionTypes.MECHANICALS
-            .value,
+        sectionType: repairEstimateSectionTypes.repairEstimateSectionTypes.MECHANICALS.value,
         subSections: [
           {
             key: uuidv4(),
@@ -1927,8 +2236,7 @@ export const newRepairEstimate = () => {
               {
                 key: uuidv4(),
                 selected: false,
-                name:
-                  "Gas fired forced hot air heating system, ac system, & ductwork",
+                name: "Gas fired forced hot air heating system, ac system, & ductwork",
                 quantity: 0,
                 unit: 2,
                 unitCost: 6000,
@@ -2017,8 +2325,7 @@ export const newRepairEstimate = () => {
               {
                 key: uuidv4(),
                 selected: false,
-                name:
-                  "New plumbing system in entire house (1,500 sq. ft 3/2 bath house)",
+                name: "New plumbing system in entire house (1,500 sq. ft 3/2 bath house)",
                 quantity: 0,
                 unit: 2,
                 unitCost: 7000,
@@ -2027,8 +2334,7 @@ export const newRepairEstimate = () => {
               {
                 key: uuidv4(),
                 selected: false,
-                name:
-                  "Plumbing work in wet locations with fixtures (not replumbing entire house)",
+                name: "Plumbing work in wet locations with fixtures (not replumbing entire house)",
                 quantity: 0,
                 unit: 2,
                 unitCost: 1500,
@@ -2063,8 +2369,7 @@ export const newRepairEstimate = () => {
               {
                 key: uuidv4(),
                 selected: false,
-                name:
-                  "Rewire entire house, new panel, & all lighting fixtures (1,500 sq. ft house)",
+                name: "Rewire entire house, new panel, & all lighting fixtures (1,500 sq. ft house)",
                 quantity: 0,
                 unit: 2,
                 unitCost: 7000,
@@ -2073,8 +2378,7 @@ export const newRepairEstimate = () => {
               {
                 key: uuidv4(),
                 selected: false,
-                name:
-                  "Basic electrical work for house & lighting fixtures (1500 sq. ft. house)",
+                name: "Basic electrical work for house & lighting fixtures (1500 sq. ft. house)",
                 quantity: 0,
                 unit: 2,
                 unitCost: 3000,
@@ -2105,8 +2409,7 @@ export const newRepairEstimate = () => {
       {
         selected: false,
         totalCost: 0,
-        sectionType:
-          repairEstimateSectionTypes.repairEstimateSectionTypes.OTHER.value,
+        sectionType: repairEstimateSectionTypes.repairEstimateSectionTypes.OTHER.value,
         subSections: [
           {
             key: uuidv4(),
@@ -2287,10 +2590,7 @@ export const setRepairEstimateSqft = (repairEstimate, sqft) => {
         _.each(subSection.lineItems, function(lineItem) {
           if (lineItem.unit == unitTypes.unitTypes.SQUARE_FEET.value) {
             lineItem.quantity = sqft;
-          } else if (
-            lineItem.unit == unitTypes.unitTypes.LUMP_SUM.value ||
-            lineItem.unit == unitTypes.unitTypes.EACH.value
-          ) {
+          } else if (lineItem.unit == unitTypes.unitTypes.LUMP_SUM.value || lineItem.unit == unitTypes.unitTypes.EACH.value) {
             lineItem.quantity = 1;
           }
         });
@@ -2299,12 +2599,7 @@ export const setRepairEstimateSqft = (repairEstimate, sqft) => {
   }
 };
 
-export const updateRepairEstimateLineItem = (
-  repairEstimate,
-  key,
-  field,
-  val
-) => {
+export const updateRepairEstimateLineItem = (repairEstimate, key, field, val) => {
   let repairEstimateSection,
     repairEstimateSubSection,
     repairEstimateLineItem = null;
@@ -2322,9 +2617,7 @@ export const updateRepairEstimateLineItem = (
           reconcileRepairEstimateSubSection(repairEstimateSubSection);
           reconcileRepairEstimateSection(repairEstimateSection);
 
-          repairEstimate.totalCost = _.sumBy(repairEstimate.sections, function(
-            x
-          ) {
+          repairEstimate.totalCost = _.sumBy(repairEstimate.sections, function(x) {
             return x.totalCost;
           });
           break;
@@ -2353,40 +2646,28 @@ export const reconcileRepairEstimate = (repairEstimate, recurse = false) => {
 };
 
 export const reconcileRepairEstimateSection = repairEstimateSection => {
-  repairEstimateSection.selected = _.some(
-    repairEstimateSection.subSections,
-    function(x) {
-      return x.selected;
-    }
-  );
+  repairEstimateSection.selected = _.some(repairEstimateSection.subSections, function(x) {
+    return x.selected;
+  });
 
   if (repairEstimateSection.selected) {
-    repairEstimateSection.totalCost = _.sumBy(
-      repairEstimateSection.subSections,
-      function(x) {
-        return x.totalCost;
-      }
-    );
+    repairEstimateSection.totalCost = _.sumBy(repairEstimateSection.subSections, function(x) {
+      return x.totalCost;
+    });
   } else {
     repairEstimateSection.totalCost = 0;
   }
 };
 
 export const reconcileRepairEstimateSubSection = repairEstimateSubSection => {
-  repairEstimateSubSection.selected = _.some(
-    repairEstimateSubSection.lineItems,
-    function(x) {
-      return x.selected;
-    }
-  );
+  repairEstimateSubSection.selected = _.some(repairEstimateSubSection.lineItems, function(x) {
+    return x.selected;
+  });
 
   if (repairEstimateSubSection.selected) {
-    repairEstimateSubSection.totalCost = _.sumBy(
-      repairEstimateSubSection.lineItems,
-      function(x) {
-        return x.totalCost;
-      }
-    );
+    repairEstimateSubSection.totalCost = _.sumBy(repairEstimateSubSection.lineItems, function(x) {
+      return x.totalCost;
+    });
   } else {
     repairEstimateSubSection.totalCost = 0;
   }
@@ -2394,8 +2675,7 @@ export const reconcileRepairEstimateSubSection = repairEstimateSubSection => {
 
 export const reconcileRepairEstimateLineItem = repairEstimateLineItem => {
   if (repairEstimateLineItem.selected) {
-    repairEstimateLineItem.totalCost =
-      repairEstimateLineItem.quantity * repairEstimateLineItem.unitCost;
+    repairEstimateLineItem.totalCost = repairEstimateLineItem.quantity * repairEstimateLineItem.unitCost;
   } else {
     repairEstimateLineItem.totalCost = 0;
   }
@@ -2483,42 +2763,17 @@ export const buildZillowCompUrl = (property, compFilter, currentPage) => {
   addZillowBooleanFilter(searchQueryState, "isPreMarketPreForeclosure", false);
   addZillowBooleanFilter(searchQueryState, "isTownhouse", false);
 
-  addZillowMinMaxFilter(
-    searchQueryState,
-    "beds",
-    compFilter.minBeds,
-    compFilter.maxBeds
-  );
+  addZillowMinMaxFilter(searchQueryState, "beds", compFilter.minBeds, compFilter.maxBeds);
 
-  addZillowMinMaxFilter(
-    searchQueryState,
-    "baths",
-    compFilter.minBaths,
-    compFilter.maxBaths
-  );
+  addZillowMinMaxFilter(searchQueryState, "baths", compFilter.minBaths, compFilter.maxBaths);
 
   const sqftRandomOffset = 25;
 
-  addZillowMinMaxFilter(
-    searchQueryState,
-    "sqft",
-    compFilter.minSqft,
-    compFilter.maxSqft
-  );
+  addZillowMinMaxFilter(searchQueryState, "sqft", compFilter.minSqft, compFilter.maxSqft);
 
-  addZillowMinMaxFilter(
-    searchQueryState,
-    "lotSize",
-    compFilter.minLotSqft,
-    compFilter.maxLotSqft
-  );
+  addZillowMinMaxFilter(searchQueryState, "lotSize", compFilter.minLotSqft, compFilter.maxLotSqft);
 
-  addZillowMinMaxFilter(
-    searchQueryState,
-    "built",
-    compFilter.minYearBuilt,
-    compFilter.maxYearBuilt
-  );
+  addZillowMinMaxFilter(searchQueryState, "built", compFilter.minYearBuilt, compFilter.maxYearBuilt);
 
   compUrl += encodeURIComponent(JSON.stringify(searchQueryState));
 
@@ -2562,20 +2817,8 @@ export const buildRedfinCompUrl = (property, compFilter, currentPage) => {
   urlParameters.push(addCompUrlParameter("max-beds", compFilter.maxBeds, -1));
   urlParameters.push(addCompUrlParameter("min-baths", compFilter.minBaths, -1));
 
-  urlParameters.push(
-    addCompUrlParameter(
-      "min-sqft",
-      compFilter.minSqft + _.random(-sqftRandomOffset, sqftRandomOffset, false),
-      -1
-    )
-  );
-  urlParameters.push(
-    addCompUrlParameter(
-      "max-sqft",
-      compFilter.maxSqft + _.random(-sqftRandomOffset, sqftRandomOffset, false),
-      -1
-    )
-  );
+  urlParameters.push(addCompUrlParameter("min-sqft", compFilter.minSqft + _.random(-sqftRandomOffset, sqftRandomOffset, false), -1));
+  urlParameters.push(addCompUrlParameter("max-sqft", compFilter.maxSqft + _.random(-sqftRandomOffset, sqftRandomOffset, false), -1));
 
   // urlParameters.push(
   //   addCompUrlParameter(
@@ -2596,36 +2839,12 @@ export const buildRedfinCompUrl = (property, compFilter, currentPage) => {
   //   )
   // );
 
-  urlParameters.push(
-    addCompUrlParameter(
-      "min-lot-size",
-      compFilter.minLotSqft,
-      -1,
-      formatSqftForUrl,
-      property.lotSize
-    )
-  );
-  urlParameters.push(
-    addCompUrlParameter(
-      "max-lot-size",
-      compFilter.maxLotSqft,
-      -1,
-      formatSqftForUrl,
-      property.lotSize
-    )
-  );
-  urlParameters.push(
-    addCompUrlParameter("min-year-built", compFilter.minYearBuilt, -1)
-  );
-  urlParameters.push(
-    addCompUrlParameter("max-year-built", compFilter.maxYearBuilt, -1)
-  );
+  urlParameters.push(addCompUrlParameter("min-lot-size", compFilter.minLotSqft, -1, formatSqftForUrl, property.lotSize));
+  urlParameters.push(addCompUrlParameter("max-lot-size", compFilter.maxLotSqft, -1, formatSqftForUrl, property.lotSize));
+  urlParameters.push(addCompUrlParameter("min-year-built", compFilter.minYearBuilt, -1));
+  urlParameters.push(addCompUrlParameter("max-year-built", compFilter.maxYearBuilt, -1));
   urlParameters.push("include=sold-1yr");
-  urlParameters.push(
-    `viewport=${bounds.maxLat.toFixed(5)}:${bounds.minLat.toFixed(
-      5
-    )}:${bounds.maxLon.toFixed(5)}:${bounds.minLon.toFixed(5)}`
-  );
+  urlParameters.push(`viewport=${bounds.maxLat.toFixed(5)}:${bounds.minLat.toFixed(5)}:${bounds.maxLon.toFixed(5)}:${bounds.minLon.toFixed(5)}`);
   urlParameters.push("no-outline");
 
   const shuffledUrlParameters = _.shuffle(urlParameters);
@@ -2638,13 +2857,7 @@ export const buildRedfinCompUrl = (property, compFilter, currentPage) => {
   return compUrl;
 };
 
-const addCompUrlParameter = (
-  paramName,
-  paramValue,
-  ignoreValue = -1,
-  formatFunc = null,
-  formatParam = null
-) => {
+const addCompUrlParameter = (paramName, paramValue, ignoreValue = -1, formatFunc = null, formatParam = null) => {
   if (paramValue != ignoreValue) {
     if (formatFunc != null) {
       paramValue = formatFunc(formatParam, paramValue);

@@ -34,8 +34,7 @@ export const findZillowUrl = async address => {
     q: address.replaceAll(",", "").replaceAll(".", "")
   };
 
-  const url =
-    "https://www.googleapis.com/customsearch/v1?" + qs.stringify(params);
+  const url = "https://www.googleapis.com/customsearch/v1?" + qs.stringify(params);
 
   const options = {
     uri: url
@@ -75,8 +74,7 @@ export const findProperty = async term => {
   const options = {
     uri: url,
     headers: {
-      "user-agent":
-        "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0"
+      "user-agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0"
     }
   };
 
@@ -138,31 +136,16 @@ export const findProperty = async term => {
 
   property.zillow_propertyId = zillowData.zpid;
   property.zillow_path = zillowData.hdpUrl;
-  property.zillow_url =
-    "https://www.zillow.com" + property.zillow_path + "?fullpage=true";
+  property.zillow_url = "https://www.zillow.com" + property.zillow_path + "?fullpage=true";
 
   property.streetAddress = zillowData.streetAddress;
   property.city = zillowData.city;
   property.state = zillowData.state;
   property.zipcode = zillowData.zipcode;
-  property.address = `${property.streetAddress}, ${property.city}, ${
-    property.state
-  } ${property.zipcode}`;
-  utilities.setPropertyFromObject(
-    zillowData,
-    "livingArea",
-    property,
-    "sqft",
-    -1
-  );
+  property.address = `${property.streetAddress}, ${property.city}, ${property.state} ${property.zipcode}`;
+  utilities.setPropertyFromObject(zillowData, "livingArea", property, "sqft", -1);
 
-  utilities.setPropertyFromObject(
-    zillowData,
-    "lotSize",
-    property,
-    "lotSize",
-    -1
-  );
+  utilities.setPropertyFromObject(zillowData, "lotSize", property, "lotSize", -1);
 
   utilities.setPropertyFromObject(zillowData, "price", property, "price", -1);
   utilities.setPropertyFromObject(zillowData, "bedrooms", property, "beds", -1);
@@ -180,56 +163,21 @@ export const findProperty = async term => {
     }
   }
 
-  utilities.setPropertyFromObject(
-    zillowData,
-    "bathrooms",
-    property,
-    "baths",
-    -1
-  );
-  utilities.setPropertyFromObject(
-    zillowData,
-    "description",
-    property,
-    "description",
-    ""
-  );
-  utilities.setPropertyFromObject(
-    zillowData,
-    "zestimate",
-    property,
-    "zestimate",
-    -1
-  );
-  property.price_to_zestimate =
-    property.zestimate == -1
-      ? 1000
-      : parseFloat((property.price / property.zestimate).toFixed(2));
+  utilities.setPropertyFromObject(zillowData, "bathrooms", property, "baths", -1);
+  utilities.setPropertyFromObject(zillowData, "description", property, "description", "");
+  utilities.setPropertyFromObject(zillowData, "zestimate", property, "zestimate", -1);
+  property.price_to_zestimate = property.zestimate == -1 ? 1000 : parseFloat((property.price / property.zestimate).toFixed(2));
   property.zillow_status = zillowData.homeStatus;
 
-  utilities.setPropertyFromObject(
-    zillowData,
-    "resoFacts.onMarketDate",
-    property,
-    "date_listed",
-    -1
-  );
+  utilities.setPropertyFromObject(zillowData, "resoFacts.onMarketDate", property, "date_listed", -1);
 
-  property.year_built = extractAtAGlanceValues(
-    zillowData,
-    "Year Built",
-    parseInt,
-    0
-  );
+  property.year_built = extractAtAGlanceValues(zillowData, "Year Built", parseInt, 0);
 
   if (isNaN(property.year_built)) {
     property.year_built = 1850;
   }
 
-  if (
-    zillowData.responsivePhotos != null &&
-    zillowData.responsivePhotos.length > 0
-  ) {
+  if (zillowData.responsivePhotos != null && zillowData.responsivePhotos.length > 0) {
     property.image_urls = _.map(zillowData.responsivePhotos, function(item) {
       return item.mixedSources.jpeg[2].url;
     }).join("|");
@@ -245,29 +193,11 @@ export const findProperty = async term => {
     property.image_urls = "";
   }
 
-  utilities.setPropertyFromObject(
-    zillowData,
-    "dateSold",
-    property,
-    "date_sold",
-    -1
-  );
+  utilities.setPropertyFromObject(zillowData, "dateSold", property, "date_sold", -1);
 
-  utilities.setPropertyFromObject(
-    zillowData,
-    "latitude",
-    property,
-    "latitude",
-    -1
-  );
+  utilities.setPropertyFromObject(zillowData, "latitude", property, "latitude", -1);
 
-  utilities.setPropertyFromObject(
-    zillowData,
-    "longitude",
-    property,
-    "longitude",
-    -1
-  );
+  utilities.setPropertyFromObject(zillowData, "longitude", property, "longitude", -1);
 
   return property;
 };
@@ -286,8 +216,7 @@ export const trialScrape = async (url, filename = "") => {
   const options = {
     uri: url,
     headers: {
-      "user-agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36"
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36"
     }
   };
 
@@ -454,11 +383,7 @@ export const findComps = async ({
   let hasMorePages = true;
 
   while (hasMorePages) {
-    let compUrl = utilities.buildRedfinCompUrl(
-      property,
-      compFilter,
-      currentPage
-    );
+    let compUrl = utilities.buildRedfinCompUrl(property, compFilter, currentPage);
 
     logInfo(
       "scrapeComps",
@@ -479,8 +404,7 @@ export const findComps = async ({
     const options = {
       uri: compUrl,
       headers: {
-        "user-agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36"
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36"
       }
     };
 
@@ -521,10 +445,7 @@ export const findComps = async ({
       );
     }
 
-    const results = $(
-      ".HomeViews .HomeCardContainer > .HomeCard > .v2 > a",
-      html
-    );
+    const results = $(".HomeViews .HomeCardContainer > .HomeCard > .v2 > a", html);
 
     comps = _.concat(
       comps,
@@ -533,10 +454,7 @@ export const findComps = async ({
       })
     );
 
-    const nextPage = $(
-      ".PagingControls button:not(.disabled) .slide-next",
-      html
-    );
+    const nextPage = $(".PagingControls button:not(.disabled) .slide-next", html);
     if (nextPage.length > 0) {
       currentPage += 1;
     } else {
@@ -580,26 +498,14 @@ const buildRealtorCompUrl = (property, compFilter, currentPage) => {
   const longitudeOffset = (1 / 49) * compFilter.searchDistance;
   const longitudeRandomOffset = longitudeOffset / 10;
 
-  const maxLon =
-    property.longitude +
-    longitudeOffset +
-    _.random(0, longitudeRandomOffset, true);
-  const minLon =
-    property.longitude -
-    longitudeOffset +
-    _.random(0, longitudeRandomOffset, true);
+  const maxLon = property.longitude + longitudeOffset + _.random(0, longitudeRandomOffset, true);
+  const minLon = property.longitude - longitudeOffset + _.random(0, longitudeRandomOffset, true);
 
   const latitudeOffset = (1 / 69) * compFilter.searchDistance;
   const latitudeRandomOffset = longitudeOffset / 10;
 
-  const maxLat =
-    property.latitude +
-    latitudeOffset +
-    _.random(0, latitudeRandomOffset, true);
-  const minLat =
-    property.latitude -
-    latitudeOffset +
-    _.random(0, latitudeRandomOffset, true);
+  const maxLat = property.latitude + latitudeOffset + _.random(0, latitudeRandomOffset, true);
+  const minLat = property.latitude - latitudeOffset + _.random(0, latitudeRandomOffset, true);
   //endregion
 
   let compUrl = `https://www.realtor.com/soldhomeprices/`;

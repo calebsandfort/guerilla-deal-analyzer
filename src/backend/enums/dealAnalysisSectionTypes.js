@@ -46,3 +46,24 @@ export const findByValue = value => {
 export const getDisplayForValue = value => {
   return enumUtilities.getDisplayForValue(dealAnalysisSectionTypes, value);
 };
+
+export const getTotalCost = (dealAnalysisSectionType, dealAnalysis) => {
+  let totalCost = 0;
+
+  switch (dealAnalysisSectionType.value) {
+    case dealAnalysisSectionTypes.FINANCING_COSTS.value:
+      totalCost = dealAnalysis.FC_TotalCost;
+      break;
+    case dealAnalysisSectionTypes.BUYING_COSTS.value:
+      totalCost = dealAnalysis.BTC_TotalCost;
+      break;
+    case dealAnalysisSectionTypes.HOLDING_COSTS.value:
+      totalCost = dealAnalysis.HC_TotalCost;
+      break;
+    case dealAnalysisSectionTypes.SELLING_COSTS.value:
+      totalCost = dealAnalysis.STC_TotalCost;
+      break;
+  }
+
+  return totalCost;
+};

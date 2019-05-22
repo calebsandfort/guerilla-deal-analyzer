@@ -49,26 +49,17 @@ export const mutations = {
 export const actions = {
   async expandoUpdate({ commit }, requestVariables) {
     commit("setFinding", true);
-    const response = await propertyApi.expandoUpdate(
-      apolloClient,
-      requestVariables
-    );
+    const response = await propertyApi.expandoUpdate(apolloClient, requestVariables);
     commit("updateItem", response.data.expandoPropertyUpdate);
   },
 
   async fetchList({ commit }, requestVariables) {
-    const response = await propertyApi.getAllQueryable(
-      apolloClient,
-      requestVariables
-    );
+    const response = await propertyApi.getAllQueryable(apolloClient, requestVariables);
     commit("setList", response.data.propertiesQueryable);
   },
 
   async findProperties({ commit }, requestVariables) {
-    const response = await propertyApi.findProperties(
-      apolloClient,
-      requestVariables
-    );
+    const response = await propertyApi.findProperties(apolloClient, requestVariables);
     commit("setList", response.data.findProperties);
   },
 

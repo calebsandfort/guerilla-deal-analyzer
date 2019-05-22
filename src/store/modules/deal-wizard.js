@@ -5,8 +5,10 @@ import * as utilities from "../../backend/utilities/utilities";
 import * as statuses from "../../backend/enums/statuses";
 import colors from "vuetify/es5/util/colors";
 import uuidv4 from "uuid/v4";
+import DealAnalysisProxy from "../../backend/utilities/DealAnalysisProxy";
 
 const state = {
+  debugDealAnalysis: false,
   item: null,
   spotlightItem: null,
   comps: [],
@@ -16,20 +18,12 @@ const state = {
   findingComps: false,
   pullingCompsFromCache: false,
   compLog: [],
-  search_keywords: [
-    "remodel",
-    "update",
-    "hardwood",
-    "hard wood",
-    "new",
-    "granite"
-  ],
+  search_keywords: ["remodel", "update", "hardwood", "hard wood", "new", "granite"],
   arv: 0,
   repairEstimate: utilities.newRepairEstimate(),
   dealAnalysis: utilities.newDealAnalysis(),
-  dealAnalysisSections: utilities.dealAnalysisSections(
-    utilities.newDealAnalysis()
-  ),
+  dealAnalysisProxy: new DealAnalysisProxy(utilities.newDealAnalysis()),
+  dealAnalysisSections: utilities.dealAnalysisSections(utilities.newDealAnalysis()),
   listItems: {
     // prettier-ignore
     amenityCount: [
@@ -147,23 +141,28 @@ export const mutations = {
   },
   updateRepairEstimateLineItem(state, payload) {
     const temp = Object.assign({}, state.repairEstimate);
-    utilities.updateRepairEstimateLineItem(
-      temp,
-      payload.key,
-      payload.field,
-      payload.val
-    );
+    utilities.updateRepairEstimateLineItem(temp, payload.key, payload.field, payload.val);
 
     state.repairEstimate = temp;
+
+    if (
+      state.dealAnalysisProxy.setField([
+        {
+          field: "DF_RepairCosts",
+          val: state.repairEstimate.totalCost
+        }
+      ])
+    ) {
+      state.dealAnalysis = Object.assign({}, state.dealAnalysisProxy.dealAnalysis);
+    }
   },
   //endregion
 
   //region Deal Analysis Mutations
   updateDealAnalysisForProperty(state) {
-    const temp = Object.assign({}, state.dealAnalysis);
-    utilities.updateDealAnalysisForProperty(temp, state.item);
-
-    state.dealAnalysis = temp;
+    state.arv = state.item.zestimate > 0 ? state.item.zestimate : state.item.price;
+    state.dealAnalysisProxy.updateForProperty(state.item);
+    state.dealAnalysis = Object.assign({}, state.dealAnalysisProxy.dealAnalysis);
   },
   //endregion
 
@@ -172,16 +171,22 @@ export const mutations = {
     const names = payload.name.split(",");
 
     for (let i = 0; i < names.length; i++) {
-      _.set(state, names[i], payload.v);
+      if (!names[i].startsWith("dealAnalysis.")) {
+        _.set(state, names[i], payload.v);
+      }
     }
 
-    const pairs = _.map(names, function(x) {
-      return { field: x, val: payload.v };
-    });
+    const pairs = _.map(
+      _.filter(names, function(f) {
+        return f.startsWith("dealAnalysis.");
+      }),
+      function(x) {
+        return { field: x.replace("dealAnalysis.", ""), val: payload.v };
+      }
+    );
 
-    const temp = Object.assign({}, state.dealAnalysis);
-    if (utilities.setDealAnalysisField(temp, pairs)) {
-      state.dealAnalysis = temp;
+    if (state.dealAnalysisProxy.setField(pairs)) {
+      state.dealAnalysis = Object.assign({}, state.dealAnalysisProxy.dealAnalysis);
     }
   }
   //endregion
@@ -197,10 +202,7 @@ export const actions = {
 
   async findItem({ dispatch, commit, state }, requestVariables) {
     commit("setFinding", true);
-    const findProperty = await propertyApi.findProperty(
-      apolloClient,
-      requestVariables
-    );
+    const findProperty = await propertyApi.findProperty(apolloClient, requestVariables);
 
     const property = findProperty.data.findProperty;
 
@@ -236,12 +238,14 @@ export const actions = {
 
   async findProperty({ dispatch, commit, state }, requestVariables) {
     commit("setFinding", true);
-    const findProperty = await propertyApi.findProperty(
-      apolloClient,
-      requestVariables
-    );
+    const findProperty = await propertyApi.findProperty(apolloClient, requestVariables);
 
     const property = findProperty.data.findProperty;
+
+    if (state.debugDealAnalysis) {
+      property.propertyTaxesAnnually = 3500;
+      property.insuranceAnnually = 600;
+    }
 
     commit("setItem", property);
     commit("setRepairEstimateSqft");
@@ -284,10 +288,7 @@ export const actions = {
       compCacheRequest.coord.latitude = state.item.latitude;
       compCacheRequest.coord.longitude = state.item.longitude;
 
-      const response = await propertyApi.findProperties(
-        apolloClient,
-        compCacheRequest
-      );
+      const response = await propertyApi.findProperties(apolloClient, compCacheRequest);
 
       commit("setComps", response.data.findProperties);
       commit("setPullingCompsFromCache", false);
@@ -320,15 +321,9 @@ export const actions = {
           subTitle: `Page ${currentPage}...`
         });
 
-        let compUrl = utilities.buildZillowCompUrl(
-          state.item,
-          state.compFilter,
-          currentPage
-        );
+        let compUrl = utilities.buildZillowCompUrl(state.item, state.compFilter, currentPage);
 
-        const zillowIframe = window.$(
-          "<iframe id='zillowIframe' is='x-frame-bypass'></iframe>"
-        );
+        const zillowIframe = window.$("<iframe id='zillowIframe' is='x-frame-bypass'></iframe>");
 
         zillowIframe.attr("src", compUrl);
 
@@ -339,14 +334,10 @@ export const actions = {
         // const zillowHtml = window.$(window.$(zillowIframe[0]).attr("srcdoc"));
         zillowIframe.remove();
 
-        let results = window
-          .$(window.$(zillowIframe[0]).attr("srcdoc"))
-          .find(".zsg-photo-card-address");
+        let results = window.$(window.$(zillowIframe[0]).attr("srcdoc")).find(".zsg-photo-card-address");
 
         if (results.length == 0) {
-          results = window
-            .$(window.$(zillowIframe[0]).attr("srcdoc"))
-            .find(".list-card-addr");
+          results = window.$(window.$(zillowIframe[0]).attr("srcdoc")).find(".list-card-addr");
         }
 
         compAddresses = _.concat(
@@ -356,9 +347,7 @@ export const actions = {
           })
         );
 
-        const nextPage = window
-          .$(window.$(zillowIframe[0]).attr("srcdoc"))
-          .find(".zsg-pagination-next");
+        const nextPage = window.$(window.$(zillowIframe[0]).attr("srcdoc")).find(".zsg-pagination-next");
         if (nextPage.length > 0) {
           currentPage += 1;
         } else {
@@ -510,10 +499,7 @@ export const actions = {
 
     requestVariables.compFilter = state.compFilter;
 
-    const response = await propertyApi.findComps(
-      apolloClient,
-      requestVariables
-    );
+    const response = await propertyApi.findComps(apolloClient, requestVariables);
 
     const comps = response.data.findComps;
 
@@ -530,10 +516,7 @@ export const actions = {
         findPropertyRequest.status = statuses.statuses.COMP.value;
         findPropertyRequest.persist = true;
 
-        const comp = await propertyApi.findProperty(
-          apolloClient,
-          findPropertyRequest
-        );
+        const comp = await propertyApi.findProperty(apolloClient, findPropertyRequest);
         commit("pushComp", comp);
       }
     } else {
@@ -546,12 +529,12 @@ export const actions = {
   },
 
   async compCacheUpdate({ commit }, requestVariables) {
-    const response = await propertyApi.compCacheUpdate(
-      apolloClient,
-      requestVariables
-    );
+    const response = await propertyApi.compCacheUpdate(apolloClient, requestVariables);
     commit("setItem", response.data.compCacheUpdate);
   },
+  //endregion
+
+  //region Repair Estimate Actions
   //endregion
 
   //region Misc Actions

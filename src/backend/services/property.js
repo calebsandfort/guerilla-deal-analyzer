@@ -4,10 +4,7 @@ import * as zillowScraper from "../services/scrape/zillow-scraper";
 import moment from "moment";
 import * as statuses from "../enums/statuses";
 
-const findProperty = async (
-  { term, tag, status = statuses.statuses.ACTIVE.value, persist = true },
-  { models }
-) => {
+const findProperty = async ({ term, tag, status = statuses.statuses.ACTIVE.value, persist = true }, { models }) => {
   let property = await findPropertyHelper(term, models);
 
   if (property == null) {
@@ -29,10 +26,7 @@ const findProperty = async (
   return property;
 };
 
-const findProperties = async (
-  { terms, tag, status = statuses.statuses.ACTIVE.value, persist = true },
-  { models }
-) => {
+const findProperties = async ({ terms, tag, status = statuses.statuses.ACTIVE.value, persist = true }, { models }) => {
   const properties = [];
   let counter = 0;
 
@@ -66,10 +60,7 @@ const findProperties = async (
   return properties;
 };
 
-const findComps = async (
-  { id, term, tag, status = statuses.statuses.ACTIVE.value, persist = true },
-  { models }
-) => {
+const findComps = async ({ id, term, tag, status = statuses.statuses.ACTIVE.value, persist = true }, { models }) => {
   let property = null;
 
   if (id > 0) {
@@ -96,11 +87,7 @@ const findComps = async (
 const findPropertyHelper = async (term, models) => {
   let property = await models.Property.findOne({
     where: {
-      [Sequelize.Op.or]: [
-        { zillow_path: term },
-        { streetAddress: term },
-        { address: term }
-      ]
+      [Sequelize.Op.or]: [{ zillow_path: term }, { streetAddress: term }, { address: term }]
     }
   });
 

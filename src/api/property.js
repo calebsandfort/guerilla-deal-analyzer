@@ -80,14 +80,7 @@ const GET_ALL_QUERYABLE = gql`
 `;
 
 const FIND_PROPERTY = gql`
-  query(
-    $term: String!
-    $tag: String!
-    $status: Int
-    $persist: Boolean
-    $coord: CoordInput
-    $search_keywords: [String]
-  ) {
+  query($term: String!, $tag: String!, $status: Int, $persist: Boolean, $coord: CoordInput, $search_keywords: [String]) {
     findProperty(term: $term, tag: $tag, status: $status, persist: $persist) {
       ...SimpleProperty
     }
@@ -96,20 +89,8 @@ const FIND_PROPERTY = gql`
 `;
 
 const FIND_PROPERTIES = gql`
-  query(
-    $terms: [String!]!
-    $tag: String!
-    $status: Int
-    $persist: Boolean
-    $search_keywords: [String]
-    $coord: CoordInput
-  ) {
-    findProperties(
-      terms: $terms
-      tag: $tag
-      status: $status
-      persist: $persist
-    ) {
+  query($terms: [String!]!, $tag: String!, $status: Int, $persist: Boolean, $search_keywords: [String], $coord: CoordInput) {
+    findProperties(terms: $terms, tag: $tag, status: $status, persist: $persist) {
       ...SimpleProperty
     }
   }
@@ -128,15 +109,7 @@ const FIND_COMPS = gql`
     $search_keywords: [String]
     $useCompCache: Boolean
   ) {
-    findComps(
-      id: $id
-      term: $term
-      tag: $tag
-      status: $status
-      persist: $persist
-      compFilter: $compFilter
-      useCompCache: $useCompCache
-    ) {
+    findComps(id: $id, term: $term, tag: $tag, status: $status, persist: $persist, compFilter: $compFilter, useCompCache: $useCompCache) {
       ...SimpleProperty
     }
   }
@@ -177,12 +150,7 @@ const EXPANDO_UPDATE = gql`
 `;
 
 const COMP_CACHE_UPDATE = gql`
-  mutation(
-    $id: ID!
-    $input: CompCacheUpdateInput!
-    $search_keywords: [String]
-    $coord: CoordInput
-  ) {
+  mutation($id: ID!, $input: CompCacheUpdateInput!, $search_keywords: [String], $coord: CoordInput) {
     compCacheUpdate(id: $id, input: $input) {
       ...SimpleProperty
     }
