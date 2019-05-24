@@ -47,9 +47,7 @@ const server = new ApolloServer({
 
     // remove the internal sequelize error message
     // leave only the important validation error
-    const message = error.message
-      .replace("SequelizeValidationError: ", "")
-      .replace("Validation error: ", "");
+    const message = error.message.replace("SequelizeValidationError: ", "").replace("Validation error: ", "");
 
     if (!formatValidationError(error)) {
       return {

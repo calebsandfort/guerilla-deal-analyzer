@@ -235,7 +235,7 @@ export default class DealAnalysisProxy {
       }
 
       this.dealAnalysis.DF_PurchasePrice = proposedPrice;
-      this.exprValues.DF_PurchasePrice = new Fraction(this.dealAnalysis.DF_PurchasePrice * 100, 100);
+      this.exprValues.DF_PurchasePrice = new Fraction(Math.floor(this.dealAnalysis.DF_PurchasePrice * 100), 100);
 
       this.evalExpr("SNAP_Profit");
       this.evalExpr("SNAP_TotalCost");
@@ -259,43 +259,43 @@ export default class DealAnalysisProxy {
   // prettier-ignore
   setExprValues(includePurchasePrice = true) {
     this.exprValues = {
-      DF_ARV: new Fraction(this.dealAnalysis.DF_ARV * 100, 100),
-      DF_RepairCosts: new Fraction(this.dealAnalysis.DF_RepairCosts * 100, 100),
+      DF_ARV: new Fraction(Math.floor(this.dealAnalysis.DF_ARV * 100), 100),
+      DF_RepairCosts: new Fraction(Math.floor(this.dealAnalysis.DF_RepairCosts * 100), 100),
       DF_HoldTime: new Fraction(this.dealAnalysis.DF_HoldTime, 1),
       DF_HoldTimeFraction: new Fraction(1, this.dealAnalysis.DF_HoldTime),
 
-      FC_FirstMortgageAmount: new Fraction(this.dealAnalysis.FC_FirstMortgageAmount * 10000, 10000),
-      FC_FirstMortgagePoints: new Fraction(this.dealAnalysis.FC_FirstMortgagePoints * 100, 100),
-      FC_FirstMortgageInterest: new Fraction(this.dealAnalysis.FC_FirstMortgageInterest * 10000, 10000),
-      FC_SecondMortgageAmount: new Fraction(this.dealAnalysis.FC_SecondMortgageAmount * 10000, 10000),
-      FC_SecondMortgagePoints: new Fraction(this.dealAnalysis.FC_SecondMortgagePoints * 100, 100),
-      FC_SecondMortgageInterest: new Fraction(this.dealAnalysis.FC_SecondMortgageInterest * 10000, 10000),
-      FC_MiscMortgageAmount: new Fraction(this.dealAnalysis.FC_MiscMortgageAmount * 10000, 10000),
-      FC_MiscMortgagePoints: new Fraction(this.dealAnalysis.FC_MiscMortgagePoints * 100, 100),
-      FC_MiscMortgageInterest: new Fraction(this.dealAnalysis.FC_MiscMortgageInterest * 10000, 10000),
-      FC_MiscCost: new Fraction(this.dealAnalysis.FC_MiscCost * 100, 100),
+      FC_FirstMortgageAmount: new Fraction(Math.floor(this.dealAnalysis.FC_FirstMortgageAmount * 10000), 10000),
+      FC_FirstMortgagePoints: new Fraction(Math.floor(this.dealAnalysis.FC_FirstMortgagePoints * 100), 100),
+      FC_FirstMortgageInterest: new Fraction(Math.floor(this.dealAnalysis.FC_FirstMortgageInterest * 10000), 10000),
+      FC_SecondMortgageAmount: new Fraction(Math.floor(this.dealAnalysis.FC_SecondMortgageAmount * 10000), 10000),
+      FC_SecondMortgagePoints: new Fraction(Math.floor(this.dealAnalysis.FC_SecondMortgagePoints * 100), 100),
+      FC_SecondMortgageInterest: new Fraction(Math.floor(this.dealAnalysis.FC_SecondMortgageInterest * 10000), 10000),
+      FC_MiscMortgageAmount: new Fraction(Math.floor(this.dealAnalysis.FC_MiscMortgageAmount * 10000), 10000),
+      FC_MiscMortgagePoints: new Fraction(Math.floor(this.dealAnalysis.FC_MiscMortgagePoints * 100), 100),
+      FC_MiscMortgageInterest: new Fraction(Math.floor(this.dealAnalysis.FC_MiscMortgageInterest * 10000), 10000),
+      FC_MiscCost: new Fraction(Math.floor(this.dealAnalysis.FC_MiscCost * 100), 100),
 
-      BTC_EscrowAttorney: new Fraction(this.dealAnalysis.BTC_EscrowAttorney * 100, 100),
-      BTC_TitleInsuranceSearch: new Fraction(this.dealAnalysis.BTC_TitleInsuranceSearch * 10000, 10000),
-      BTC_Misc: new Fraction(this.dealAnalysis.BTC_Misc * 100, 100),
+      BTC_EscrowAttorney: new Fraction(Math.floor(this.dealAnalysis.BTC_EscrowAttorney * 100), 100),
+      BTC_TitleInsuranceSearch: new Fraction(Math.floor(this.dealAnalysis.BTC_TitleInsuranceSearch * 10000), 10000),
+      BTC_Misc: new Fraction(Math.floor(this.dealAnalysis.BTC_Misc * 100), 100),
 
-      HC_PropertyTaxesAnnually: new Fraction(this.dealAnalysis.HC_PropertyTaxesAnnually * 100, 100),
-      HC_InsuranceAnnually: new Fraction(this.dealAnalysis.HC_InsuranceAnnually * 100, 100),
-      HC_HOAMonthly: new Fraction(this.dealAnalysis.HC_HOAMonthly * 100, 100),
-      HC_Gas: new Fraction(this.dealAnalysis.HC_Gas * 100, 100),
-      HC_Water: new Fraction(this.dealAnalysis.HC_Water * 100, 100),
-      HC_Electricity: new Fraction(this.dealAnalysis.HC_Electricity * 100, 100),
-      HC_OtherUtilities: new Fraction(this.dealAnalysis.HC_OtherUtilities * 100, 100),
-      HC_MiscMonthly: new Fraction(this.dealAnalysis.HC_MiscMonthly * 100, 100),
+      HC_PropertyTaxesAnnually: new Fraction(Math.floor(this.dealAnalysis.HC_PropertyTaxesAnnually * 100), 100),
+      HC_InsuranceAnnually: new Fraction(Math.floor(this.dealAnalysis.HC_InsuranceAnnually * 100), 100),
+      HC_HOAMonthly: new Fraction(Math.floor(this.dealAnalysis.HC_HOAMonthly * 100), 100),
+      HC_Gas: new Fraction(Math.floor(this.dealAnalysis.HC_Gas * 100), 100),
+      HC_Water: new Fraction(Math.floor(this.dealAnalysis.HC_Water * 100), 100),
+      HC_Electricity: new Fraction(Math.floor(this.dealAnalysis.HC_Electricity * 100), 100),
+      HC_OtherUtilities: new Fraction(Math.floor(this.dealAnalysis.HC_OtherUtilities * 100), 100),
+      HC_MiscMonthly: new Fraction(Math.floor(this.dealAnalysis.HC_MiscMonthly * 100), 100),
 
-      STC_RealtorFees: new Fraction(this.dealAnalysis.STC_RealtorFees * 10000, 10000),
-      STC_TransferConveyenceFees: new Fraction(this.dealAnalysis.STC_TransferConveyenceFees * 10000, 10000),
-      STC_Misc: new Fraction(this.dealAnalysis.STC_Misc * 100, 100),
-      STC_Staging: new Fraction(this.dealAnalysis.STC_Staging * 100, 100),
-      STC_EscrowAttorney: new Fraction(this.dealAnalysis.STC_EscrowAttorney * 100, 100),
-      STC_SellingRecording: new Fraction(this.dealAnalysis.STC_SellingRecording * 100, 100),
-      STC_HomeWarranty: new Fraction(this.dealAnalysis.STC_HomeWarranty * 100, 100),
-      STC_Marketing: new Fraction(this.dealAnalysis.STC_Marketing * 100, 100)
+      STC_RealtorFees: new Fraction(Math.floor(this.dealAnalysis.STC_RealtorFees * 10000), 10000),
+      STC_TransferConveyenceFees: new Fraction(Math.floor(this.dealAnalysis.STC_TransferConveyenceFees * 10000), 10000),
+      STC_Misc: new Fraction(Math.floor(this.dealAnalysis.STC_Misc * 100), 100),
+      STC_Staging: new Fraction(Math.floor(this.dealAnalysis.STC_Staging * 100), 100),
+      STC_EscrowAttorney: new Fraction(Math.floor(this.dealAnalysis.STC_EscrowAttorney * 100), 100),
+      STC_SellingRecording: new Fraction(Math.floor(this.dealAnalysis.STC_SellingRecording * 100), 100),
+      STC_HomeWarranty: new Fraction(Math.floor(this.dealAnalysis.STC_HomeWarranty * 100), 100),
+      STC_Marketing: new Fraction(Math.floor(this.dealAnalysis.STC_Marketing * 100), 100)
     };
 
     // if(includePurchasePrice){

@@ -122,6 +122,12 @@ const FIND_COMP_ADDRESSES = gql`
   }
 `;
 
+const ENCODE_IMAGE = gql`
+  query($image_url: String) {
+    encodeImage(image_url: $image_url)
+  }
+`;
+
 const CREATE = gql`
   mutation($input: PropertyInput!) {
     createProperty(input: $input) {
@@ -182,7 +188,8 @@ export const getRequestVariables = () => {
       longitude: 0
     },
     compFilter: utilities.defaultCompFilter(),
-    useCompCache: true
+    useCompCache: true,
+    image_url: ""
   };
 };
 
@@ -238,6 +245,14 @@ export const findCompAddresses = async (client, variables) =>
   client
     .query({
       query: FIND_COMP_ADDRESSES,
+      variables: variables
+    })
+    .catch(errorHandler);
+
+export const encodeImage = async (client, variables) =>
+  client
+    .query({
+      query: ENCODE_IMAGE,
       variables: variables
     })
     .catch(errorHandler);

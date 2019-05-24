@@ -5,12 +5,7 @@
       <v-container fluid>
         <v-layout text-xs-center wrap>
           <v-flex xs12>
-            <v-img
-              :src="require('../assets/guerillaLogo.png')"
-              class="my-3"
-              contain
-              height="175"
-            ></v-img>
+            <v-img :src="require('../assets/guerillaLogo.png')" class="my-3" contain height="175"></v-img>
           </v-flex>
           <v-flex mb-4>
             <h1 class="display-2 font-weight-bold mb-3">
@@ -23,17 +18,9 @@
           <v-flex mb-5 xs12>
             <h2 class="headline font-weight-bold mb-3">Sections</h2>
             <v-layout justify-center>
-              <router-link :to="'/comp-assistant'" class="subheading mx-3"
-                >Comp Assistant</router-link
-              >
-              <router-link :to="'/lead-finder'" class="subheading mx-3"
-                >Lead Finder</router-link
-              >
-              <router-link
-                :to="'/deal-calculator-finder'"
-                class="subheading mx-3"
-                >Deal Calculator</router-link
-              >
+              <router-link :to="'/comp-assistant'" class="subheading mx-3">Comp Assistant</router-link>
+              <router-link :to="'/lead-finder'" class="subheading mx-3">Lead Finder</router-link>
+              <router-link :to="'/deal-calculator-finder'" class="subheading mx-3">Deal Calculator</router-link>
             </v-layout>
           </v-flex>
         </v-layout>

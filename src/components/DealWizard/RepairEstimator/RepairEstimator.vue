@@ -41,7 +41,7 @@
               v-on:change="
                 setField({
                   name: 'repairEstimate.quick',
-                  v: $event
+                  v: $event != null
                 })
               "
             ></v-switch>

@@ -9,6 +9,8 @@ import DealAnalysisProxy from "../../backend/utilities/DealAnalysisProxy";
 
 const state = {
   debugDealAnalysis: false,
+  encodedImage: "",
+  mapImage: "",
   item: null,
   spotlightItem: null,
   comps: [],
@@ -145,11 +147,27 @@ export const mutations = {
 
     state.repairEstimate = temp;
 
+    // if (
+    //   state.dealAnalysisProxy.setField([
+    //     {
+    //       field: "DF_RepairCosts",
+    //       val: state.repairEstimate.totalCost
+    //     }
+    //   ])
+    // ) {
+    //   state.dealAnalysis = Object.assign({}, state.dealAnalysisProxy.dealAnalysis);
+    // }
+  },
+  reconcileDealAnalysis(state) {
     if (
       state.dealAnalysisProxy.setField([
         {
           field: "DF_RepairCosts",
           val: state.repairEstimate.totalCost
+        },
+        {
+          field: "DF_ARV",
+          val: state.arv
         }
       ])
     ) {
@@ -271,6 +289,17 @@ export const actions = {
 
       await dispatch("findCompsV2", findCompsRequest);
     }
+  },
+
+  async encodeImage({ dispatch, commit, state }, { image_url, field }) {
+    const reqVar = propertyApi.getRequestVariables();
+    reqVar.image_url = image_url;
+    const response = await propertyApi.encodeImage(apolloClient, reqVar);
+
+    commit("setField", {
+      name: field,
+      v: response.data.encodeImage
+    });
   },
   //endregion
 

@@ -8,6 +8,7 @@ import { statuses } from "../../enums/statuses";
 import guerillaTor from "../../utilities/guerilla-tor";
 import seleniumPage from "./selenium-base-page";
 import qs from "qs";
+import * as math from "mathjs";
 
 Aigle.mixin(_);
 
@@ -150,11 +151,23 @@ export const findProperty = async term => {
   utilities.setPropertyFromObject(zillowData, "price", property, "price", -1);
   utilities.setPropertyFromObject(zillowData, "bedrooms", property, "beds", -1);
 
-  property.propertyTaxesAnnually = property.price * PROPERTY_TAX_RATE;
-  property.propertyTaxesMonthly = property.propertyTaxesAnnually / 12;
+  property.propertyTaxesAnnually = math
+    .chain(property.price * PROPERTY_TAX_RATE)
+    .toFloat(0)
+    .done();
+  property.propertyTaxesMonthly = math
+    .chain(property.propertyTaxesAnnually / 12)
+    .toFloat(0)
+    .done();
 
-  property.insuranceAnnually = property.price * INSURANCE_RATE;
-  property.insuranceMonthly = property.insuranceAnnually / 12;
+  property.insuranceAnnually = math
+    .chain(property.price * INSURANCE_RATE)
+    .toFloat(0)
+    .done();
+  property.insuranceMonthly = math
+    .chain(property.insuranceAnnually / 12)
+    .toFloat(0)
+    .done();
 
   if (property.beds == 0) {
     const bedSpan = $(".ds-bed-bath-living-area > span", html);

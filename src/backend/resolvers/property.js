@@ -7,6 +7,7 @@ import * as statuses from "../enums/statuses";
 import * as engagements from "../enums/engagements";
 import { logInfo } from "../utilities/logging";
 import { getDistance, tryParseNumber, newProperty } from "../utilities/utilities";
+import base64Img from "base64-img";
 
 //region Query
 //region properties
@@ -145,6 +146,23 @@ const findComps = async (parent, { id, term, tag, status = statuses.statuses.ACT
   return comps;
 };
 //endregion
+
+const encodeImage = async (parent, { image_url }, { models }) => {
+  if (image_url == "") {
+    return "";
+  }
+
+  const encoded = await new Promise(function(resolve, reject) {
+    base64Img.requestBase64(image_url, function(err, res, body) {
+      if (err) {
+        reject(err);
+      }
+      resolve(body);
+    });
+  });
+
+  return encoded;
+};
 //endregion
 
 export default {
@@ -155,7 +173,8 @@ export default {
     findProperty,
     findProperties,
     findComps,
-    findCompAddresses
+    findCompAddresses,
+    encodeImage
   },
 
   Mutation: {

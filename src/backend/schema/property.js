@@ -5,36 +5,16 @@ export default gql`
     properties(offset: Int, limit: Int, order: String): [Property!]
     propertiesQueryable(query: EntityQuery): [Property!]
     property(id: ID!): Property
-    findProperty(
-      term: String!
-      tag: String!
-      status: Int
-      persist: Boolean
-    ): Property
-    findProperties(
-      terms: [String!]!
-      tag: String!
-      status: Int
-      persist: Boolean
-    ): [Property]
-    findComps(
-      id: ID
-      term: String
-      tag: String
-      status: Int
-      persist: Boolean
-      compFilter: CompFilter
-      useCompCache: Boolean
-    ): [Property]
+    findProperty(term: String!, tag: String!, status: Int, persist: Boolean): Property
+    findProperties(terms: [String!]!, tag: String!, status: Int, persist: Boolean): [Property]
+    findComps(id: ID, term: String, tag: String, status: Int, persist: Boolean, compFilter: CompFilter, useCompCache: Boolean): [Property]
     findCompAddresses(id: ID!, compFilter: CompFilter!): [String]
+    encodeImage(image_url: String): String
   }
   extend type Mutation {
     createProperty(input: PropertyInput!): Property!
     updateProperty(id: ID!, input: PropertyInput!): Property!
-    expandoPropertyUpdate(
-      id: ID!
-      input: ExpandoPropertyUpdateInput!
-    ): Property!
+    expandoPropertyUpdate(id: ID!, input: ExpandoPropertyUpdateInput!): Property!
     compCacheUpdate(id: ID!, input: CompCacheUpdateInput!): Property!
     deleteProperty(id: ID!): Boolean!
   }
