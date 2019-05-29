@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class="pa-0 pb-3">
-    <v-layout column v-if="showProgess">
+    <v-layout column v-show="showProgess || crunchingVariableDeals">
       <v-flex xs12>
         <v-layout align-center justify-center row fill-height>
           <div style="width: 740px;">
@@ -9,24 +9,24 @@
         </v-layout>
       </v-flex>
     </v-layout>
-    <v-layout column>
+    <v-layout column v-show="!crunchingVariableDeals">
       <v-flex xs12 class="text-xs-center">
         <v-btn color="info" @click="generatePdf">Download</v-btn>
       </v-flex>
     </v-layout>
-    <v-layout column>
+    <v-layout column v-show="!crunchingVariableDeals">
       <v-flex xs12>
         <v-layout align-center justify-center row fill-height>
           <div style="width: 740px;">
             <PropertyReport id="propertyReport"></PropertyReport>
             <RepairEstimateReport id="repairEstimateReport"></RepairEstimateReport>
-            <DealAnalysisCostsReport id="dealAnalysisCostsReport"></DealAnalysisCostsReport>
             <DealSheetReport id="dealSheetReport"></DealSheetReport>
+            <DealAnalysisCostsReport id="dealAnalysisCostsReport"></DealAnalysisCostsReport>
           </div>
         </v-layout>
       </v-flex>
     </v-layout>
-    <v-layout column>
+    <v-layout column v-show="!crunchingVariableDeals">
       <v-flex xs12 class="text-xs-center">
         <v-btn color="info" @click="generatePdf">Download</v-btn>
       </v-flex>
@@ -66,7 +66,8 @@ export default {
       compFilter: state => state.dealWizard.compFilter,
       arv: state => state.dealWizard.arv,
       repairEstimate: state => state.dealWizard.repairEstimate,
-      dealAnalysis: state => state.dealWizard.dealAnalysis
+      dealAnalysis: state => state.dealWizard.dealAnalysis,
+      crunchingVariableDeals: state => state.dealWizard.crunchingVariableDeals
     })
     // example: function() {return {}}
   },
@@ -105,11 +106,11 @@ export default {
 
       doc.addPage();
 
-      var dealAnalysisCostsCanvasElement = document.createElement("canvas");
-      var dealAnalysisCostsReport = window.$("#dealAnalysisCostsReport").get(0);
+      var dealSheetCanvasElement = document.createElement("canvas");
+      var dealSheetReport = window.$("#dealSheetReport").get(0);
 
       await new Promise(function(resolve, reject) {
-        html2canvas(dealAnalysisCostsReport, { canvas: dealAnalysisCostsCanvasElement }).then(function(canvas) {
+        html2canvas(dealSheetReport, { canvas: dealSheetCanvasElement }).then(function(canvas) {
           const img = canvas.toDataURL("image/png");
           doc.addImage(img, "JPEG", 7, 7);
           resolve();
@@ -118,11 +119,11 @@ export default {
 
       doc.addPage();
 
-      var dealSheetCanvasElement = document.createElement("canvas");
-      var dealSheetReport = window.$("#dealSheetReport").get(0);
+      var dealAnalysisCostsCanvasElement = document.createElement("canvas");
+      var dealAnalysisCostsReport = window.$("#dealAnalysisCostsReport").get(0);
 
       await new Promise(function(resolve, reject) {
-        html2canvas(dealSheetReport, { canvas: dealSheetCanvasElement }).then(function(canvas) {
+        html2canvas(dealAnalysisCostsReport, { canvas: dealAnalysisCostsCanvasElement }).then(function(canvas) {
           const img = canvas.toDataURL("image/png");
           doc.addImage(img, "JPEG", 7, 7);
           resolve();

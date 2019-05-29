@@ -114,13 +114,19 @@
         >
           <template slot="headers" slot-scope="props">
             <tr class="blue">
-              <th v-for="(header, index) in props.headers" :key="`header_${index}`" :class="['white--text', `text-xs-${header.align}`]">
+              <th
+                v-for="(header, index) in props.headers"
+                :key="`header_${index}`"
+                :style="`${index == 0 ? 'padding-left: 12px;' : ''}`"
+                :class="['white--text', `text-xs-${header.align}`]"
+              >
                 {{ header.text }}
               </th>
             </tr>
           </template>
           <template v-slot:items="props">
             <tr :key="props.item.id">
+              <td class="text-xs-left">{{ props.index + 1 }}</td>
               <td>
                 <a :href="props.item.zillow_url" target="_blank">{{ props.item.streetAddress }}</a>
               </td>
@@ -189,6 +195,11 @@ export default {
   data() {
     return {
       compHeaders: [
+        {
+          text: "idx",
+          align: "left",
+          value: "index"
+        },
         {
           text: "Address",
           align: "left",
@@ -262,15 +273,14 @@ export default {
       });
 
       if (this.comps.length > 0) {
-        url +=
-          "&" +
-          qs.stringify({
-            markers:
-              "color:green|size:mid|" +
-              _.map(this.comps, function(c) {
-                return `${c.latitude},${c.longitude}`;
-              }).join("|")
-          });
+        for (let i = 0; i < this.comps.length; i++) {
+          const c = this.comps[i];
+          url +=
+            "&" +
+            qs.stringify({
+              markers: `color:green|size:mid|label:${i + 1}|${c.latitude},${c.longitude}`
+            });
+        }
       }
 
       this.encodeImage({

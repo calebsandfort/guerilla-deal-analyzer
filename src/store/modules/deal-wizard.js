@@ -6,6 +6,7 @@ import * as statuses from "../../backend/enums/statuses";
 import colors from "vuetify/es5/util/colors";
 import uuidv4 from "uuid/v4";
 import DealAnalysisProxy from "../../backend/utilities/DealAnalysisProxy";
+import VariableDealCalculator from "../../backend/utilities/VariableDealCalculator";
 
 const state = {
   debugDealAnalysis: false,
@@ -18,6 +19,7 @@ const state = {
   compFilter: utilities.defaultCompFilter(),
   finding: false,
   findingComps: false,
+  crunchingVariableDeals: false,
   pullingCompsFromCache: false,
   compLog: [],
   search_keywords: ["remodel", "update", "hardwood", "hard wood", "new", "granite"],
@@ -26,6 +28,7 @@ const state = {
   dealAnalysis: utilities.newDealAnalysis(),
   dealAnalysisProxy: new DealAnalysisProxy(utilities.newDealAnalysis()),
   dealAnalysisSections: utilities.dealAnalysisSections(utilities.newDealAnalysis()),
+  variableDealCalculator: new VariableDealCalculator(),
   listItems: {
     // prettier-ignore
     amenityCount: [
@@ -85,6 +88,11 @@ const state = {
       { text: "1920", value: 1920 },
       { text: "1900", value: 1900 }
     ]
+  },
+  addRepairEstimateLineItemSubSectionKey: "",
+  variableDeals: {
+    rehabLineItems: [],
+    roiLineItems: []
   }
 };
 
@@ -146,17 +154,12 @@ export const mutations = {
     utilities.updateRepairEstimateLineItem(temp, payload.key, payload.field, payload.val);
 
     state.repairEstimate = temp;
+  },
+  addRepairEstimateLineItem(state, payload) {
+    const temp = Object.assign({}, state.repairEstimate);
+    utilities.addRepairEstimateLineItem(temp, state.addRepairEstimateLineItemSubSectionKey, payload);
 
-    // if (
-    //   state.dealAnalysisProxy.setField([
-    //     {
-    //       field: "DF_RepairCosts",
-    //       val: state.repairEstimate.totalCost
-    //     }
-    //   ])
-    // ) {
-    //   state.dealAnalysis = Object.assign({}, state.dealAnalysisProxy.dealAnalysis);
-    // }
+    state.repairEstimate = temp;
   },
   reconcileDealAnalysis(state) {
     if (
@@ -358,7 +361,7 @@ export const actions = {
 
         body.append(zillowIframe);
 
-        await utilities.pause(45);
+        await utilities.pause(20);
 
         // const zillowHtml = window.$(window.$(zillowIframe[0]).attr("srcdoc"));
         zillowIframe.remove();
@@ -563,7 +566,28 @@ export const actions = {
   },
   //endregion
 
-  //region Repair Estimate Actions
+  //region Deal Analysis Actions
+  async reconcileDealAnalysis({ dispatch, commit, state }, findCompsRequest) {
+    commit("reconcileDealAnalysis");
+    //dispatch("crunchVariableDeals");
+  },
+
+  async crunchVariableDeals({ dispatch, commit, state }) {
+    commit("setField", { name: "crunchingVariableDeals", v: true });
+
+    const variableDealCalculator = new VariableDealCalculator();
+    await variableDealCalculator.generateDeals(state.dealAnalysis);
+
+    commit("setField", {
+      name: "variableDeals",
+      v: {
+        rehabLineItems: variableDealCalculator.rehabLineItems,
+        roiLineItems: variableDealCalculator.roiLineItems
+      }
+    });
+
+    commit("setField", { name: "crunchingVariableDeals", v: false });
+  },
   //endregion
 
   //region Misc Actions

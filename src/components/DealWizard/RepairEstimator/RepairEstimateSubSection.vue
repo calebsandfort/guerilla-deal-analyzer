@@ -1,5 +1,21 @@
 <template>
   <v-container fluid grid-list-xs class="pa-0">
+    <v-layout row v-if="showAddItem">
+      <v-flex xs12>
+        <v-btn
+          flat
+          small
+          color="primary"
+          @click="
+            setField({
+              name: 'addRepairEstimateLineItemSubSectionKey',
+              v: subSectionKey
+            })
+          "
+          >+ Add Other or Miscellaneous</v-btn
+        >
+      </v-flex>
+    </v-layout>
     <v-layout row>
       <v-flex xs12 class="pt-0">
         <v-data-table
@@ -12,10 +28,7 @@
           class="condensed-table"
         >
           <template v-slot:items="props">
-            <tr
-              :key="props.item.key"
-              :class="[!props.item.selected ? 'grey--text' : '']"
-            >
+            <tr :key="props.item.key" :class="[!props.item.selected ? 'grey--text' : '']">
               <td class="text-xs-left" style="width: 10px;">
                 <v-layout row>
                   <v-flex align-self-center>
@@ -91,6 +104,14 @@ export default {
     lineItems: {
       type: Array,
       required: true
+    },
+    showAddItem: {
+      type: Boolean,
+      default: false
+    },
+    subSectionKey: {
+      type: String,
+      default: ""
     }
   },
   data() {
@@ -136,7 +157,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      updateRepairEstimateLineItem: "dealWizard/updateRepairEstimateLineItem"
+      updateRepairEstimateLineItem: "dealWizard/updateRepairEstimateLineItem",
+      setField: "dealWizard/setField"
     }),
     formatMoney: formatMoney,
     formatNumber: formatNumber,

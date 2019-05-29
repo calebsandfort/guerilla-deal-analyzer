@@ -138,19 +138,25 @@ export default {
   },
   watch: {
     tabIndex: function(val) {
-      if (val == 2 || val == 3) {
+      if (val == 2) {
         this.reconcileDealAnalysis();
+      } else if (val == 3) {
+        const that = this;
+        setTimeout(function() {
+          that.crunchVariableDeals();
+        }, 500);
       }
     }
   },
   methods: {
     ...mapActions({
       fetchProperty: "dealWizard/fetchItem",
-      findProperty: "dealWizard/findProperty"
+      findProperty: "dealWizard/findProperty",
+      reconcileDealAnalysis: "dealWizard/reconcileDealAnalysis",
+      crunchVariableDeals: "dealWizard/crunchVariableDeals"
     }),
-    ...mapMutations({
-      reconcileDealAnalysis: "dealWizard/reconcileDealAnalysis"
-    }),
+    // ...mapMutations({
+    // }),
     findPropertyClick: function() {
       const request = propertyRequest();
       request.term = this.address;

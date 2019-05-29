@@ -1,18 +1,11 @@
 <template>
   <div>
     <v-expansion-panel>
-      <template
-        v-for="repairEstimateSubSection in repairEstimateSection.subSections"
-      >
+      <template v-for="repairEstimateSubSection in repairEstimateSection.subSections">
         <v-expansion-panel-content :key="repairEstimateSubSection.key">
           <template v-slot:header>
             <v-container fluid grid-list-xs class="pa-0">
-              <v-layout
-                row
-                :class="[
-                  repairEstimateSubSection.selected ? 'font-weight-bold' : ''
-                ]"
-              >
+              <v-layout row :class="[repairEstimateSubSection.selected ? 'font-weight-bold' : '']">
                 <v-flex grow pa-1 align-self-center>
                   {{ repairEstimateSubSection.title }}
                 </v-flex>
@@ -30,6 +23,8 @@
             <v-card-text class="pt-0">
               <RepairEstimateSubSection
                 :line-items="repairEstimateSubSection.lineItems"
+                :sub-section-key="repairEstimateSubSection.key"
+                :show-add-item="repairEstimateSubSection.title == 'Other & Miscellaneous'"
               ></RepairEstimateSubSection>
             </v-card-text>
           </v-card>
@@ -45,6 +40,16 @@ import { mapState } from "vuex";
 import * as repairEstimateSectionTypes from "../../../backend/enums/repairEstimateSectionTypes";
 import formatMoney from "accounting-js/lib/formatMoney";
 import RepairEstimateSubSection from "./RepairEstimateSubSection";
+
+// {
+//   key: uuidv4(),
+//     selected: false,
+//   name: "Misc Contingency Cost (10-20% depending on unknowns)",
+//   quantity: 0,
+//   unit: 4,
+//   unitCost: null,
+//   totalCost: 0
+// }
 
 export default {
   name: "RepairEstimateSection",

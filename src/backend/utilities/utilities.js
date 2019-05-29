@@ -606,7 +606,7 @@ export const newRepairEstimate = () => {
   return {
     title: "Repair Estimate",
     totalCost: 50000,
-    quick: false,
+    quick: true,
     sections: [
       {
         selected: false,
@@ -2576,6 +2576,13 @@ export const newRepairEstimate = () => {
                 totalCost: 0
               }
             ]
+          },
+          {
+            key: uuidv4(),
+            selected: false,
+            title: "Other & Miscellaneous",
+            totalCost: 0,
+            lineItems: []
           }
         ]
       }
@@ -2584,19 +2591,17 @@ export const newRepairEstimate = () => {
 };
 
 export const setRepairEstimateSqft = (repairEstimate, sqft) => {
-  if (!repairEstimate.quick) {
-    _.each(repairEstimate.sections, function(section) {
-      _.each(section.subSections, function(subSection) {
-        _.each(subSection.lineItems, function(lineItem) {
-          if (lineItem.unit == unitTypes.unitTypes.SQUARE_FEET.value) {
-            lineItem.quantity = sqft;
-          } else if (lineItem.unit == unitTypes.unitTypes.LUMP_SUM.value || lineItem.unit == unitTypes.unitTypes.EACH.value) {
-            lineItem.quantity = 1;
-          }
-        });
+  _.each(repairEstimate.sections, function(section) {
+    _.each(section.subSections, function(subSection) {
+      _.each(subSection.lineItems, function(lineItem) {
+        if (lineItem.unit == unitTypes.unitTypes.SQUARE_FEET.value) {
+          lineItem.quantity = sqft;
+        } else if (lineItem.unit == unitTypes.unitTypes.LUMP_SUM.value || lineItem.unit == unitTypes.unitTypes.EACH.value) {
+          lineItem.quantity = 1;
+        }
       });
     });
-  }
+  });
 };
 
 export const updateRepairEstimateLineItem = (repairEstimate, key, field, val) => {
@@ -2622,6 +2627,31 @@ export const updateRepairEstimateLineItem = (repairEstimate, key, field, val) =>
           });
           break;
         }
+      }
+    }
+  }
+};
+
+export const addRepairEstimateLineItem = (repairEstimate, key, item) => {
+  let repairEstimateSection,
+    repairEstimateSubSection,
+    repairEstimateLineItem = null;
+
+  for (let i = 0; i < repairEstimate.sections.length; i++) {
+    repairEstimateSection = repairEstimate.sections[i];
+    for (let j = 0; j < repairEstimateSection.subSections.length; j++) {
+      repairEstimateSubSection = repairEstimateSection.subSections[j];
+
+      if (repairEstimateSubSection.key == key) {
+        reconcileRepairEstimateLineItem(item);
+        repairEstimateSubSection.lineItems.push(item);
+        reconcileRepairEstimateSubSection(repairEstimateSubSection);
+        reconcileRepairEstimateSection(repairEstimateSection);
+
+        repairEstimate.totalCost = _.sumBy(repairEstimate.sections, function(x) {
+          return x.totalCost;
+        });
+        break;
       }
     }
   }
