@@ -197,6 +197,14 @@ export default class DealAnalysisProxy {
     return expr;
   }
 
+  get SNAP_DiscountCostExpr() {
+    return new Expression("DF_PurchasePrice").subtract("DF_Ask");
+  }
+
+  get SNAP_DiscountPercentExpr() {
+    return this.SNAP_DiscountCostExpr.divide(this.dealAnalysis.DF_Ask);
+  }
+
   findPurchasePrice() {
     let min = 0;
     let max = 0;
@@ -260,6 +268,7 @@ export default class DealAnalysisProxy {
   setExprValues(includePurchasePrice = true) {
     this.exprValues = {
       DF_ARV: new Fraction(Math.floor(this.dealAnalysis.DF_ARV * 100), 100),
+      DF_Ask: new Fraction(Math.floor(this.dealAnalysis.DF_Ask * 100), 100),
       DF_RepairCosts: new Fraction(Math.floor(this.dealAnalysis.DF_RepairCosts * 100), 100),
       DF_HoldTime: new Fraction(this.dealAnalysis.DF_HoldTime, 1),
       DF_HoldTimeFraction: new Fraction(1, this.dealAnalysis.DF_HoldTime),
@@ -364,6 +373,8 @@ export default class DealAnalysisProxy {
       //region SNAP
       this.evalExpr("SNAP_TotalCost");
       this.evalExpr("SNAP_Profit");
+      this.evalExpr("SNAP_DiscountCost");
+      this.evalExpr("SNAP_DiscountPercent");
       //endregion
     }
 

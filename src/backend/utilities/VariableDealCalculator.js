@@ -11,27 +11,28 @@ export default class VariableDealCalculator {
   dealAnalysis = null;
   rehabLineItems = [];
   roiLineItems = [];
+  comboLineItems = [];
 
   rehabIterations = 2;
   rehabMult = 10000;
 
-  roiIterations = 6;
+  roiIterations = 3;
   roiStart = 10;
-  roiOffset = 1;
+  roiOffset = 2.5;
 
   constructor() {}
 
   async generateDeals(dealAnalysis) {
     this.dealAnalysis = dealAnalysis;
 
-    const promises = [];
+    // const promises = [];
+    //
+    // promises.push(this.generateRehabDeals());
+    // promises.push(this.generateRoiDeals());
+    //
+    // await Promise.all(promises);
 
-    promises.push(this.generateRehabDeals());
-    promises.push(this.generateRoiDeals());
-
-    await Promise.all(promises);
-
-    return;
+    await this.generateComboLineItems();
   }
 
   async generateRehabDeals() {
@@ -77,10 +78,62 @@ export default class VariableDealCalculator {
     }
   }
 
+  async generateComboLineItems() {
+    const promises = [];
+
+    promises.push(this.generateLineItem(this.dealAnalysis.DF_RepairCosts, this.dealAnalysis.SNAP_ROI * 100, true));
+
+    for (let i = 0; i < this.roiIterations; i++) {
+      const roi = this.roiStart + i * this.roiOffset;
+
+      for (let i = -this.rehabIterations; i < 0; i++) {
+        const repairCost = this.dealAnalysis.DF_RepairCosts + i * this.rehabMult;
+        promises.push(this.generateLineItem(repairCost, roi, false));
+      }
+
+      for (let i = 1; i <= this.rehabIterations; i++) {
+        const repairCost = this.dealAnalysis.DF_RepairCosts + i * this.rehabMult;
+        promises.push(this.generateLineItem(repairCost, roi, false));
+      }
+    }
+
+    this.comboLineItems = await Promise.all(promises);
+    this.comboLineItems = _.orderBy(this.comboLineItems, ["askDiff"], ["asc"]);
+  }
+
+  async generateLineItem(repairCosts, roi, actual) {
+    const da = Object.assign({}, this.dealAnalysis);
+    return new Promise(function(resolve) {
+      // console.log(repairCosts, roi);
+      const proxy = new DealAnalysisProxy(da);
+      proxy.setField([
+        {
+          field: "DF_RepairCosts",
+          val: repairCosts
+        },
+        {
+          field: "SNAP_ROI",
+          val: roi
+        }
+      ]);
+
+      resolve({
+        key: uuidv4(),
+        purchase: proxy.dealAnalysis.DF_PurchasePrice,
+        askDiff: proxy.dealAnalysis.SNAP_DiscountPercent,
+        repairCost: proxy.dealAnalysis.DF_RepairCosts,
+        roi: proxy.dealAnalysis.SNAP_ROI,
+        profit: proxy.dealAnalysis.SNAP_Profit,
+        actual
+      });
+    });
+  }
+
   addLineItem(list, dealAnalysis, actual = false) {
     list.push({
       key: uuidv4(),
       purchase: dealAnalysis.DF_PurchasePrice,
+      askDiff: dealAnalysis.SNAP_DiscountPercent,
       repairCost: dealAnalysis.DF_RepairCosts,
       roi: dealAnalysis.SNAP_ROI,
       profit: dealAnalysis.SNAP_Profit,

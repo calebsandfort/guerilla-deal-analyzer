@@ -10,7 +10,7 @@
       <v-flex xs4>
         <img :src="encodedImage" class="image" width="100%" />
       </v-flex>
-      <v-flex xs8>
+      <v-flex xs8 class="propertyDetails">
         <v-layout row wrap>
           <v-flex xs3 class="font-weight-medium">
             Price
@@ -83,6 +83,54 @@
             ROI
           </v-flex>
           <v-flex xs3> {{ formatNumber(dealAnalysis.SNAP_ROI * 100, { precision: 2 }) }}% </v-flex>
+        </v-layout>
+        <v-layout row wrap>
+          <v-flex xs3 class="font-weight-medium">
+            Ask Diff $
+          </v-flex>
+          <v-flex
+            xs3
+            :class="{
+              'text--darken-3': true,
+              'red--text': dealAnalysis.SNAP_DiscountPercent < -discountThreshold,
+              'green--text': dealAnalysis.SNAP_DiscountPercent > discountThreshold
+            }"
+          >
+            {{
+              formatMoney(dealAnalysis.SNAP_DiscountCost, {
+                symbol: "$",
+                precision: 0,
+                format: {
+                  zero: "%v%s",
+                  pos: "%s%v",
+                  neg: "(%s%v)"
+                }
+              })
+            }}
+          </v-flex>
+          <v-flex xs3 class="font-weight-medium">
+            Ask Diff %
+          </v-flex>
+          <v-flex
+            xs3
+            :class="{
+              'text--darken-3': true,
+              'red--text': dealAnalysis.SNAP_DiscountPercent < -discountThreshold,
+              'green--text': dealAnalysis.SNAP_DiscountPercent > discountThreshold
+            }"
+          >
+            {{
+              formatMoney(dealAnalysis.SNAP_DiscountPercent * 100, {
+                symbol: "%",
+                precision: 0,
+                format: {
+                  zero: "%v%s",
+                  pos: "%v%s",
+                  neg: "(%v%s)"
+                }
+              })
+            }}
+          </v-flex>
         </v-layout>
       </v-flex>
     </v-layout>
@@ -233,7 +281,8 @@ export default {
       compFilter: state => state.dealWizard.compFilter,
       arv: state => state.dealWizard.arv,
       encodedImage: state => state.dealWizard.encodedImage,
-      mapImage: state => state.dealWizard.mapImage
+      mapImage: state => state.dealWizard.mapImage,
+      discountThreshold: state => state.dealWizard.discountThreshold
     }),
     map_center: function() {
       return {
@@ -309,4 +358,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.propertyDetails .flex {
+  padding: 5px !important;
+}
+</style>

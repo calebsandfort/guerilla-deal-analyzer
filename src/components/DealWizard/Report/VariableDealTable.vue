@@ -26,7 +26,10 @@
           <tr
             :key="props.item.key"
             :class="{
-              'amber lighten-4': props.item.actual
+              'lighten-4': true,
+              'light-blue': props.item.actual,
+              red: !props.item.actual && props.item.askDiff < -discountThreshold,
+              green: !props.item.actual && props.item.askDiff > discountThreshold
             }"
           >
             <td
@@ -35,6 +38,23 @@
               }"
             >
               {{ formatMoney(props.item.purchase, { precision: 2 }) }}
+            </td>
+            <td
+              :class="{
+                'text-xs-right': true
+              }"
+            >
+              {{
+                formatMoney(props.item.askDiff * 100, {
+                  symbol: "%",
+                  precision: 0,
+                  format: {
+                    zero: "%v%s",
+                    pos: "%v%s",
+                    neg: "(%v%s)"
+                  }
+                })
+              }}
             </td>
             <td
               :class="{
@@ -92,6 +112,7 @@ export default {
           align: "left",
           sortable: false
         },
+        { text: "Ask Diff", align: "right" },
         { text: "Repair Cost", align: "right" },
         { text: "ROI", align: "right" },
         { text: "Profit", align: "right" }
@@ -102,6 +123,9 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      discountThreshold: state => state.dealWizard.discountThreshold
+    })
     // ...mapState({
     //   example: state => state.example,
     // }),

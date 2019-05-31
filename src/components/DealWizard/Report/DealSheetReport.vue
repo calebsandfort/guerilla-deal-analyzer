@@ -42,8 +42,9 @@
         </v-data-table>
       </v-flex>
     </v-layout>
-    <VariableDealTable :variable-index="1" :items="variableDeals.rehabLineItems"></VariableDealTable>
-    <VariableDealTable :variable-index="2" :items="variableDeals.roiLineItems"></VariableDealTable>
+    <VariableDealTable :variable-index="-1" :items="variableDeals.comboLineItems"></VariableDealTable>
+    <!--    <VariableDealTable :variable-index="1" :items="variableDeals.rehabLineItems"></VariableDealTable>-->
+    <!--    <VariableDealTable :variable-index="2" :items="variableDeals.roiLineItems"></VariableDealTable>-->
   </v-container>
 </template>
 

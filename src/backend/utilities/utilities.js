@@ -207,7 +207,9 @@ export const newDealAnalysis = () => {
     SNAP_ROI: 0.15,
     SNAP_DownPayment: 0,
     SNAP_CommittedCapital: 0,
-    SNAP_TotalCost: 0
+    SNAP_TotalCost: 0,
+    SNAP_DiscountCost: 0,
+    SNAP_DiscountPercent: 0
     //endregion
   };
 };

@@ -77,7 +77,9 @@ const dealAnalysis = (sequelize, DataTypes) => {
       SNAP_ROI: { type: DataTypes.FLOAT, defaultValue: 0, allowNull: false },
       SNAP_DownPayment: { type: DataTypes.FLOAT, defaultValue: 0, allowNull: false },
       SNAP_CommittedCapital: { type: DataTypes.FLOAT, defaultValue: 0, allowNull: false },
-      SNAP_TotalCost: { type: DataTypes.FLOAT, defaultValue: 0, allowNull: false }
+      SNAP_TotalCost: { type: DataTypes.FLOAT, defaultValue: 0, allowNull: false },
+      SNAP_DiscountCost: { type: DataTypes.FLOAT, defaultValue: 0, allowNull: false },
+      SNAP_DiscountPercent: { type: DataTypes.FLOAT, defaultValue: 0, allowNull: false }
     }
   );
 

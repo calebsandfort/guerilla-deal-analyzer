@@ -10,6 +10,7 @@ import VariableDealCalculator from "../../backend/utilities/VariableDealCalculat
 
 const state = {
   debugDealAnalysis: false,
+  discountThreshold: 0.05,
   encodedImage: "",
   mapImage: "",
   item: null,
@@ -91,6 +92,7 @@ const state = {
   },
   addRepairEstimateLineItemSubSectionKey: "",
   variableDeals: {
+    comboLineItems: [],
     rehabLineItems: [],
     roiLineItems: []
   }
@@ -581,6 +583,7 @@ export const actions = {
     commit("setField", {
       name: "variableDeals",
       v: {
+        comboLineItems: variableDealCalculator.comboLineItems,
         rehabLineItems: variableDealCalculator.rehabLineItems,
         roiLineItems: variableDealCalculator.roiLineItems
       }

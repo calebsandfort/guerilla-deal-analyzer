@@ -141,10 +141,16 @@ export default {
       if (val == 2) {
         this.reconcileDealAnalysis();
       } else if (val == 3) {
+        this.setField({
+          name: "crunchingVariableDeals",
+          v: true
+        });
+
         const that = this;
+
         setTimeout(function() {
           that.crunchVariableDeals();
-        }, 500);
+        }, 750);
       }
     }
   },
@@ -153,7 +159,8 @@ export default {
       fetchProperty: "dealWizard/fetchItem",
       findProperty: "dealWizard/findProperty",
       reconcileDealAnalysis: "dealWizard/reconcileDealAnalysis",
-      crunchVariableDeals: "dealWizard/crunchVariableDeals"
+      crunchVariableDeals: "dealWizard/crunchVariableDeals",
+      setField: "dealWizard/setField"
     }),
     // ...mapMutations({
     // }),
