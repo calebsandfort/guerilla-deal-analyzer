@@ -91,6 +91,8 @@ export default class VariableDealCalculator {
         promises.push(this.generateLineItem(repairCost, roi, false));
       }
 
+      promises.push(this.generateLineItem(this.dealAnalysis.DF_RepairCosts, roi, false));
+
       for (let i = 1; i <= this.rehabIterations; i++) {
         const repairCost = this.dealAnalysis.DF_RepairCosts + i * this.rehabMult;
         promises.push(this.generateLineItem(repairCost, roi, false));
@@ -98,7 +100,6 @@ export default class VariableDealCalculator {
     }
 
     this.comboLineItems = await Promise.all(promises);
-    this.comboLineItems = _.orderBy(this.comboLineItems, ["askDiff"], ["asc"]);
   }
 
   async generateLineItem(repairCosts, roi, actual) {

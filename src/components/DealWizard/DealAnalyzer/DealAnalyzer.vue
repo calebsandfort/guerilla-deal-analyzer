@@ -70,6 +70,12 @@
         </VuetifyNumeric>
       </v-flex>
     </v-layout>
+    <v-layout row wrap>
+      <v-flex xs6 md3>
+        <VuetifyNumeric field="dealAnalysis.DF_Ask" label="Ask" currency="$" :precision="2" :value="dealAnalysis.DF_Ask" v-on:input="fieldChangedNumber">
+        </VuetifyNumeric>
+      </v-flex>
+    </v-layout>
     <v-layout row>
       <v-flex xs12>
         <v-expansion-panel>

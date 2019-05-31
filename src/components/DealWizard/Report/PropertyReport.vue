@@ -16,7 +16,7 @@
             Price
           </v-flex>
           <v-flex xs3>
-            {{ formatMoney(property.price, { precision: 0 }) }}
+            {{ formatMoney(dealAnalysis.DF_Ask, { precision: 0 }) }}
           </v-flex>
           <v-flex xs3 class="font-weight-medium">
             sqft

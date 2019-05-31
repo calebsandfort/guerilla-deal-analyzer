@@ -21,17 +21,15 @@ describe("zillow-scraper", () => {
   //     expect(response.length).to.eql(expectedResult);
   //   });
   // });
-  // it("it finds the zillow url for the given address", function() {
-  //   this.timeout(10 * 60 * 1000);
-  //
-  //   const expectedResult = ZILLOW_PROPERTY_URL;
-  //
-  //   return zillowScraper
-  //     .findZillowUrl("124 SW Woods St")
-  //     .then(function(response) {
-  //       expect(response).to.eql(expectedResult);
-  //     });
-  // });
+  it("it finds the zillow url for the given address", function() {
+    this.timeout(10 * 60 * 1000);
+
+    const expectedResult = ZILLOW_PROPERTY_URL;
+
+    return zillowScraper.findZillowUrl("10940 SE Cherry Blossom Dr Portland, OR 97216").then(function(response) {
+      expect(response).to.eql(expectedResult);
+    });
+  });
   // it("finds comps for a property id", function() {
   //   this.timeout(10 * 60 * 1000);
   //

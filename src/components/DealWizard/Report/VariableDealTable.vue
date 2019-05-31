@@ -14,10 +14,18 @@
           <tr class="blue">
             <th
               v-for="(header, index) in props.headers"
-              :key="`header_${index}`"
+              :key="header.text"
               :style="`${index == 0 ? 'padding-left: 12px;' : ''}`"
-              :class="['white--text', `text-xs-${header.align}`]"
+              :class="[
+                'column sortable',
+                pagination.descending ? 'desc' : 'asc',
+                header.value === pagination.sortBy ? 'active' : '',
+                'white--text',
+                `text-xs-${header.align}`
+              ]"
+              @click="changeSort(header.value)"
             >
+              <v-icon small class="white--text">arrow_upward</v-icon>
               {{ header.text }}
             </th>
           </tr>
@@ -110,14 +118,16 @@ export default {
         {
           text: "Purchase",
           align: "left",
-          sortable: false
+          sortable: false,
+          value: "purchase"
         },
-        { text: "Ask Diff", align: "right" },
-        { text: "Repair Cost", align: "right" },
-        { text: "ROI", align: "right" },
-        { text: "Profit", align: "right" }
+        { text: "Ask Diff", align: "right", value: "askDiff" },
+        { text: "Repair Cost", align: "right", value: "repairCost" },
+        { text: "ROI", align: "right", value: "roi" },
+        { text: "Profit", align: "right", value: "profit" }
       ],
       pagination: {
+        sortBy: "askDiff",
         rowsPerPage: -1
       }
     };
@@ -136,7 +146,15 @@ export default {
   },
   methods: {
     formatMoney,
-    formatNumber
+    formatNumber,
+    changeSort(column) {
+      if (this.pagination.sortBy === column) {
+        this.pagination.descending = !this.pagination.descending;
+      } else {
+        this.pagination.sortBy = column;
+        this.pagination.descending = false;
+      }
+    }
     // ...mapMutations({
     //   example: "example/example",
     // }),
