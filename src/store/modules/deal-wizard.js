@@ -148,7 +148,7 @@ export const mutations = {
   //region Repair Estimate Mutations
   setRepairEstimateSqft(state) {
     const re = utilities.newRepairEstimate();
-    utilities.setRepairEstimateSqft(re, state.item.sqft);
+    if (state.item != null) utilities.setRepairEstimateSqft(re, state.item.sqft);
     state.repairEstimate = re;
   },
   updateRepairEstimateLineItem(state, payload) {
@@ -489,6 +489,7 @@ export const actions = {
         const r = await propertyApi.findProperty(apolloClient, pr);
 
         if (
+          r.data.findProperty != null &&
           _.findIndex(comps, function(c) {
             return c.id == r.data.findProperty.id;
           }) == -1
