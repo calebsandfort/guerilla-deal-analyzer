@@ -112,7 +112,7 @@ export default {
   },
   data() {
     return {
-      address: "11335 SE Pine St",
+      address: "1203 SE Malden St",
       // address: "2032 n Schofield",
       activeGalleryRef: "",
       engagements: engagements,

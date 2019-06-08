@@ -42,9 +42,9 @@ const property = async (parent, { id }, { models }) => {
 
 //region findProperty
 const findProperty = async (parent, { term, tag, status = statuses.statuses.ACTIVE.value, persist = true }, { models }) => {
-  let property = await findPropertyHelper(term, models, tag, status, persist);
+  let response = await findPropertyHelper(term, models, tag, status, persist);
 
-  return property;
+  return response;
 };
 //endregion
 
@@ -55,13 +55,13 @@ const findProperties = async (parent, { terms, tag, status = statuses.statuses.A
 
   for (let i = 0; i < terms.length; i++) {
     const term = terms[i];
-    let property = await findPropertyHelper(term, models, tag, status, persist, {
+    let response = await findPropertyHelper(term, models, tag, status, persist, {
       current: i + 1,
       total: terms.length
     });
 
-    if (property) {
-      properties.push(property);
+    if (response) {
+      properties.push(response);
     }
 
     if (counter > 50) {
@@ -271,7 +271,11 @@ export default {
 //region Helpers
 const findPropertyHelper = async (term, models, tag, status = statuses.statuses.ACTIVE.value, persist = true, collectionInfo = null) => {
   const logRows = [];
-
+  const response = {
+    property: null,
+    url: null
+  }
+  
   if (collectionInfo) {
     logRows.push({
       message: "record",
@@ -287,57 +291,58 @@ const findPropertyHelper = async (term, models, tag, status = statuses.statuses.
       message: "cache",
       term
     });
-
-    property = await models.Property.findByPk(id);
+  
+    response.property = await models.Property.findByPk(id);
   } else {
     logRows.push({
       message: "finding",
       term
     });
-
-    property = await models.Property.findOne({
+  
+    response.property = await models.Property.findOne({
       where: {
         [Sequelize.Op.or]: [{ zillow_path: term }, { streetAddress: term }, { address: term }]
       }
     });
 
-    if (property == null && term.indexOf("homedetails") == -1) {
+    if (response.property == null && term.indexOf("homedetails") == -1) {
       const zillowUrl = await zillowScraper.findZillowUrl(term);
       logRows.push({
         message: "check zillow",
         term: zillowUrl.replace("https://www.zillow.com", "")
       });
-
-      property = await models.Property.findOne({
+  
+      response.property = await models.Property.findOne({
         where: {
           [Sequelize.Op.or]: [{ zillow_url: zillowUrl + "?fullpage=true" }, { zillow_url: zillowUrl }, { address: term }]
         }
       });
 
-      if (property == null) {
-        logRows.push({
-          message: "scraping zillow",
-          term: zillowUrl.replace("https://www.zillow.com", "")
-        });
-
-        if (zillowUrl.indexOf("homedetails") > -1) {
-          const scrapedProperty = await zillowScraper.findProperty(zillowUrl);
-          if (scrapedProperty) {
-            scrapedProperty.tag = tag;
-            scrapedProperty.status = status;
-
-            if (persist) {
-              property = await models.Property.create(scrapedProperty);
-            } else {
-              property = scrapedProperty;
-            }
-
-            logRows.push({
-              message: "scraped zillow",
-              term: zillowUrl.replace("https://www.zillow.com", "")
-            });
-          }
-        }
+      if (response.property == null) {
+        response.url = zillowUrl;
+        // logRows.push({
+        //   message: "scraping zillow",
+        //   term: zillowUrl.replace("https://www.zillow.com", "")
+        // });
+        //
+        // if (zillowUrl.indexOf("homedetails") > -1) {
+        //   const scrapedProperty = await zillowScraper.findProperty(zillowUrl);
+        //   if (scrapedProperty) {
+        //     scrapedProperty.tag = tag;
+        //     scrapedProperty.status = status;
+        //
+        //     if (persist) {
+        //       property = await models.Property.create(scrapedProperty);
+        //     } else {
+        //       property = scrapedProperty;
+        //     }
+        //
+        //     logRows.push({
+        //       message: "scraped zillow",
+        //       term: zillowUrl.replace("https://www.zillow.com", "")
+        //     });
+        //   }
+        // }
       }
     }
   }
@@ -349,6 +354,6 @@ const findPropertyHelper = async (term, models, tag, status = statuses.statuses.
 
   logInfo("findPropertyHelper", logRows, property == null ? "red" : "green");
 
-  return property;
+  return response;
 };
 //endregion

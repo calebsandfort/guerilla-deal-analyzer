@@ -25,6 +25,7 @@ export const errorHandler = err => {
     });
 
     console.table(errTable);
+    console.log(err);
   } else if (_.get(err, "message", "") != "") {
     console.log(chalk.red(_.get(err, "message", "")));
   }

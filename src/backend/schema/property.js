@@ -5,8 +5,8 @@ export default gql`
     properties(offset: Int, limit: Int, order: String): [Property!]
     propertiesQueryable(query: EntityQuery): [Property!]
     property(id: ID!): Property
-    findProperty(term: String!, tag: String!, status: Int, persist: Boolean): Property
-    findProperties(terms: [String!]!, tag: String!, status: Int, persist: Boolean): [Property]
+    findProperty(term: String!, tag: String!, status: Int, persist: Boolean): FindPropertyResponse
+    findProperties(terms: [String!]!, tag: String!, status: Int, persist: Boolean): [FindPropertyResponse]
     findComps(id: ID, term: String, tag: String, status: Int, persist: Boolean, compFilter: CompFilter, useCompCache: Boolean): [Property]
     findCompAddresses(id: ID!, compFilter: CompFilter!): [String]
     encodeImage(image_url: String): String
@@ -18,6 +18,11 @@ export default gql`
     compCacheUpdate(id: ID!, input: CompCacheUpdateInput!): Property!
     deleteProperty(id: ID!): Boolean!
   }
+  type FindPropertyResponse {
+    property: Property
+    url: String
+  }
+  
   type Property {
     id: ID!
     zillow_propertyId: Int!
@@ -74,8 +79,10 @@ export default gql`
     city: String!
     state: String!
     zipcode: String!
+    address: String!
     price: Float!
     sqft: Int!
+    lotSize: Int!
     beds: Int!
     baths: Float!
     description: String!
@@ -90,6 +97,11 @@ export default gql`
     longitude: Float!
     notes: String
     status: Int!
+    compCache: String
+    propertyTaxesAnnually: Float
+    propertyTaxesMonthly: Float
+    insuranceAnnually: Float
+    insuranceMonthly: Float
   }
   input ExpandoPropertyUpdateInput {
     notes: String

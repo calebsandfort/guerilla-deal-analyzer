@@ -49,6 +49,55 @@ export const fragments = {
       insuranceAnnually
       insuranceMonthly
     }
+  `,
+  findPropertyResponse: gql`
+    fragment SimpleFindPropertyResponse on FindPropertyResponse {
+      property {
+        id
+        zillow_propertyId
+        zillow_path
+        zillow_url
+        streetAddress
+        city
+        state
+        zipcode
+        address
+        streetPlusZip
+        price
+        sqft
+        lotSize
+        beds
+        baths
+        description
+        zestimate
+        price_to_zestimate
+        keywords(search_keywords: $search_keywords)
+        keywords_count(search_keywords: $search_keywords)
+        keywords_set(search_keywords: $search_keywords)
+        days_listed
+        year_built
+        date_sold
+        latitude
+        longitude
+        days_since_sold
+        image_urls_list
+        status
+        status_display
+        notes
+        tag
+        distance(coord: $coord)
+        distance_set(coord: $coord)
+        engagement
+        pricePerSqft
+        compCacheArray
+        compFilterJson
+        propertyTaxesAnnually
+        propertyTaxesMonthly
+        insuranceAnnually
+        insuranceMonthly
+      }
+      url
+    }
   `
 };
 
@@ -82,19 +131,19 @@ const GET_ALL_QUERYABLE = gql`
 const FIND_PROPERTY = gql`
   query($term: String!, $tag: String!, $status: Int, $persist: Boolean, $coord: CoordInput, $search_keywords: [String]) {
     findProperty(term: $term, tag: $tag, status: $status, persist: $persist) {
-      ...SimpleProperty
+      ...SimpleFindPropertyResponse
     }
   }
-  ${fragments.simple}
+  ${fragments.findPropertyResponse}
 `;
 
 const FIND_PROPERTIES = gql`
   query($terms: [String!]!, $tag: String!, $status: Int, $persist: Boolean, $search_keywords: [String], $coord: CoordInput) {
     findProperties(terms: $terms, tag: $tag, status: $status, persist: $persist) {
-      ...SimpleProperty
+      ...SimpleFindPropertyResponse
     }
   }
-  ${fragments.simple}
+  ${fragments.findPropertyResponse}
 `;
 
 const FIND_COMPS = gql`
@@ -129,7 +178,7 @@ const ENCODE_IMAGE = gql`
 `;
 
 const CREATE = gql`
-  mutation($input: PropertyInput!) {
+  mutation($input: PropertyInput!, $coord: CoordInput, $search_keywords: [String]) {
     createProperty(input: $input) {
       ...SimpleProperty
     }
