@@ -488,7 +488,12 @@ export const actions = {
 
       const response = await propertyApi.findProperties(apolloClient, compCacheRequest);
 
-      commit("setComps", response.data.findProperties);
+      commit(
+        "setComps",
+        _.map(response.data.findProperties, function(x) {
+          return x.property;
+        })
+      );
       commit("setPullingCompsFromCache", false);
     } else {
       commit("setFindingComps", true);
