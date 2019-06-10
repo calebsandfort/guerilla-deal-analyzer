@@ -274,8 +274,8 @@ const findPropertyHelper = async (term, models, tag, status = statuses.statuses.
   const response = {
     property: null,
     url: null
-  }
-  
+  };
+
   if (collectionInfo) {
     logRows.push({
       message: "record",
@@ -291,14 +291,14 @@ const findPropertyHelper = async (term, models, tag, status = statuses.statuses.
       message: "cache",
       term
     });
-  
+
     response.property = await models.Property.findByPk(id);
   } else {
     logRows.push({
       message: "finding",
       term
     });
-  
+
     response.property = await models.Property.findOne({
       where: {
         [Sequelize.Op.or]: [{ zillow_path: term }, { streetAddress: term }, { address: term }]
@@ -311,7 +311,7 @@ const findPropertyHelper = async (term, models, tag, status = statuses.statuses.
         message: "check zillow",
         term: zillowUrl.replace("https://www.zillow.com", "")
       });
-  
+
       response.property = await models.Property.findOne({
         where: {
           [Sequelize.Op.or]: [{ zillow_url: zillowUrl + "?fullpage=true" }, { zillow_url: zillowUrl }, { address: term }]

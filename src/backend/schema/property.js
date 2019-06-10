@@ -22,7 +22,7 @@ export default gql`
     property: Property
     url: String
   }
-  
+
   type Property {
     id: ID!
     zillow_propertyId: Int!
@@ -88,7 +88,7 @@ export default gql`
     description: String!
     zestimate: Float!
     price_to_zestimate: Float!
-    date_listed: Int!
+    date_listed: String!
     year_built: Int!
     zillow_status: String!
     image_urls: String!

@@ -144,19 +144,19 @@ export const populatePropertyFromZillowData = (zillowData, property, html) => {
   property.zillow_propertyId = zillowData.zpid;
   property.zillow_path = zillowData.hdpUrl;
   property.zillow_url = "https://www.zillow.com" + property.zillow_path + "?fullpage=true";
-  
+
   property.streetAddress = zillowData.streetAddress;
   property.city = zillowData.city;
   property.state = zillowData.state;
   property.zipcode = zillowData.zipcode;
   property.address = `${property.streetAddress}, ${property.city}, ${property.state} ${property.zipcode}`;
   utilities.setPropertyFromObject(zillowData, "livingArea", property, "sqft", -1);
-  
+
   utilities.setPropertyFromObject(zillowData, "lotSize", property, "lotSize", -1);
-  
+
   utilities.setPropertyFromObject(zillowData, "price", property, "price", -1);
   utilities.setPropertyFromObject(zillowData, "bedrooms", property, "beds", -1);
-  
+
   property.propertyTaxesAnnually = math
     .chain(property.price * PROPERTY_TAX_RATE)
     .toFloat(0)
@@ -165,7 +165,7 @@ export const populatePropertyFromZillowData = (zillowData, property, html) => {
     .chain(property.propertyTaxesAnnually / 12)
     .toFloat(0)
     .done();
-  
+
   property.insuranceAnnually = math
     .chain(property.price * INSURANCE_RATE)
     .toFloat(0)
@@ -174,28 +174,28 @@ export const populatePropertyFromZillowData = (zillowData, property, html) => {
     .chain(property.insuranceAnnually / 12)
     .toFloat(0)
     .done();
-  
+
   if (property.beds == 0) {
     const bedSpan = $(".ds-bed-bath-living-area > span", html);
     if (bedSpan.length > 0) {
       property.beds = parseInt(bedSpan[0].text());
     }
   }
-  
+
   utilities.setPropertyFromObject(zillowData, "bathrooms", property, "baths", -1);
   utilities.setPropertyFromObject(zillowData, "description", property, "description", "");
   utilities.setPropertyFromObject(zillowData, "zestimate", property, "zestimate", -1);
   property.price_to_zestimate = property.zestimate == -1 ? 1000 : parseFloat((property.price / property.zestimate).toFixed(2));
   property.zillow_status = zillowData.homeStatus;
-  
+
   utilities.setPropertyFromObject(zillowData, "resoFacts.onMarketDate", property, "date_listed", -1);
-  
+
   property.year_built = extractAtAGlanceValues(zillowData, "Year Built", parseInt, 0);
-  
+
   if (isNaN(property.year_built)) {
     property.year_built = 1850;
   }
-  
+
   if (zillowData.responsivePhotos != null && zillowData.responsivePhotos.length > 0) {
     property.image_urls = _.map(zillowData.responsivePhotos, function(item) {
       return item.mixedSources.jpeg[2].url;
@@ -211,13 +211,13 @@ export const populatePropertyFromZillowData = (zillowData, property, html) => {
     // );
     property.image_urls = "";
   }
-  
+
   utilities.setPropertyFromObject(zillowData, "dateSold", property, "date_sold", -1);
-  
+
   utilities.setPropertyFromObject(zillowData, "latitude", property, "latitude", -1);
-  
+
   utilities.setPropertyFromObject(zillowData, "longitude", property, "longitude", -1);
-}
+};
 
 export const findProperties = async terms => {
   const properties = [];

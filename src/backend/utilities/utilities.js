@@ -112,7 +112,7 @@ export const haversineDistance = function(coords1, coords2, isMiles) {
 
 export const setPropertyFromObject = (source, sourcePath, target, targetPath, defaultValue) => {
   let propValue = _.get(source, sourcePath, defaultValue);
-  if (propValue == null) {
+  if (typeof propValue == "undefined" || propValue == null) {
     propValue = defaultValue;
   }
   _.set(target, targetPath, propValue);
