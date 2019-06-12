@@ -260,7 +260,7 @@ export default {
         { text: "Built", value: "year_built" },
         { text: "Price", value: "price" },
         { text: "Keywords", value: "keywords_count" },
-        { text: "Sold", value: "days_since_sold" },
+        { text: "Since Sold", value: "days_since_sold" },
         { text: "Distance", value: "distance" }
       ],
       pagination: {

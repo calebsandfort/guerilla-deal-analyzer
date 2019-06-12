@@ -228,7 +228,18 @@ const scrapeProperty = async (url, req) => {
 
   body.append(zillowIframe);
 
-  await utilities.pause(12);
+  let foundData = false;
+  let whileCount = 0;
+
+  while (!foundData && whileCount < 10) {
+    await utilities.pause(2.5);
+
+    if (window.$(window.$(zillowIframe[0]).attr("srcdoc")).find("script#hdpApolloPreloadedData").length > 0) {
+      foundData = true;
+    }
+
+    whileCount += 1;
+  }
 
   // const zillowHtml = window.$(window.$(zillowIframe[0]).attr("srcdoc"));
   zillowIframe.remove();
