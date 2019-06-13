@@ -222,7 +222,7 @@ export const mutations = {
 
 const scrapeProperty = async (url, req) => {
   const body = window.$("body");
-  const zillowIframe = window.$("<iframe id='zillowIframe' is='x-frame-bypass'></iframe>");
+  const zillowIframe = window.$("<iframe id='zillowIframe' is='x-frame-bypass' sandbox='allow-same-origin allow-scripts allow-popups allow-forms'></iframe>");
 
   zillowIframe.attr("src", url);
 
@@ -466,6 +466,7 @@ export const actions = {
 
       const findCompsRequest = propertyApi.getRequestVariables();
       findCompsRequest.useCompCache = true;
+      findCompsRequest.scrapeComps = false;
 
       await dispatch("findCompsV2", findCompsRequest);
     }
@@ -506,7 +507,7 @@ export const actions = {
         })
       );
       commit("setPullingCompsFromCache", false);
-    } else {
+    } else if (findCompsRequest.scrapeComps) {
       commit("setFindingComps", true);
 
       commit("addCompLogMessage", {
@@ -537,22 +538,35 @@ export const actions = {
 
         let compUrl = utilities.buildZillowCompUrl(state.item, state.compFilter, currentPage);
 
-        const zillowIframe = window.$("<iframe id='zillowIframe' is='x-frame-bypass'></iframe>");
+        const zillowIframe = window.$(
+          "<iframe id='zillowIframe' is='x-frame-bypass' sandbox='allow-same-origin allow-scripts allow-popups allow-forms'></iframe>"
+        );
 
         zillowIframe.attr("src", compUrl);
 
         body.append(zillowIframe);
 
-        await utilities.pause(20);
+        let foundData = false;
+        let whileCount = 0;
+        let results = [];
 
-        // const zillowHtml = window.$(window.$(zillowIframe[0]).attr("srcdoc"));
-        zillowIframe.remove();
+        while (!foundData && whileCount < 10) {
+          await utilities.pause(2.5);
 
-        let results = window.$(window.$(zillowIframe[0]).attr("srcdoc")).find(".zsg-photo-card-address");
+          results = window.$(window.$(zillowIframe[0]).attr("srcdoc")).find(".zsg-photo-card-address");
 
-        if (results.length == 0) {
-          results = window.$(window.$(zillowIframe[0]).attr("srcdoc")).find(".list-card-addr");
+          if (results.length == 0) {
+            results = window.$(window.$(zillowIframe[0]).attr("srcdoc")).find(".list-card-addr");
+          }
+
+          if (results.length > 0) {
+            foundData = true;
+          }
+
+          whileCount += 1;
         }
+
+        zillowIframe.remove();
 
         compAddresses = _.concat(
           compAddresses,
@@ -575,69 +589,6 @@ export const actions = {
         title: "Completed Zillow comp search",
         subTitle: `Found ${compAddresses.length} comps`
       });
-      //endregion
-
-      //region Redfin Iframe comp work
-      // let currentPage = 1;
-      // let hasMorePages = true;
-      // let compAddresses = [];
-      //
-      // const body = window.$("body");
-      //
-      // while (hasMorePages) {
-      //   commit("addCompLogMessage", {
-      //     key: uuidv4(),
-      //     color: colors.pink.accent4,
-      //     title: "Retrieving comp addresses from Redfin",
-      //     subTitle: `Page ${currentPage}...`
-      //   });
-      //
-      //   let compUrl = utilities.buildRedfinCompUrl(
-      //     state.item,
-      //     state.compFilter,
-      //     currentPage
-      //   );
-      //
-      //   const redfinIframe = window.$(
-      //     "<iframe id='redfinIframe' is='x-frame-bypass'></iframe>"
-      //   );
-      //
-      //   redfinIframe.attr("src", compUrl);
-      //
-      //   body.append(redfinIframe);
-      //
-      //   await utilities.pause(15);
-      //
-      //   const redfinHtml = window.$(redfinIframe.attr("srcdoc"));
-      //   redfinIframe.remove();
-      //
-      //   const results = redfinHtml.find(
-      //     ".HomeViews .HomeCardContainer > .HomeCard > .v2 > a"
-      //   );
-      //   compAddresses = _.concat(
-      //     compAddresses,
-      //     _.map(results, function(item) {
-      //       return window.$(item).attr("title");
-      //     })
-      //   );
-      //
-      //   const nextPage = redfinHtml.find(
-      //     ".PagingControls button:not(.disabled) .slide-next"
-      //   );
-      //   if (nextPage.length > 0) {
-      //     currentPage += 1;
-      //   } else {
-      //     hasMorePages = false;
-      //   }
-      // }
-      //
-      // commit("addCompLogMessage", {
-      //   key: uuidv4(),
-      //   color: colors.pink.accent4,
-      //   title: "Completed Redfin comp search",
-      //   subTitle: `Found ${compAddresses.length} comps`
-      // });
-
       //endregion
 
       commit("addCompLogMessage", {

@@ -238,7 +238,8 @@ export const getRequestVariables = () => {
     },
     compFilter: utilities.defaultCompFilter(),
     useCompCache: true,
-    image_url: ""
+    image_url: "",
+    scrapeComps: true
   };
 };
 
