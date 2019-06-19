@@ -484,6 +484,18 @@ export const findComps = async ({
   return comps;
 };
 
+export const getZipcodeData = async zipcode => {
+  let options = {
+    uri: `https://www.zillow.com/multnomah-county-or-${zipcode}/home-values/`
+  };
+
+  let html = await guerillaTor.request(options);
+
+  utilities.writeFile(FILE_PATH + "zillowZipcodeData.html", html);
+
+  return null;
+};
+
 const buildEstatelyCompUrl = (property, compFilter, currentPage) => {
   //https://www.estately.com/45.4571,-122.6825,45.4811,-122.6247?
   // max_days_listed=365

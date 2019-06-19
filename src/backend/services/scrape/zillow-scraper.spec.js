@@ -10,6 +10,15 @@ const ZILLOW_PROPERTY_URL = "https://www.zillow.com/homedetails/608-NE-Going-St-
 const ADDRESS = "1203 SE Malden St";
 
 describe("zillow-scraper", () => {
+  // it("it scrapes data from Zillow for the given zipcode", function() {
+  //   this.timeout(10 * 60 * 1000);
+  //
+  //   const expectedResult = null;
+  //
+  //   return zillowScraper.getZipcodeData(97080).then(function(response) {
+  //     expect(response).to.eql(expectedResult);
+  //   });
+  // });
   // it("finds comps for a property", function() {
   //   this.timeout(10 * 60 * 1000);
   //
@@ -21,15 +30,15 @@ describe("zillow-scraper", () => {
   //     expect(response.length).to.eql(expectedResult);
   //   });
   // });
-  it("it finds the zillow url for the given address", function() {
-    this.timeout(10 * 60 * 1000);
-
-    const expectedResult = ZILLOW_PROPERTY_URL;
-
-    return zillowScraper.findZillowUrl("10940 SE Cherry Blossom Dr Portland, OR 97216").then(function(response) {
-      expect(response).to.eql(expectedResult);
-    });
-  });
+  // it("it finds the zillow url for the given address", function() {
+  //   this.timeout(10 * 60 * 1000);
+  //
+  //   const expectedResult = ZILLOW_PROPERTY_URL;
+  //
+  //   return zillowScraper.findZillowUrl("10940 SE Cherry Blossom Dr Portland, OR 97216").then(function(response) {
+  //     expect(response).to.eql(expectedResult);
+  //   });
+  // });
   // it("finds comps for a property id", function() {
   //   this.timeout(10 * 60 * 1000);
   //

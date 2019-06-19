@@ -19,8 +19,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue")
+      component: () => import(/* webpackChunkName: "about" */ "./views/About.vue")
     },
     {
       path: "/lead-finder",
@@ -28,8 +27,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./components/LeadFinder/LeadFinder.vue")
+      component: () => import(/* webpackChunkName: "about" */ "./components/LeadFinder/LeadFinder.vue")
     },
     {
       path: "/deal-calculator",
@@ -37,8 +35,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./components/DealCalculator/DealCalculator.vue")
+      component: () => import(/* webpackChunkName: "about" */ "./components/DealCalculator/DealCalculator.vue")
     },
     {
       path: "/deal-wizard/:propertyId?",
@@ -46,8 +43,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./components/DealWizard/DealWizard.vue")
+      component: () => import(/* webpackChunkName: "about" */ "./components/DealWizard/DealWizard.vue")
     },
     {
       path: "/sandbox",
@@ -55,8 +51,15 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./components/Sandbox/Sandbox.vue")
+      component: () => import(/* webpackChunkName: "about" */ "./components/Sandbox/Sandbox.vue")
+    },
+    {
+      path: "/research",
+      name: "research",
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "about" */ "./components/Research/Research.vue")
     }
   ]
 });

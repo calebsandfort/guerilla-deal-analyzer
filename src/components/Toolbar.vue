@@ -1,16 +1,7 @@
 <template>
   <v-toolbar app>
-    <v-toolbar-title
-      class="headline text-uppercase"
-      v-on:click="goHome"
-      style="cursor: pointer"
-    >
-      <v-btn
-        v-if="showBackButton"
-        v-on:click.stop="goBack"
-        icon
-        class="hidden-xs-only"
-      >
+    <v-toolbar-title class="headline text-uppercase" v-on:click="goHome" style="cursor: pointer">
+      <v-btn v-if="showBackButton" v-on:click.stop="goBack" icon class="hidden-xs-only">
         <v-icon>arrow_back</v-icon>
       </v-btn>
       <span>Columbia Sunset </span>
@@ -22,6 +13,7 @@
       <v-btn flat :to="'/deal-calculator'">Deal Calculator</v-btn>
       <v-btn flat :to="'/deal-wizard'">Deal Wizard</v-btn>
       <v-btn flat :to="'/sandbox'">Sandbox</v-btn>
+      <v-btn flat :to="'/research'">Research</v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>
