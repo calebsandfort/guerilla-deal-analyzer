@@ -39,6 +39,7 @@
             <tr :key="props.item.zipcode" :class="[getColorScaleColorString(props.item.marketTemperature), 'lighten-2', 'grey--text', 'text--darken-4']">
               <td>{{ props.item.zipcode }}</td>
               <td class="text-xs-right">{{ props.item.marketTemperature }}</td>
+              <td class="text-xs-right">{{ tempLabel(props.item.marketTemperature) }}</td>
               <td class="text-xs-right">
                 {{ formatMoney(props.item.medianHomeValue, { precision: 0 }) }}
               </td>
@@ -69,6 +70,7 @@ export default {
           value: "zipcode"
         },
         { text: "Market Temp", value: "marketTemperature", align: "right" },
+        { text: "Market Type", value: "marketTemperature", align: "right" },
         { text: "Median Home Value", value: "medianHomeValue", align: "right" }
       ],
       sortStack: [{ text: "Market Temp", value: "marketTemperature", descending: true }],
@@ -113,6 +115,9 @@ export default {
     // comps: function () {}
   },
   methods: {
+    tempLabel: function(i) {
+      return i <= 30 ? "Buyers" : i >= 80 ? "Sellers" : "Neutral";
+    },
     getColorScaleColorString(val) {
       return ColorHelper.getColorScaleColorString(val);
     },
