@@ -1,24 +1,10 @@
 <template>
   <v-layout row>
     <v-flex xs6>
-      <v-select
-        :items="items"
-        item-text="text"
-        item-value="value"
-        :value="min"
-        @input="$emit('update:min', $event)"
-        :label="minLabel"
-      ></v-select>
+      <v-select :items="items" item-text="text" item-value="value" :value="min" @input="$emit('update:min', $event)" :label="minLabel"></v-select>
     </v-flex>
     <v-flex xs6>
-      <v-select
-        :items="items"
-        item-text="text"
-        item-value="value"
-        :value="max"
-        @input="$emit('update:max', $event)"
-        :label="maxLabel"
-      ></v-select>
+      <v-select :items="items" item-text="text" item-value="value" :value="max" @input="$emit('update:max', $event)" :label="maxLabel"></v-select>
     </v-flex>
   </v-layout>
 </template>

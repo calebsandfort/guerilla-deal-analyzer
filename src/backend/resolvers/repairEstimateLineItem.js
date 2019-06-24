@@ -3,11 +3,7 @@ import * as entityQuery from "../utilities/entityQuery";
 
 export default {
   Query: {
-    repairEstimateLineItems: async (
-      parent,
-      { offset = 0, limit = 0, order = "idx ASC" },
-      { models }
-    ) => {
+    repairEstimateLineItems: async (parent, { offset = 0, limit = 0, order = "idx ASC" }, { models }) => {
       const params = {};
 
       if (limit > 0) {
@@ -36,9 +32,7 @@ export default {
     },
 
     updateRepairEstimateLineItem: async (parent, { id, input }, { models }) => {
-      const repairEstimateLineItem = await models.RepairEstimateLineItem.findById(
-        id
-      );
+      const repairEstimateLineItem = await models.RepairEstimateLineItem.findById(id);
       return await repairEstimateLineItem.update(input);
     },
 

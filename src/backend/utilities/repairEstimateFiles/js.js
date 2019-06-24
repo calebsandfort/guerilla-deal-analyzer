@@ -39,32 +39,28 @@ $(function() {
   var exteriorSection = {
     selected: false,
     totalCost: 0,
-    sectionType:
-      "|repairEstimateSectionTypes.repairEstimateSectionTypes.EXTERIOR.value|",
+    sectionType: "|repairEstimateSectionTypes.repairEstimateSectionTypes.EXTERIOR.value|",
     subSections: []
   };
 
   var interiorSection = {
     selected: false,
     totalCost: 0,
-    sectionType:
-      "|repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value|",
+    sectionType: "|repairEstimateSectionTypes.repairEstimateSectionTypes.INTERIOR.value|",
     subSections: []
   };
 
   var mechanicalsSection = {
     selected: false,
     totalCost: 0,
-    sectionType:
-      "|repairEstimateSectionTypes.repairEstimateSectionTypes.MECHANICALS.value|",
+    sectionType: "|repairEstimateSectionTypes.repairEstimateSectionTypes.MECHANICALS.value|",
     subSections: []
   };
 
   var otherSection = {
     selected: false,
     totalCost: 0,
-    sectionType:
-      "|repairEstimateSectionTypes.repairEstimateSectionTypes.OTHER.value|",
+    sectionType: "|repairEstimateSectionTypes.repairEstimateSectionTypes.OTHER.value|",
     subSections: []
   };
 

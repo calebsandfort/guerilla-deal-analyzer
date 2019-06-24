@@ -5,12 +5,7 @@
       <v-container fluid v-if="sandboxStore.finding">
         <v-layout text-xs-center wrap>
           <v-flex xs12>
-            <v-progress-circular
-              :width="7"
-              :size="70"
-              color="green"
-              indeterminate
-            ></v-progress-circular>
+            <v-progress-circular :width="7" :size="70" color="green" indeterminate></v-progress-circular>
           </v-flex>
         </v-layout>
       </v-container>
@@ -20,13 +15,7 @@
             <v-text-field label="Address" v-model="address">
               <template v-slot:append-outer>
                 <v-icon @click="findPropertyClick" color="blue">send</v-icon>
-                <v-icon
-                  v-if="property"
-                  @click="findCompsClick"
-                  color="green"
-                  class="pl-2"
-                  >layers</v-icon
-                >
+                <v-icon v-if="property" @click="findCompsClick" color="green" class="pl-2">layers</v-icon>
               </template>
             </v-text-field>
           </v-flex>

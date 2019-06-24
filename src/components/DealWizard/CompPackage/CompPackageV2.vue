@@ -11,18 +11,11 @@
             height: `${mapHeight}px`
           }"
         >
-          <GmapPolyline
-            :path="search_path"
-            :options="search_path_options"
-          ></GmapPolyline>
+          <GmapPolyline :path="search_path" :options="search_path_options"></GmapPolyline>
           <GmapMarker
             key="center"
             :position="map_center"
-            :icon="
-              `http://maps.google.com/mapfiles/ms/icons/${engagements.getMarkerColor(
-                engagements.engagements.ANALYSIS.value
-              )}-dot.png`
-            "
+            :icon="`http://maps.google.com/mapfiles/ms/icons/${engagements.getMarkerColor(engagements.engagements.ANALYSIS.value)}-dot.png`"
             :clickable="true"
             @click="markerClicked"
           ></GmapMarker>
@@ -30,11 +23,7 @@
             :key="comp.id"
             v-for="comp in filteredComps"
             :position="{ lat: comp.latitude, lng: comp.longitude }"
-            :icon="
-              `http://maps.google.com/mapfiles/ms/icons/${engagements.getMarkerColor(
-                comp.engagement
-              )}-dot.png`
-            "
+            :icon="`http://maps.google.com/mapfiles/ms/icons/${engagements.getMarkerColor(comp.engagement)}-dot.png`"
             :clickable="true"
             @click="compClicked(comp.id)"
             @mouseover="compMouseover(comp.id)"
@@ -45,43 +34,18 @@
       <v-flex xs3>
         <v-layout row wrap>
           <v-flex xs12>
-            <VuetifyNumeric
-              field="arv_average"
-              label="Avg Sale Price"
-              currency="$"
-              :readonly="true"
-              :value="arv_average"
-            >
-            </VuetifyNumeric>
+            <VuetifyNumeric field="arv_average" label="Avg Sale Price" currency="$" :readonly="true" :value="arv_average"> </VuetifyNumeric>
           </v-flex>
           <v-flex xs12>
-            <VuetifyNumeric
-              field="arv_pricePerSqft"
-              label="Avg Price Per Sqft"
-              currency="$"
-              :readonly="true"
-              :value="arv_pricePerSqft"
-            >
-            </VuetifyNumeric>
+            <VuetifyNumeric field="arv_pricePerSqft" label="Avg Price Per Sqft" currency="$" :readonly="true" :value="arv_pricePerSqft"> </VuetifyNumeric>
           </v-flex>
           <v-flex xs12>
-            <VuetifyNumeric
-              field="arv,dealAnalysis.DF_ARV"
-              label="ARV"
-              currency="$"
-              :value="arv"
-              v-on:input="fieldChangedNumber"
-            >
-            </VuetifyNumeric>
+            <VuetifyNumeric field="arv,dealAnalysis.DF_ARV" label="ARV" currency="$" :value="arv" v-on:input="fieldChangedNumber"> </VuetifyNumeric>
           </v-flex>
           <v-flex xs12>
-            <v-btn
-              :color="onlyShowSelected ? 'primary' : 'success'"
-              block
-              class="white--text"
-              @click="onlyShowSelected = !onlyShowSelected"
-              >{{ onlyShowSelected ? "Show All" : "Show Selected" }}</v-btn
-            >
+            <v-btn :color="onlyShowSelected ? 'primary' : 'success'" block class="white--text" @click="onlyShowSelected = !onlyShowSelected">{{
+              onlyShowSelected ? "Show All" : "Show Selected"
+            }}</v-btn>
           </v-flex>
         </v-layout>
       </v-flex>
@@ -108,22 +72,14 @@
               <th
                 v-for="(header, index) in props.headers"
                 :key="`header_${index}`"
-                :class="[
-                  'column sortable',
-                  header.descending ? 'desc' : 'asc',
-                  indexHeaderInStack(header) >= 0 ? 'active' : ''
-                ]"
+                :class="['column sortable', header.descending ? 'desc' : 'asc', indexHeaderInStack(header) >= 0 ? 'active' : '']"
                 @click="changeSort(header)"
               >
                 <template v-if="index == 0">
                   <CompFiltersDialog></CompFiltersDialog>
                 </template>
                 <template v-else>
-                  {{
-                    indexHeaderInStack(header) >= 0
-                      ? indexHeaderInStack(header) + 1
-                      : ""
-                  }}
+                  {{ indexHeaderInStack(header) >= 0 ? indexHeaderInStack(header) + 1 : "" }}
                   <v-icon small>arrow_upward</v-icon>
 
                   {{ header.text }}
@@ -137,38 +93,24 @@
               @mouseover="compMouseover(props.item.id)"
               @mouseout="compMouseout(props.item.id)"
               v-bind:class="{
-                'yellow lighten-2':
-                  props.item.engagement == engagements.engagements.HOVER.value,
-                'blue lighten-3':
-                  props.item.engagement ==
-                  engagements.engagements.SPOTLIGHT.value
+                'yellow lighten-2': props.item.engagement == engagements.engagements.HOVER.value,
+                'blue lighten-3': props.item.engagement == engagements.engagements.SPOTLIGHT.value
               }"
             >
               <td class="text-xs-left" style="width: 10px;">
                 <v-layout row>
                   <v-flex xs3 align-self-center>
-                    <v-checkbox
-                      v-model="props.selected"
-                      primary
-                      hide-details
-                    ></v-checkbox>
+                    <v-checkbox v-model="props.selected" primary hide-details></v-checkbox>
                   </v-flex>
                   <v-flex xs3>
-                    <v-btn
-                      flat
-                      icon
-                      color="primary"
-                      @click="compClicked(props.item.id)"
-                    >
+                    <v-btn flat icon color="primary" @click="compClicked(props.item.id)">
                       <v-icon>pageview</v-icon>
                     </v-btn>
                   </v-flex>
                 </v-layout>
               </td>
               <td>
-                <a :href="props.item.zillow_url" target="_blank">{{
-                  props.item.streetAddress
-                }}</a>
+                <a :href="props.item.zillow_url" target="_blank">{{ props.item.streetAddress }}</a>
               </td>
               <td class="text-xs-right">{{ props.item.beds }}</td>
               <td class="text-xs-right">{{ props.item.baths }}</td>
@@ -183,9 +125,7 @@
                 {{ props.item.keywords.join(", ") }}
               </td>
               <td class="text-xs-right">{{ props.item.days_since_sold }}</td>
-              <td class="text-xs-right">
-                {{ formatNumber(props.item.distance, { precision: 2 }) }} miles
-              </td>
+              <td class="text-xs-right">{{ formatNumber(props.item.distance, { precision: 2 }) }} miles</td>
             </tr>
           </template>
         </v-data-table>
@@ -240,10 +180,7 @@ export default {
         { text: "Days Since Sold", value: "days_since_sold" },
         { text: "Distance", value: "distance" }
       ],
-      sortStack: [
-        { text: "Keywords", value: "keywords_count", descending: true },
-        { text: "Days Since Sold", value: "days_since_sold", descending: false }
-      ],
+      sortStack: [{ text: "Keywords", value: "keywords_count", descending: true }, { text: "Days Since Sold", value: "days_since_sold", descending: false }],
       // sortStack: [{ text: "Status", value: "status", descending: false }],
       pagination: {
         // sortBy: "keywords_count",
@@ -276,10 +213,7 @@ export default {
     window.$(window).resize(
       _.debounce(function(args) {
         const availableHeight = window.$(window).height() - 195;
-        that.mapHeight = that.compTableHeight = Math.max(
-          300,
-          availableHeight / 2
-        );
+        that.mapHeight = that.compTableHeight = Math.max(300, availableHeight / 2);
       })
     );
   },
@@ -404,9 +338,7 @@ export default {
       this.pagination.descending = !this.pagination.descending;
     },
     nextSort() {
-      let index = this.headers.findIndex(
-        h => h.value === this.pagination.sortBy
-      );
+      let index = this.headers.findIndex(h => h.value === this.pagination.sortBy);
       index = (index + 1) % this.headers.length;
       index = index === 0 ? index + 1 : index;
       this.pagination.sortBy = this.headers[index].value;

@@ -217,8 +217,7 @@ export default {
      * @return {String} '.' or ','
      */
     decimalSeparatorSymbol() {
-      if (typeof this.decimalSeparator !== "undefined")
-        return this.decimalSeparator;
+      if (typeof this.decimalSeparator !== "undefined") return this.decimalSeparator;
       if (this.separator === ",") return ".";
       return ",";
     },
@@ -228,8 +227,7 @@ export default {
      * @return {String} '.' or ','
      */
     thousandSeparatorSymbol() {
-      if (typeof this.thousandSeparator !== "undefined")
-        return this.thousandSeparator;
+      if (typeof this.thousandSeparator !== "undefined") return this.thousandSeparator;
       if (this.separator === ".") return ".";
       if (this.separator === "space") return " ";
       return ",";
@@ -340,8 +338,7 @@ export default {
       if (value >= this.max) this.update(this.max);
       if (value <= this.min) this.update(this.min);
       if (value > this.min && value < this.max) this.update(value);
-      if (!this.minus && value < 0)
-        this.min >= 0 ? this.update(this.min) : this.update(0);
+      if (!this.minus && value < 0) this.min >= 0 ? this.update(this.min) : this.update(0);
     },
 
     /**
@@ -350,10 +347,7 @@ export default {
      */
     update(value) {
       const fixedValue = accounting.toFixed(value, this.precision);
-      const output =
-        this.outputType.toLowerCase() === "string"
-          ? fixedValue
-          : Number(fixedValue);
+      const output = this.outputType.toLowerCase() === "string" ? fixedValue : Number(fixedValue);
 
       if (this.mountedFinished) {
         this.$emit("input", {
@@ -384,8 +378,7 @@ export default {
      * @return {Number}
      */
     unformat(value) {
-      const toUnformat =
-        typeof value === "string" && value === "" ? this.emptyValue : value;
+      const toUnformat = typeof value === "string" && value === "" ? this.emptyValue : value;
       return accounting.unformat(toUnformat, this.decimalSeparatorSymbol);
     }
   }

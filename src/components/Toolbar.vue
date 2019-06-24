@@ -1,7 +1,7 @@
 <template>
   <v-toolbar app>
-    <v-toolbar-title class="headline text-uppercase" v-on:click="goHome" style="cursor: pointer">
-      <v-btn v-if="showBackButton" v-on:click.stop="goBack" icon class="hidden-xs-only">
+    <v-toolbar-title class="headline text-uppercase toolbarTitle" v-on:click="goHome" style="cursor: pointer">
+      <v-btn v-if="showBackButton" v-on:click.stop="goBack" icon class="hidden-xs-only btn_Back">
         <v-icon>arrow_back</v-icon>
       </v-btn>
       <span>Columbia Sunset </span>

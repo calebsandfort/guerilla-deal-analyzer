@@ -1,12 +1,5 @@
 <template>
-  <gallery
-    ref="theGallery"
-    :images="image_urls_list"
-    :index="galleryIndex"
-    @close="index = null"
-    @onslideend="slideEnd"
-    @onclosed="closed"
-  ></gallery>
+  <gallery ref="theGallery" :images="image_urls_list" :index="galleryIndex" @close="index = null" @onslideend="slideEnd" @onclosed="closed"></gallery>
 </template>
 
 <script>

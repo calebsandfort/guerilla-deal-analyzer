@@ -32,9 +32,7 @@ dealAnalysisProxy.prototype.FC_LoanAmount = function() {
     case loanTypes.loanTypes.PURCHASE_PRICE.value:
       return this.dealAnalysis.DF_PurchasePrice;
     case loanTypes.loanTypes.PURCHASE_PLUS_REHAB.value:
-      return (
-        this.dealAnalysis.DF_PurchasePrice + this.dealAnalysis.DF_RepairCosts
-      );
+      return this.dealAnalysis.DF_PurchasePrice + this.dealAnalysis.DF_RepairCosts;
   }
 
   return 0;

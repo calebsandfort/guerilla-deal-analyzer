@@ -2,24 +2,13 @@ import { gql } from "apollo-server-express";
 
 export default gql`
   extend type Query {
-    repairEstimateSubSections(
-      offset: Int
-      limit: Int
-      order: String
-    ): [RepairEstimateSubSection!]
-    repairEstimateSubSectionsQueryable(
-      query: EntityQuery
-    ): [RepairEstimateSubSection!]
+    repairEstimateSubSections(offset: Int, limit: Int, order: String): [RepairEstimateSubSection!]
+    repairEstimateSubSectionsQueryable(query: EntityQuery): [RepairEstimateSubSection!]
     repairEstimateSubSection(id: ID!): RepairEstimateSubSection
   }
   extend type Mutation {
-    createRepairEstimateSubSection(
-      input: RepairEstimateSubSectionInput!
-    ): RepairEstimateSubSection!
-    updateRepairEstimateSubSection(
-      id: ID!
-      input: RepairEstimateSubSectionInput!
-    ): RepairEstimateSubSection!
+    createRepairEstimateSubSection(input: RepairEstimateSubSectionInput!): RepairEstimateSubSection!
+    updateRepairEstimateSubSection(id: ID!, input: RepairEstimateSubSectionInput!): RepairEstimateSubSection!
     deleteRepairEstimateSubSection(id: ID!): Boolean!
   }
   type RepairEstimateSubSection {

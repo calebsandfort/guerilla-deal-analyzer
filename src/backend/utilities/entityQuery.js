@@ -1,12 +1,6 @@
 import Sequelize from "sequelize";
 
-export const entityQueryCtor = (
-  isAndQuery = true,
-  enablePaging = false,
-  startRowIndex = 0,
-  maximumRows = 0,
-  sortExpression = ""
-) => {
+export const entityQueryCtor = (isAndQuery = true, enablePaging = false, startRowIndex = 0, maximumRows = 0, sortExpression = "") => {
   return {
     isAndQuery,
     enablePaging,
@@ -121,9 +115,7 @@ export const getPropertyAndFilter = searchFilter => {
 
 export const getOperatorAndFilter = searchFilter => {
   return {
-    [searchFilterConditionToSequelizeOperator(
-      searchFilter.condition
-    )]: getSearchFilterValue(searchFilter)
+    [searchFilterConditionToSequelizeOperator(searchFilter.condition)]: getSearchFilterValue(searchFilter)
   };
 };
 

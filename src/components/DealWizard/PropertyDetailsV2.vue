@@ -14,14 +14,7 @@
         <v-container fluid grid-list-sm class="pa-3">
           <v-layout row wrap>
             <v-flex xs5>
-              <img
-                :src="property.image_urls_list[0]"
-                class="image"
-                width="100%"
-                @click="imgClick"
-                style="cursor: pointer;"
-                alt="Click for more pictures..."
-              />
+              <img :src="property.image_urls_list[0]" class="image" width="100%" @click="imgClick" style="cursor: pointer;" alt="Click for more pictures..." />
               <!--              <gallery-->
               <!--                ref="theGallery"-->
               <!--                :images="property.image_urls_list"-->
@@ -82,9 +75,7 @@
                 </v-flex>
                 <v-flex xs3 class="font-weight-medium">Ratio</v-flex>
                 <v-flex xs3>
-                  {{
-                    formatNumber(property.price_to_zestimate, { precision: 2 })
-                  }}
+                  {{ formatNumber(property.price_to_zestimate, { precision: 2 }) }}
                 </v-flex>
               </v-layout>
               <v-layout row wrap>

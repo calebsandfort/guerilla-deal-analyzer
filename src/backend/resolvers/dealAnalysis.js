@@ -3,11 +3,7 @@ import * as entityQuery from "../utilities/entityQuery";
 
 export default {
   Query: {
-    dealAnalyses: async (
-      parent,
-      { offset = 0, limit = 0, order = "idx ASC" },
-      { models }
-    ) => {
+    dealAnalyses: async (parent, { offset = 0, limit = 0, order = "idx ASC" }, { models }) => {
       const params = {};
 
       if (limit > 0) {

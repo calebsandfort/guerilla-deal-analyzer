@@ -35,11 +35,7 @@
           <!--              </VuetifyNumeric>-->
           <!--            </v-flex>-->
           <!--          </v-layout>-->
-          <MinMaxRowNumeric
-            label="Sqft"
-            :min.sync="localCompFilter.minSqft"
-            :max.sync="localCompFilter.maxSqft"
-          ></MinMaxRowNumeric>
+          <MinMaxRowNumeric label="Sqft" :min.sync="localCompFilter.minSqft" :max.sync="localCompFilter.maxSqft"></MinMaxRowNumeric>
           <MinMaxRowSelect
             label="Lot Size"
             :min.sync="localCompFilter.minLotSqft"
@@ -76,12 +72,8 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="red darken-1" class="white--text" @click="dialog = false"
-          >Close</v-btn
-        >
-        <v-btn color="blue darken-1" class="white--text" @click="apply"
-          >Apply</v-btn
-        >
+        <v-btn color="red darken-1" class="white--text" @click="dialog = false">Close</v-btn>
+        <v-btn color="blue darken-1" class="white--text" @click="apply">Apply</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

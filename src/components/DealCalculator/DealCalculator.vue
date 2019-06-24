@@ -11,46 +11,21 @@
             <v-form>
               <v-layout row wrap>
                 <v-flex xs12 sm6 md3 class="px-2">
-                  <v-text-field
-                    name="purchasePrice"
-                    label="Purchase Price"
-                    prefix="$"
-                    v-model.number="purchasePrice"
-                  ></v-text-field>
+                  <v-text-field name="purchasePrice" label="Purchase Price" prefix="$" v-model.number="purchasePrice"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md3 class="px-2">
-                  <v-text-field
-                    name="rehabBudget"
-                    label="Rehab Budget"
-                    prefix="$"
-                    v-model.number="rehabBudget"
-                  ></v-text-field>
+                  <v-text-field name="rehabBudget" label="Rehab Budget" prefix="$" v-model.number="rehabBudget"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md3 class="px-2">
-                  <v-text-field
-                    name="arv"
-                    label="ARV"
-                    prefix="$"
-                    v-model.number="arv"
-                  ></v-text-field>
+                  <v-text-field name="arv" label="ARV" prefix="$" v-model.number="arv"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md3 class="px-2">
-                  <v-text-field
-                    name="roi"
-                    label="ROI"
-                    suffix="%"
-                    v-model.number="roi"
-                  ></v-text-field>
+                  <v-text-field name="roi" label="ROI" suffix="%" v-model.number="roi"></v-text-field>
                 </v-flex>
               </v-layout>
               <v-layout row wrap>
                 <v-flex xs12 sm6 md3 class="px-2">
-                  <v-text-field
-                    name="holdPeriod"
-                    label="Hold Period"
-                    suffix="months"
-                    v-model.number="holdPeriod"
-                  ></v-text-field>
+                  <v-text-field name="holdPeriod" label="Hold Period" suffix="months" v-model.number="holdPeriod"></v-text-field>
                 </v-flex>
               </v-layout>
               <v-expansion-panel expand>
@@ -61,13 +36,7 @@
                   <v-card>
                     <v-card-text>
                       <v-layout row wrap>
-                        <v-flex
-                          xs12
-                          sm4
-                          md6
-                          align-self-center
-                          class="pr-2 pl-4"
-                        >
+                        <v-flex xs12 sm4 md6 align-self-center class="pr-2 pl-4">
                           <h4>
                             Property Taxes
                           </h4>
@@ -86,20 +55,12 @@
                             label="Monthly"
                             prefix="$"
                             readonly
-                            v-model.number="
-                              holdingCostsComputed.propertyTaxesMonthly
-                            "
+                            v-model.number="holdingCostsComputed.propertyTaxesMonthly"
                           ></v-text-field>
                         </v-flex>
                       </v-layout>
                       <v-layout row wrap>
-                        <v-flex
-                          xs12
-                          sm4
-                          md6
-                          align-self-center
-                          class="pr-2 pl-4"
-                        >
+                        <v-flex xs12 sm4 md6 align-self-center class="pr-2 pl-4">
                           <h4>
                             Insurance Costs
                           </h4>
@@ -118,31 +79,18 @@
                             label="Monthly"
                             prefix="$"
                             readonly
-                            v-model.number="
-                              holdingCostsComputed.insuranceMonthly
-                            "
+                            v-model.number="holdingCostsComputed.insuranceMonthly"
                           ></v-text-field>
                         </v-flex>
                       </v-layout>
                       <v-layout row wrap>
-                        <v-flex
-                          xs12
-                          sm4
-                          md6
-                          align-self-center
-                          class="pr-2 pl-4"
-                        >
+                        <v-flex xs12 sm4 md6 align-self-center class="pr-2 pl-4">
                           <h4>
                             HOA Fees
                           </h4>
                         </v-flex>
                         <v-flex xs12 sm4 md3 class="px-2">
-                          <v-text-field
-                            name="holdingCosts.hoaAnnually"
-                            label="Annually"
-                            prefix="$"
-                            v-model.number="holdingCosts.hoaAnnually"
-                          ></v-text-field>
+                          <v-text-field name="holdingCosts.hoaAnnually" label="Annually" prefix="$" v-model.number="holdingCosts.hoaAnnually"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm4 md3 class="px-2">
                           <v-text-field
@@ -155,13 +103,7 @@
                         </v-flex>
                       </v-layout>
                       <v-layout row wrap>
-                        <v-flex
-                          xs12
-                          sm4
-                          md6
-                          align-self-center
-                          class="pr-2 pl-4"
-                        >
+                        <v-flex xs12 sm4 md6 align-self-center class="pr-2 pl-4">
                           <h4>
                             Utilities
                           </h4>
@@ -176,24 +118,13 @@
                         </v-flex>
                       </v-layout>
                       <v-layout row wrap>
-                        <v-flex
-                          xs12
-                          sm4
-                          md6
-                          align-self-center
-                          class="pr-2 pl-4"
-                        >
+                        <v-flex xs12 sm4 md6 align-self-center class="pr-2 pl-4">
                           <h4>
                             Misc
                           </h4>
                         </v-flex>
                         <v-flex xs12 sm4 offset-sm4 md3 offset-md3 class="px-2">
-                          <v-text-field
-                            name="holdingCosts.miscMonthly"
-                            label="Monthly"
-                            prefix="$"
-                            v-model.number="holdingCosts.miscMonthly"
-                          ></v-text-field>
+                          <v-text-field name="holdingCosts.miscMonthly" label="Monthly" prefix="$" v-model.number="holdingCosts.miscMonthly"></v-text-field>
                         </v-flex>
                       </v-layout>
                       <v-layout row wrap>
@@ -294,20 +225,13 @@ export default {
     }),
     holdingCostsComputed: function() {
       const obj = {
-        propertyTaxesMonthly: Math.round(
-          this.holdingCosts.propertyTaxesAnnually / 12
-        ),
+        propertyTaxesMonthly: Math.round(this.holdingCosts.propertyTaxesAnnually / 12),
         insuranceMonthly: Math.round(this.holdingCosts.insuranceAnnually / 12),
         hoaMonthly: Math.round(this.holdingCosts.hoaAnnually / 12),
         total: 0
       };
 
-      obj.total =
-        obj.propertyTaxesMonthly +
-        obj.insuranceMonthly +
-        obj.hoaMonthly +
-        this.holdingCosts.utilitiesMonthly +
-        this.holdingCosts.miscMonthly;
+      obj.total = obj.propertyTaxesMonthly + obj.insuranceMonthly + obj.hoaMonthly + this.holdingCosts.utilitiesMonthly + this.holdingCosts.miscMonthly;
 
       return obj;
     }

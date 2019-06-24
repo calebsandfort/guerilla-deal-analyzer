@@ -1,9 +1,6 @@
 import Vue from "vue";
 import VueApollo from "vue-apollo";
-import {
-  createApolloClient,
-  restartWebsockets
-} from "vue-cli-plugin-apollo/graphql-client";
+import { createApolloClient, restartWebsockets } from "vue-cli-plugin-apollo/graphql-client";
 
 // Install the vue plugin
 Vue.use(VueApollo);
@@ -12,8 +9,7 @@ Vue.use(VueApollo);
 const AUTH_TOKEN = "apollo-token";
 
 // Http endpoint
-const httpEndpoint =
-  process.env.VUE_APP_GRAPHQL_HTTP || "http://localhost:5050/graphql";
+const httpEndpoint = process.env.VUE_APP_GRAPHQL_HTTP || "http://localhost:5050/graphql";
 
 // Config
 const defaultOptions = {
@@ -69,11 +65,7 @@ export function createProvider(options = {}) {
     },
     errorHandler(error) {
       // eslint-disable-next-line no-console
-      console.log(
-        "%cError",
-        "background: red; color: white; padding: 2px 4px; border-radius: 3px; font-weight: bold;",
-        error.message
-      );
+      console.log("%cError", "background: red; color: white; padding: 2px 4px; border-radius: 3px; font-weight: bold;", error.message);
     }
   });
 

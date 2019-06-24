@@ -5,12 +5,7 @@
       <v-container fluid v-if="leadFinderStore.finding">
         <v-layout text-xs-center wrap>
           <v-flex xs12>
-            <v-progress-circular
-              :width="7"
-              :size="70"
-              color="green"
-              indeterminate
-            ></v-progress-circular>
+            <v-progress-circular :width="7" :size="70" color="green" indeterminate></v-progress-circular>
           </v-flex>
         </v-layout>
       </v-container>
@@ -28,54 +23,18 @@
                 <v-container fluid grid-list-lg class="pa-0">
                   <v-layout row>
                     <v-flex xs10>
-                      <v-textarea
-                        outline
-                        name="urls"
-                        label="URLs"
-                        v-model="urls"
-                        rows="2"
-                      ></v-textarea>
+                      <v-textarea outline name="urls" label="URLs" v-model="urls" rows="2"></v-textarea>
                     </v-flex>
                     <v-flex xs2>
-                      <v-btn
-                        block
-                        small
-                        color="success"
-                        v-on:click="findClick"
-                        :disabled="urls.length == 0"
-                        >Find
-                      </v-btn>
-                      <v-btn
-                        block
-                        small
-                        color="info"
-                        v-on:click="loadExistingClick"
-                        >Load Existing
-                      </v-btn>
-                      <v-btn
-                        block
-                        small
-                        color="error"
-                        v-on:click="clearClick"
-                        :disabled="urls.length > 0"
-                        >Clear
-                      </v-btn>
+                      <v-btn block small color="success" v-on:click="findClick" :disabled="urls.length == 0">Find </v-btn>
+                      <v-btn block small color="info" v-on:click="loadExistingClick">Load Existing </v-btn>
+                      <v-btn block small color="error" v-on:click="clearClick" :disabled="urls.length > 0">Clear </v-btn>
                     </v-flex>
                   </v-layout>
                   <v-layout row>
                     <v-flex xs10 class="pt-0">
-                      <v-text-field
-                        label="Tag"
-                        v-model="tag"
-                        class="pt-0"
-                      ></v-text-field>
-                      <v-select
-                        v-model="status"
-                        :items="statusItems"
-                        item-text="display"
-                        item-value="value"
-                        label="Status"
-                      ></v-select>
+                      <v-text-field label="Tag" v-model="tag" class="pt-0"></v-text-field>
+                      <v-select v-model="status" :items="statusItems" item-text="display" item-value="value" label="Status"></v-select>
                     </v-flex>
                   </v-layout>
                 </v-container>
@@ -96,18 +55,10 @@
                       </h4>
                     </v-flex>
                     <v-flex xs2>
-                      <v-select
-                        :items="filterData.listItems.amenityCount"
-                        v-model="filterData.values.beds.min"
-                        label="Min"
-                      ></v-select>
+                      <v-select :items="filterData.listItems.amenityCount" v-model="filterData.values.beds.min" label="Min"></v-select>
                     </v-flex>
                     <v-flex xs2>
-                      <v-select
-                        :items="filterData.listItems.amenityCount"
-                        v-model="filterData.values.beds.max"
-                        label="Max"
-                      ></v-select>
+                      <v-select :items="filterData.listItems.amenityCount" v-model="filterData.values.beds.max" label="Max"></v-select>
                     </v-flex>
                     <v-flex xs2 align-self-center>
                       <h4 class="text-xs-right pr-2">
@@ -115,18 +66,10 @@
                       </h4>
                     </v-flex>
                     <v-flex xs2>
-                      <v-select
-                        :items="filterData.listItems.amenityCount"
-                        v-model="filterData.values.baths.min"
-                        label="Min"
-                      ></v-select>
+                      <v-select :items="filterData.listItems.amenityCount" v-model="filterData.values.baths.min" label="Min"></v-select>
                     </v-flex>
                     <v-flex xs2>
-                      <v-select
-                        :items="filterData.listItems.amenityCount"
-                        v-model="filterData.values.baths.max"
-                        label="Max"
-                      ></v-select>
+                      <v-select :items="filterData.listItems.amenityCount" v-model="filterData.values.baths.max" label="Max"></v-select>
                     </v-flex>
                   </v-layout>
                   <v-layout row>
@@ -136,16 +79,10 @@
                       </h4>
                     </v-flex>
                     <v-flex xs2>
-                      <v-text-field
-                        label="Min"
-                        v-model.number="filterData.values.sqft.min"
-                      ></v-text-field>
+                      <v-text-field label="Min" v-model.number="filterData.values.sqft.min"></v-text-field>
                     </v-flex>
                     <v-flex xs2>
-                      <v-text-field
-                        label="Max"
-                        v-model.number="filterData.values.sqft.max"
-                      ></v-text-field>
+                      <v-text-field label="Max" v-model.number="filterData.values.sqft.max"></v-text-field>
                     </v-flex>
                     <v-flex xs2 align-self-center>
                       <h4 class="text-xs-right pr-2">
@@ -153,16 +90,10 @@
                       </h4>
                     </v-flex>
                     <v-flex xs2>
-                      <v-text-field
-                        label="Min"
-                        v-model.number="filterData.values.year_built.min"
-                      ></v-text-field>
+                      <v-text-field label="Min" v-model.number="filterData.values.year_built.min"></v-text-field>
                     </v-flex>
                     <v-flex xs2>
-                      <v-text-field
-                        label="Max"
-                        v-model.number="filterData.values.year_built.max"
-                      ></v-text-field>
+                      <v-text-field label="Max" v-model.number="filterData.values.year_built.max"></v-text-field>
                     </v-flex>
                   </v-layout>
                   <v-layout row>
@@ -172,16 +103,10 @@
                       </h4>
                     </v-flex>
                     <v-flex xs2>
-                      <v-text-field
-                        label="Min"
-                        v-model.number="filterData.values.days_listed.min"
-                      ></v-text-field>
+                      <v-text-field label="Min" v-model.number="filterData.values.days_listed.min"></v-text-field>
                     </v-flex>
                     <v-flex xs2>
-                      <v-text-field
-                        label="Max"
-                        v-model.number="filterData.values.days_listed.max"
-                      ></v-text-field>
+                      <v-text-field label="Max" v-model.number="filterData.values.days_listed.max"></v-text-field>
                     </v-flex>
                     <v-flex xs2 align-self-center>
                       <h4 class="text-xs-right pr-2">
@@ -259,18 +184,10 @@
               <th
                 v-for="header in props.headers"
                 :key="header.text"
-                :class="[
-                  'column sortable',
-                  header.descending ? 'desc' : 'asc',
-                  indexHeaderInStack(header) >= 0 ? 'active' : ''
-                ]"
+                :class="['column sortable', header.descending ? 'desc' : 'asc', indexHeaderInStack(header) >= 0 ? 'active' : '']"
                 @click="changeSort(header)"
               >
-                {{
-                  indexHeaderInStack(header) >= 0
-                    ? indexHeaderInStack(header) + 1
-                    : ""
-                }}
+                {{ indexHeaderInStack(header) >= 0 ? indexHeaderInStack(header) + 1 : "" }}
                 <v-icon small>arrow_upward</v-icon>
 
                 {{ header.text }}
@@ -282,14 +199,11 @@
               @click="props.expanded = !props.expanded"
               v-bind:class="{
                 'yellow lighten-2': props.item.status == statuses.EXPLORE.value,
-                'light-green lighten-2':
-                  props.item.status == statuses.TARGET.value
+                'light-green lighten-2': props.item.status == statuses.TARGET.value
               }"
             >
               <td>
-                <a :href="props.item.zillow_url" target="_blank">{{
-                  props.item.streetPlusZip
-                }}</a>
+                <a :href="props.item.zillow_url" target="_blank">{{ props.item.streetPlusZip }}</a>
               </td>
               <td class="text-xs-right">{{ props.item.beds }}</td>
               <td class="text-xs-right">{{ props.item.baths }}</td>
@@ -304,9 +218,7 @@
                 {{ formatMoney(props.item.zestimate, { precision: 0 }) }}
               </td>
               <td class="text-xs-right">
-                {{
-                  formatNumber(props.item.price_to_zestimate, { precision: 2 })
-                }}
+                {{ formatNumber(props.item.price_to_zestimate, { precision: 2 }) }}
               </td>
               <td class="text-xs-right">
                 {{ props.item.keywords.join(", ") }}
@@ -316,10 +228,7 @@
             </tr>
           </template>
           <template v-slot:expand="props">
-            <ExpandoProperty
-              :property="props.item"
-              v-on:expando-update="expandoUpdateTriggered"
-            ></ExpandoProperty>
+            <ExpandoProperty :property="props.item" v-on:expando-update="expandoUpdateTriggered"></ExpandoProperty>
           </template>
         </v-data-table>
       </v-container>
@@ -376,15 +285,7 @@ export default {
         "imagi",
         "potential"
       ],
-      unwanted_keywords: [
-        "manufactured home",
-        "mobile home",
-        "double wide",
-        "remodeled",
-        "new construction",
-        "auction",
-        "floating"
-      ],
+      unwanted_keywords: ["manufactured home", "mobile home", "double wide", "remodeled", "new construction", "auction", "floating"],
       headers: [
         {
           text: "Address",
@@ -403,10 +304,7 @@ export default {
         { text: "Days Listed", value: "days_listed" },
         { text: "Status", value: "status" }
       ],
-      sortStack: [
-        { text: "Keywords", value: "keywords_count", descending: true },
-        { text: "Days Listed", value: "days_listed", descending: true }
-      ],
+      sortStack: [{ text: "Keywords", value: "keywords_count", descending: true }, { text: "Days Listed", value: "days_listed", descending: true }],
       // sortStack: [{ text: "Status", value: "status", descending: false }],
       pagination: {
         // sortBy: "keywords_count",
@@ -441,12 +339,7 @@ export default {
             max: 2,
             step: 0.05
           },
-          statuses: [
-            statuses.statuses.NEW,
-            statuses.statuses.ACTIVE,
-            statuses.statuses.EXPLORE,
-            statuses.statuses.TARGET
-          ],
+          statuses: [statuses.statuses.NEW, statuses.statuses.ACTIVE, statuses.statuses.EXPLORE, statuses.statuses.TARGET],
           keywords_count: {
             threshold: 1,
             min: 0,
@@ -495,51 +388,33 @@ export default {
 
       for (let i = 0; i < that.unwanted_keywords.length; i++) {
         filteredList = _.filter(filteredList, function(item) {
-          return (
-            item.description.toLowerCase().indexOf(that.unwanted_keywords[i]) ==
-            -1
-          );
+          return item.description.toLowerCase().indexOf(that.unwanted_keywords[i]) == -1;
         });
       }
 
       //beds
       filteredList = _.filter(filteredList, function(item) {
-        return (
-          item.beds >= that.filterData.values.beds.min &&
-          item.beds <= that.filterData.values.beds.max
-        );
+        return item.beds >= that.filterData.values.beds.min && item.beds <= that.filterData.values.beds.max;
       });
 
       //baths
       filteredList = _.filter(filteredList, function(item) {
-        return (
-          item.baths >= that.filterData.values.baths.min &&
-          item.baths <= that.filterData.values.baths.max
-        );
+        return item.baths >= that.filterData.values.baths.min && item.baths <= that.filterData.values.baths.max;
       });
 
       //sqft
       filteredList = _.filter(filteredList, function(item) {
-        return (
-          item.sqft >= that.filterData.values.sqft.min &&
-          item.sqft <= that.filterData.values.sqft.max
-        );
+        return item.sqft >= that.filterData.values.sqft.min && item.sqft <= that.filterData.values.sqft.max;
       });
 
       //year_built
       filteredList = _.filter(filteredList, function(item) {
-        return (
-          item.year_built >= that.filterData.values.year_built.min &&
-          item.year_built <= that.filterData.values.year_built.max
-        );
+        return item.year_built >= that.filterData.values.year_built.min && item.year_built <= that.filterData.values.year_built.max;
       });
 
       //days_listed
       filteredList = _.filter(filteredList, function(item) {
-        return (
-          item.days_listed >= that.filterData.values.days_listed.min &&
-          item.days_listed <= that.filterData.values.days_listed.max
-        );
+        return item.days_listed >= that.filterData.values.days_listed.min && item.days_listed <= that.filterData.values.days_listed.max;
       });
 
       //statuses
@@ -552,17 +427,12 @@ export default {
       });
 
       //set keywords
-      utilities.setKeywordsForList(
-        filteredList,
-        "description",
-        this.search_keywords
-      );
+      utilities.setKeywordsForList(filteredList, "description", this.search_keywords);
 
       //investor filters
       filteredList = _.filter(filteredList, function(item) {
         return (
-          item.price_to_zestimate <=
-            that.filterData.values.price_to_zestimate.threshold &&
+          item.price_to_zestimate <= that.filterData.values.price_to_zestimate.threshold &&
           item.keywords_count >= that.filterData.values.keywords_count.threshold
         );
       });
@@ -625,9 +495,7 @@ export default {
       this.pagination.descending = !this.pagination.descending;
     },
     nextSort() {
-      let index = this.headers.findIndex(
-        h => h.value === this.pagination.sortBy
-      );
+      let index = this.headers.findIndex(h => h.value === this.pagination.sortBy);
       index = (index + 1) % this.headers.length;
       index = index === 0 ? index + 1 : index;
       this.pagination.sortBy = this.headers[index].value;

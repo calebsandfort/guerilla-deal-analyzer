@@ -10,10 +10,7 @@
         >
           <v-list two-line>
             <template v-for="(item, index) in compLog">
-              <v-divider
-                v-if="index != 0"
-                :key="`divider_${item.key}`"
-              ></v-divider>
+              <v-divider v-if="index != 0" :key="`divider_${item.key}`"></v-divider>
               <v-list-tile :key="`tile_${item.key}`">
                 <v-list-tile-content>
                   <v-list-tile-title
@@ -22,9 +19,7 @@
                       color: item.color
                     }"
                   ></v-list-tile-title>
-                  <v-list-tile-sub-title
-                    v-html="item.subTitle"
-                  ></v-list-tile-sub-title>
+                  <v-list-tile-sub-title v-html="item.subTitle"></v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
             </template>

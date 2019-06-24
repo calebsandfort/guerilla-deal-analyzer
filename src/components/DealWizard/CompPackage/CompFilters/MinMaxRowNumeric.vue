@@ -1,20 +1,10 @@
 <template>
   <v-layout row>
     <v-flex xs6>
-      <VuetifyNumeric
-        @input="$emit('update:min', $event.value)"
-        :label="minLabel"
-        :value="min"
-      >
-      </VuetifyNumeric>
+      <VuetifyNumeric @input="$emit('update:min', $event.value)" :label="minLabel" :value="min"> </VuetifyNumeric>
     </v-flex>
     <v-flex xs6>
-      <VuetifyNumeric
-        @input="$emit('update:max', $event.value)"
-        :label="minLabel"
-        :value="max"
-      >
-      </VuetifyNumeric>
+      <VuetifyNumeric @input="$emit('update:max', $event.value)" :label="minLabel" :value="max"> </VuetifyNumeric>
     </v-flex>
   </v-layout>
 </template>

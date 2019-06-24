@@ -3,11 +3,7 @@ import * as entityQuery from "../utilities/entityQuery";
 
 export default {
   Query: {
-    repairEstimateSubSections: async (
-      parent,
-      { offset = 0, limit = 0, order = "idx ASC" },
-      { models }
-    ) => {
+    repairEstimateSubSections: async (parent, { offset = 0, limit = 0, order = "idx ASC" }, { models }) => {
       const params = {};
 
       if (limit > 0) {
@@ -21,11 +17,7 @@ export default {
 
       return await models.RepairEstimateSubSection.findAll(params);
     },
-    repairEstimateSubSectionsQueryable: async (
-      parent,
-      { query },
-      { models }
-    ) => {
+    repairEstimateSubSectionsQueryable: async (parent, { query }, { models }) => {
       const params = entityQuery.entityQueryToSequelize(query);
       return await models.RepairEstimateSubSection.findAll(params);
     },
@@ -39,14 +31,8 @@ export default {
       return await models.RepairEstimateSubSection.create(input);
     },
 
-    updateRepairEstimateSubSection: async (
-      parent,
-      { id, input },
-      { models }
-    ) => {
-      const repairEstimateSubSection = await models.RepairEstimateSubSection.findByPk(
-        id
-      );
+    updateRepairEstimateSubSection: async (parent, { id, input }, { models }) => {
+      const repairEstimateSubSection = await models.RepairEstimateSubSection.findByPk(id);
       return await repairEstimateSubSection.update(input);
     },
 

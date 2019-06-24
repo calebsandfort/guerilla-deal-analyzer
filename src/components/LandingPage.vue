@@ -17,10 +17,11 @@
           </v-flex>
           <v-flex mb-5 xs12>
             <h2 class="headline font-weight-bold mb-3">Sections</h2>
-            <v-layout justify-center>
+            <v-layout justify-center class="nav-links-wrapper">
               <router-link :to="'/comp-assistant'" class="subheading mx-3">Comp Assistant</router-link>
               <router-link :to="'/lead-finder'" class="subheading mx-3">Lead Finder</router-link>
               <router-link :to="'/deal-calculator-finder'" class="subheading mx-3">Deal Calculator</router-link>
+              <router-link :to="'/research'" class="subheading mx-3">Research</router-link>
             </v-layout>
           </v-flex>
         </v-layout>
