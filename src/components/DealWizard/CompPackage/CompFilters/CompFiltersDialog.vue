@@ -101,25 +101,30 @@ export default {
       min: 0
     };
   },
-  // mounted() {
-  //   console.log("***********************");
-  //   console.log(this.localCompFilter.minYearBuilt);
-  //   console.log("***********************");
-  // },
+  mounted() {
+    if (this.showCompFilterDialog) {
+      this.dialog = true;
+    }
+  },
   watch: {
-    dialog: function(val) {
+    dialog: function() {
       this.localCompFilter = Object.assign({}, this.compFilter);
+    },
+    showCompFilterDialog: function(newVal, oldVal) {
+      this.dialog = newVal;
     }
   },
   computed: {
     ...mapState({
       dealWizardStore: state => state.dealWizard,
-      compFilter: state => state.dealWizard.compFilter
+      compFilter: state => state.dealWizard.compFilter,
+      showCompFilterDialog: state => state.dealWizard.showCompFilterDialog
     })
   },
   methods: {
     ...mapMutations({
-      setCompFilter: "dealWizard/setCompFilter"
+      setCompFilter: "dealWizard/setCompFilter",
+      setShowCompFilterDialog: "dealWizard/setShowCompFilterDialog"
     }),
     ...mapActions({
       setField: "dealWizard/setField"
@@ -127,8 +132,11 @@ export default {
     print: function() {
       console.log(this.localCompFilter);
     },
+    cancel: function() {
+      this.showCompFilterDialog(false);
+    },
     apply: function() {
-      this.dialog = false;
+      this.showCompFilterDialog(false);
       this.setCompFilter(this.localCompFilter);
     },
     fieldChangedNumber: _.debounce(function(args) {

@@ -100,7 +100,8 @@ const state = {
     comboLineItems: [],
     rehabLineItems: [],
     roiLineItems: []
-  }
+  },
+  showCompFilterDialog: false
 };
 
 const getters = {};
@@ -213,9 +214,13 @@ export const mutations = {
       }
     );
 
-    if (state.dealAnalysisProxy.setField(pairs)) {
+    if (state.dealAnalysisProxy && state.dealAnalysisProxy.setField(pairs)) {
       state.dealAnalysis = Object.assign({}, state.dealAnalysisProxy.dealAnalysis);
     }
+  },
+
+  setShowCompFilterDialog(state, payload) {
+    state.showCompFilterDialog = payload;
   }
   //endregion
 };
@@ -507,6 +512,8 @@ export const actions = {
         })
       );
       commit("setPullingCompsFromCache", false);
+    } else if (findCompsRequest.useCompCache && state.item.compCacheArray.length == 0) {
+      commit("setShowCompFilterDialog", true);
     } else if (findCompsRequest.scrapeComps) {
       commit("setFindingComps", true);
 

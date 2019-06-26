@@ -19,7 +19,8 @@
     "test:mocha": "mocha --reporter spec --require @babel/register --recursive \"src/**/*.spec.js\"",
     "test:mocha:debug": "mocha --reporter spec --inspect-brk --require @babel/register --recursive \"src/**/*.spec.js\"",
     "test:unit": "vue-cli-service test:unit",
-    "test:all": "npm run test:mocha && npm run test:unit",
+    "test:unit:debug": "node --inspect-brk ./node_modules/.bin/vue-cli-service test:unit --no-cache --runInBand",
+    "test:all": "npm run test:mocha && npm run test:unit --no-cache --runInBand",
     "webpack:backend": "npm run remove:backend && webpack && npm run copy:backend"
   },
   "dependencies": {
@@ -80,6 +81,7 @@
     "vue2-google-maps": "^0.10.6",
     "vuetify": "^1.5.5",
     "vuex": "^3.0.1",
+    "whatwg-fetch": "^3.0.0",
     "x-frame-bypass": "^1.0.2"
   },
   "devDependencies": {
