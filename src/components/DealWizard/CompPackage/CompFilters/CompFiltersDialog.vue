@@ -133,10 +133,10 @@ export default {
       console.log(this.localCompFilter);
     },
     cancel: function() {
-      this.showCompFilterDialog(false);
+      this.setShowCompFilterDialog(false);
     },
     apply: function() {
-      this.showCompFilterDialog(false);
+      this.setShowCompFilterDialog(false);
       this.setCompFilter(this.localCompFilter);
     },
     fieldChangedNumber: _.debounce(function(args) {

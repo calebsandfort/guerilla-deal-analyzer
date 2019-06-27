@@ -491,6 +491,7 @@ export const actions = {
 
   //region Comp Actions
   async findCompsV2({ dispatch, commit, state }, findCompsRequest) {
+    debugger;
     if (findCompsRequest.useCompCache && state.item.compCacheArray.length > 0) {
       commit("setPullingCompsFromCache", true);
       if (state.item.compFilterJson) {
