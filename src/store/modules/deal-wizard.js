@@ -434,15 +434,20 @@ export const actions = {
 
   async findProperty({ dispatch, commit, state }, requestVariables) {
     commit("setFinding", true);
-    const findProperty = await propertyApi.findProperty(apolloClient, requestVariables);
-
-    const findPropertyResponse = findProperty.data.findProperty;
     let property = null;
 
-    if (findPropertyResponse.property != null) {
-      property = findPropertyResponse.property;
+    if (requestVariables.term.indexOf("www.zillow.com") > -1) {
+      property = await scrapeProperty(requestVariables.term);
     } else {
-      property = await scrapeProperty(findPropertyResponse.url);
+      const findProperty = await propertyApi.findProperty(apolloClient, requestVariables);
+
+      const findPropertyResponse = findProperty.data.findProperty;
+
+      if (findPropertyResponse.property != null) {
+        property = findPropertyResponse.property;
+      } else {
+        property = await scrapeProperty(findPropertyResponse.url);
+      }
     }
 
     if (state.debugDealAnalysis) {
@@ -491,7 +496,6 @@ export const actions = {
 
   //region Comp Actions
   async findCompsV2({ dispatch, commit, state }, findCompsRequest) {
-    debugger;
     if (findCompsRequest.useCompCache && state.item.compCacheArray.length > 0) {
       commit("setPullingCompsFromCache", true);
       if (state.item.compFilterJson) {
