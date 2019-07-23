@@ -330,7 +330,7 @@ export default {
     }),
     ...mapActions({
       setField: "dealWizard/setField",
-      findComps: "dealWizard/findCompsV2"
+      findComps: "dealWizard/findCompsV3"
     }),
     formatMoney: formatMoney,
     formatNumber: formatNumber,

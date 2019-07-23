@@ -101,7 +101,8 @@ const state = {
     rehabLineItems: [],
     roiLineItems: []
   },
-  showCompFilterDialog: false
+  showCompFilterDialog: false,
+  showCompAddressBox: false
 };
 
 const getters = {};
@@ -148,6 +149,9 @@ export const mutations = {
   },
   clearCompLog(state) {
     state.compLog = [];
+  },
+  setShowCompAddressBox(state, showCompAddressBox) {
+    state.showCompAddressBox = showCompAddressBox;
   },
   //endregion
 
@@ -426,7 +430,7 @@ export const actions = {
 
       commit("setCompFilter", compFilter);
 
-      await dispatch("findCompsV2", findCompsRequest);
+      await dispatch("findCompsV3", findCompsRequest);
     }
 
     commit("setFinding", false);
@@ -478,7 +482,7 @@ export const actions = {
       findCompsRequest.useCompCache = true;
       findCompsRequest.scrapeComps = false;
 
-      await dispatch("findCompsV2", findCompsRequest);
+      await dispatch("findCompsV3", findCompsRequest);
     }
   },
 
@@ -495,6 +499,267 @@ export const actions = {
   //endregion
 
   //region Comp Actions
+  async findCompsV3({ dispatch, commit, state }, findCompsRequest) {
+    if (findCompsRequest.useCompCache && state.item.compCacheArray.length > 0) {
+      commit("setPullingCompsFromCache", true);
+      if (state.item.compFilterJson) {
+        commit("setCompFilter", JSON.parse(state.item.compFilterJson));
+      }
+
+      const compCacheRequest = propertyApi.getRequestVariables();
+      compCacheRequest.terms = state.item.compCacheArray;
+      compCacheRequest.search_keywords = state.search_keywords;
+      compCacheRequest.coord.latitude = state.item.latitude;
+      compCacheRequest.coord.longitude = state.item.longitude;
+
+      const response = await propertyApi.findProperties(apolloClient, compCacheRequest);
+
+      commit(
+        "setComps",
+        _.map(response.data.findProperties, function(x) {
+          return x.property;
+        })
+      );
+      commit("setPullingCompsFromCache", false);
+    } else if (findCompsRequest.useCompCache && state.item.compCacheArray.length == 0) {
+      commit("setShowCompFilterDialog", true);
+    } else if (findCompsRequest.scrapeComps) {
+      commit("setFindingComps", true);
+
+      commit("addCompLogMessage", {
+        key: uuidv4(),
+        color: colors.indigo.accent4,
+        title: "Initiating comp search",
+        subTitle: "Contacting Zillow..."
+      });
+
+      //region Zillow
+      // const zillowHtml = window.$(window.$(zillowIframe[0]).attr("srcdoc"));
+      //$($(zillowIframe[0]).attr("srcdoc")).find(".list-card-addr").length
+      //$($(zillowIframe[0]).attr("srcdoc")).find(".zsg-pagination-next").length
+
+      let currentPage = 1;
+      let hasMorePages = true;
+      let compAddresses = [];
+
+      const body = window.$("body");
+      const override = true;
+
+      if (override) {
+        commit("addCompLogMessage", {
+          key: uuidv4(),
+          color: colors.indigo.accent4,
+          title: "Click the beloww link to go Zillow and get comp urls:",
+          subTitle: `<a href='${utilities.buildZillowCompUrl(state.item, state.compFilter, currentPage)}' target='blank'>Link</a>`
+        });
+
+        commit("setShowCompAddressBox", true);
+
+        return;
+      }
+
+      while (hasMorePages) {
+        commit("addCompLogMessage", {
+          key: uuidv4(),
+          color: colors.indigo.accent4,
+          title: "Retrieving comp addresses from Zillow",
+          subTitle: `Page ${currentPage}...`
+        });
+
+        let compUrl = utilities.buildZillowCompUrl(state.item, state.compFilter, currentPage);
+
+        const zillowIframe = window.$(
+          "<iframe id='zillowIframe' is='x-frame-bypass' sandbox='allow-same-origin allow-scripts allow-popups allow-forms'></iframe>"
+        );
+
+        zillowIframe.attr("src", compUrl);
+
+        body.append(zillowIframe);
+
+        let foundData = false;
+        let whileCount = 0;
+        let results = [];
+
+        while (!foundData && whileCount < 20) {
+          await utilities.pause(2.5);
+
+          results = window.$(window.$(zillowIframe[0]).attr("srcdoc")).find(".zsg-photo-card-address");
+
+          if (results.length == 0) {
+            results = window.$(window.$(zillowIframe[0]).attr("srcdoc")).find(".list-card-addr");
+          }
+
+          if (results.length > 0) {
+            foundData = true;
+          }
+
+          whileCount += 1;
+        }
+
+        zillowIframe.remove();
+
+        compAddresses = _.concat(
+          compAddresses,
+          _.map(results, function(item) {
+            return window.$(item).html();
+          })
+        );
+
+        const nextPage = window.$(window.$(zillowIframe[0]).attr("srcdoc")).find(".zsg-pagination-next");
+        if (nextPage.length > 0) {
+          currentPage += 1;
+        } else {
+          hasMorePages = false;
+        }
+      }
+
+      commit("addCompLogMessage", {
+        key: uuidv4(),
+        color: colors.indigo.accent4,
+        title: "Completed Zillow comp search",
+        subTitle: `Found ${compAddresses.length} comps`
+      });
+      //endregion
+
+      commit("addCompLogMessage", {
+        key: uuidv4(),
+        color: colors.pink.darken1,
+        title: "Retrieving individual comp info",
+        subTitle: `Contacting Zillow...`
+      });
+
+      const comps = [];
+
+      for (let i = 0; i < compAddresses.length; i++) {
+        commit("addCompLogMessage", {
+          key: uuidv4(),
+          color: colors.pink.darken1,
+          title: `Retrieving comp ${i + 1} of ${compAddresses.length}`,
+          subTitle: `${compAddresses[i]}`
+        });
+
+        const findPropertyRequest = propertyApi.getRequestVariables();
+        findPropertyRequest.term = compAddresses[i];
+        findPropertyRequest.search_keywords = state.search_keywords;
+        findPropertyRequest.tag = `COMP ${state.item.streetAddress}`;
+        findPropertyRequest.status = statuses.statuses.COMP.value;
+        findPropertyRequest.persist = findCompsRequest.persist;
+        findPropertyRequest.coord.latitude = state.item.latitude;
+        findPropertyRequest.coord.longitude = state.item.longitude;
+        const findProperty = await propertyApi.findProperty(apolloClient, findPropertyRequest);
+
+        const findPropertyResponse = findProperty.data.findProperty;
+        let comp = null;
+
+        if (findPropertyResponse.property != null) {
+          comp = findPropertyResponse.property;
+        } else {
+          comp = await scrapeProperty(findPropertyResponse.url, findPropertyRequest);
+        }
+
+        if (
+          comp != null &&
+          _.findIndex(comps, function(c) {
+            return c.id == comp.id;
+          }) == -1
+        ) {
+          comps.push(comp);
+        }
+      }
+
+      commit("setComps", comps);
+      commit("setFindingComps", false);
+      commit("setShowCompAddressBox", false);
+      commit("clearCompLog");
+
+      if (comps.length > 0) {
+        const compCacheUpdateRequest = propertyApi.getRequestVariables();
+        compCacheUpdateRequest.id = parseInt(state.item.id);
+        compCacheUpdateRequest.search_keywords = state.search_keywords;
+        compCacheUpdateRequest.input = {
+          compCache: _.uniq(
+            _.map(comps, function(c) {
+              return c.id;
+            })
+          ).join(","),
+          compFilterJson: JSON.stringify(state.compFilter)
+        };
+
+        dispatch("compCacheUpdate", compCacheUpdateRequest);
+      }
+    }
+  },
+
+  async findCompsFromUrls({ dispatch, commit, state }, urlsString) {
+    commit("addCompLogMessage", {
+      key: uuidv4(),
+      color: colors.pink.darken1,
+      title: "Retrieving individual comp info",
+      subTitle: `Contacting Zillow...`
+    });
+
+    const comps = [];
+    const compAddresses = _.uniq(_.trimEnd(urlsString, ",").split(","));
+
+    for (let i = 0; i < compAddresses.length; i++) {
+      commit("addCompLogMessage", {
+        key: uuidv4(),
+        color: colors.pink.darken1,
+        title: `Retrieving comp ${i + 1} of ${compAddresses.length}`,
+        subTitle: `${compAddresses[i]}`
+      });
+
+      const findPropertyRequest = propertyApi.getRequestVariables();
+      findPropertyRequest.term = compAddresses[i];
+      findPropertyRequest.search_keywords = state.search_keywords;
+      findPropertyRequest.tag = `COMP ${state.item.streetAddress}`;
+      findPropertyRequest.status = statuses.statuses.COMP.value;
+      findPropertyRequest.persist = true;
+      findPropertyRequest.coord.latitude = state.item.latitude;
+      findPropertyRequest.coord.longitude = state.item.longitude;
+      const findProperty = await propertyApi.findProperty(apolloClient, findPropertyRequest);
+
+      const findPropertyResponse = findProperty.data.findProperty;
+      let comp = null;
+
+      if (findPropertyResponse.property != null) {
+        comp = findPropertyResponse.property;
+      } else {
+        comp = await scrapeProperty(findPropertyResponse.url == null ? compAddresses[i] : findPropertyResponse.url, findPropertyRequest);
+      }
+
+      if (
+        comp != null &&
+        _.findIndex(comps, function(c) {
+          return c.id == comp.id;
+        }) == -1
+      ) {
+        comps.push(comp);
+      }
+    }
+
+    commit("setComps", comps);
+    commit("setFindingComps", false);
+    commit("setShowCompAddressBox", false);
+    commit("clearCompLog");
+
+    if (comps.length > 0) {
+      const compCacheUpdateRequest = propertyApi.getRequestVariables();
+      compCacheUpdateRequest.id = parseInt(state.item.id);
+      compCacheUpdateRequest.search_keywords = state.search_keywords;
+      compCacheUpdateRequest.input = {
+        compCache: _.uniq(
+          _.map(comps, function(c) {
+            return c.id;
+          })
+        ).join(","),
+        compFilterJson: JSON.stringify(state.compFilter)
+      };
+
+      dispatch("compCacheUpdate", compCacheUpdateRequest);
+    }
+  },
+
   async findCompsV2({ dispatch, commit, state }, findCompsRequest) {
     if (findCompsRequest.useCompCache && state.item.compCacheArray.length > 0) {
       commit("setPullingCompsFromCache", true);
@@ -562,7 +827,7 @@ export const actions = {
         let whileCount = 0;
         let results = [];
 
-        while (!foundData && whileCount < 10) {
+        while (!foundData && whileCount < 20) {
           await utilities.pause(2.5);
 
           results = window.$(window.$(zillowIframe[0]).attr("srcdoc")).find(".zsg-photo-card-address");

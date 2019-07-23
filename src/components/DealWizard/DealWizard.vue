@@ -64,6 +64,21 @@
                   </v-container>
                   <CompLog v-else-if="dealWizardStore.finding || dealWizardStore.findingComps"></CompLog>
                   <CompPackage v-else></CompPackage>
+
+                  <v-container v-if="dealWizardStore.showCompAddressBox" fluid grid-list-lg class="py-0">
+                    <v-layout row>
+                      <v-flex xs12>
+                        <v-textarea v-model="urlsString" outline label="Comp URLs" class="hide-text-field-details"></v-textarea>
+                      </v-flex>
+                    </v-layout>
+                    <v-layout row>
+                      <v-flex xs12>
+                        <div class="text-xs-center">
+                          <v-btn color="success" @click="findCompsFromUrlsClick">Find</v-btn>
+                        </div>
+                      </v-flex>
+                    </v-layout>
+                  </v-container>
                 </v-tab-item>
                 <v-tab-item :key="2">
                   <RepairEstimator></RepairEstimator>
@@ -116,7 +131,8 @@ export default {
       // address: "2032 n Schofield",
       activeGalleryRef: "",
       engagements: engagements,
-      tabIndex: null
+      tabIndex: null,
+      urlsString: ""
     };
   },
   computed: {
@@ -160,7 +176,8 @@ export default {
       findProperty: "dealWizard/findProperty",
       reconcileDealAnalysis: "dealWizard/reconcileDealAnalysis",
       crunchVariableDeals: "dealWizard/crunchVariableDeals",
-      setField: "dealWizard/setField"
+      setField: "dealWizard/setField",
+      findCompsFromUrls: "dealWizard/findCompsFromUrls"
     }),
     // ...mapMutations({
     // }),
@@ -183,6 +200,9 @@ export default {
     showGallery: function(args) {
       this.activeGalleryRef = args.ref;
       this.$refs.propertyGallery.open(args);
+    },
+    findCompsFromUrlsClick: function() {
+      this.findCompsFromUrls(this.urlsString);
     }
   }
 };
