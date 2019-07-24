@@ -11,7 +11,7 @@ describe("property api", () => {
   });
 
   beforeEach(function() {
-    this.timeout(2000);
+    this.timeout(5000);
   });
 
   // it("returns finds a list of properties", async () => {
@@ -39,5 +39,28 @@ describe("property api", () => {
   //   return propertyApi
   //     .findComps(client, requestVariables)
   //     .then(function(response) {});
+  // });
+
+  it("returns a property", async () => {
+    const expectedResult = 2;
+
+    const requestVariables = propertyApi.getRequestVariables();
+    // requestVariables.term = "https://www.zillow.com/homedetails/2124-SE-54th-Ave-Portland-OR-97215/53874539_zpid/";
+    requestVariables.term = "2329 SE 58th Ave";
+
+    const result = await propertyApi.findProperty(client, requestVariables);
+
+    console.log(result.data.findProperty);
+
+    expect(result.data.findProperty).to.not.eql(null);
+  });
+
+  // it("it finds comps for the given property", function() {
+  //   this.timeout(10 * 60 * 1000);
+  //
+  //   const requestVariables = propertyApi.getRequestVariables();
+  //   requestVariables.id = 15;
+  //
+  //   return propertyApi.findComps(client, requestVariables).then(function(response) {});
   // });
 });

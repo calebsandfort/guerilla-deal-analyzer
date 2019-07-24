@@ -299,9 +299,19 @@ const findPropertyHelper = async (term, models, tag, status = statuses.statuses.
       term
     });
 
+    let zpid = 0;
+    const urlSplit = term.split("/");
+    const zpidFragment = _.find(urlSplit, function(x) {
+      return x.indexOf("_zpid") > -1;
+    });
+
+    if (zpidFragment != null) {
+      zpid = parseInt(zpidFragment.replace("_zpid", ""));
+    }
+
     response.property = await models.Property.findOne({
       where: {
-        [Sequelize.Op.or]: [{ zillow_path: term }, { streetAddress: term }, { address: term }]
+        [Sequelize.Op.or]: [{ zillow_path: term }, { streetAddress: term }, { address: term }, { zillow_propertyId: zpid }]
       }
     });
 
@@ -314,7 +324,7 @@ const findPropertyHelper = async (term, models, tag, status = statuses.statuses.
 
       response.property = await models.Property.findOne({
         where: {
-          [Sequelize.Op.or]: [{ zillow_url: zillowUrl + "?fullpage=true" }, { zillow_url: zillowUrl }, { address: term }]
+          [Sequelize.Op.or]: [{ zillow_url: zillowUrl + "?fullpage=true" }, { zillow_url: zillowUrl }, { address: term }, { zillow_propertyId: zpid }]
         }
       });
 
