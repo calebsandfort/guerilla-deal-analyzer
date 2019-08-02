@@ -1,6 +1,7 @@
 import Sequelize from "sequelize";
 import * as entityQuery from "../utilities/entityQuery";
 import * as zillowScraper from "../services/scrape/zillow-scraper";
+import * as multcoproptaxScraper from "../services/scrape/multcoproptax-scraper";
 import _ from "lodash";
 import moment from "moment";
 import * as statuses from "../enums/statuses";
@@ -147,6 +148,13 @@ const findComps = async (parent, { id, term, tag, status = statuses.statuses.ACT
 };
 //endregion
 
+//region getInfoUrls
+const getInfoUrls = async (parent, { address }, { models }) => {
+  const infoUrls = await multcoproptaxScraper.scrape(address);
+  return infoUrls;
+};
+//endregion
+
 const encodeImage = async (parent, { image_url }, { models }) => {
   if (image_url == "") {
     return "";
@@ -174,7 +182,8 @@ export default {
     findProperties,
     findComps,
     findCompAddresses,
-    encodeImage
+    encodeImage,
+    getInfoUrls
   },
 
   Mutation: {

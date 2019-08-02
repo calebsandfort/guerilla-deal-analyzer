@@ -25,7 +25,7 @@
           <v-flex xs4 v-show="tabIndex != 3">
             <v-layout v-if="property" row>
               <v-flex xs12>
-                <PropertyDetails ref="mainPropertyDetails" v-on:show-gallery="showGallery"></PropertyDetails>
+                <PropertyDetails ref="mainPropertyDetails" v-on:show-gallery="showGallery" :main-property="true"></PropertyDetails>
               </v-flex>
             </v-layout>
             <v-layout row v-if="dealWizardStore.spotlightItem">
@@ -127,7 +127,7 @@ export default {
   },
   data() {
     return {
-      address: "1203 SE Malden St",
+      address: "1240 SW Cardinell Way",
       // address: "2032 n Schofield",
       activeGalleryRef: "",
       engagements: engagements,
@@ -184,6 +184,7 @@ export default {
     findPropertyClick: function() {
       const request = propertyRequest();
       request.term = this.address;
+      request.findAdditionalInfo = true;
 
       this.findProperty(request);
     },

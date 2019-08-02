@@ -28,6 +28,18 @@ const property = (sequelize, DataTypes) => {
           notEmpty: true
         }
       },
+      multcoproptax_url: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        length: 100,
+        defaultValue: "https://multcoproptax.com/Property-Search"
+      },
+      portlandmaps_url: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        length: 100,
+        defaultValue: "https://www.portlandmaps.com"
+      },
       streetAddress: {
         type: DataTypes.STRING,
         allowNull: false,

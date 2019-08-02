@@ -10,6 +10,7 @@ export default gql`
     findComps(id: ID, term: String, tag: String, status: Int, persist: Boolean, compFilter: CompFilter, useCompCache: Boolean): [Property]
     findCompAddresses(id: ID!, compFilter: CompFilter!): [String]
     encodeImage(image_url: String): String
+    getInfoUrls(address: String!): InfoUrlsResponse
   }
   extend type Mutation {
     createProperty(input: PropertyInput!): Property!
@@ -23,11 +24,18 @@ export default gql`
     url: String
   }
 
+  type InfoUrlsResponse {
+    multcoproptax_url: String
+    portlandmaps_url: String
+  }
+
   type Property {
     id: ID!
     zillow_propertyId: Int!
     zillow_path: String!
     zillow_url: String!
+    multcoproptax_url: String
+    portlandmaps_url: String
     streetAddress: String!
     city: String!
     state: String!
@@ -75,6 +83,8 @@ export default gql`
     zillow_propertyId: Int!
     zillow_path: String!
     zillow_url: String!
+    multcoproptax_url: String
+    portlandmaps_url: String
     streetAddress: String!
     city: String!
     state: String!

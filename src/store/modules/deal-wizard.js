@@ -229,7 +229,71 @@ export const mutations = {
   //endregion
 };
 
-const scrapeProperty = async (url, req) => {
+const getAdditionalInfo = async address => {
+  const body = window.$("body");
+  const url = "https://multcoproptax.com/Property-Search";
+  const multcoproptaxIframe = window.$(
+    "<iframe id='multcoproptaxIframe' is='x-frame-bypass' sandbox='allow-same-origin allow-scripts allow-popups allow-forms'></iframe>"
+  );
+  multcoproptaxIframe.attr("src", url);
+
+  body.append(multcoproptaxIframe);
+
+  var script = "function () { alert('test') };";
+  window
+    .$(multcoproptaxIframe[0])
+    .find("body")
+    .append(window.$("<script>").html(script));
+
+  let foundData = false;
+  let whileCount = 0;
+
+  while (!foundData && whileCount < 10) {
+    await utilities.pause(2.5);
+
+    if (window.$(window.$(multcoproptaxIframe[0]).attr("srcdoc")).find("#dnn_ctr410_MultnomahGuestView_SearchTextBox").length > 0) {
+      foundData = true;
+    }
+
+    whileCount += 1;
+  }
+
+  debugger;
+
+  if (foundData) {
+    window
+      .$(window.$(multcoproptaxIframe[0]).attr("srcdoc"))
+      .find("#dnn_ctr410_MultnomahGuestView_SearchTextBox")
+      .val(address);
+
+    window
+      .$(window.$(multcoproptaxIframe[0]).attr("srcdoc"))
+      .find("#SearchButtonDiv")
+      .trigger("click");
+
+    foundData = false;
+    whileCount = 0;
+
+    while (!foundData && whileCount < 10) {
+      await utilities.pause(2.5);
+
+      if (window.$(window.$(multcoproptaxIframe[0]).attr("srcdoc")).find("#grid .k-selectable > tbody > tr").length > 0) {
+        foundData = true;
+      }
+
+      whileCount += 1;
+    }
+  }
+
+  console.log(window.$(multcoproptaxIframe[0]).attr("srcdoc"));
+
+  console.log(foundData);
+
+  // const zillowHtml = window.$(window.$(zillowIframe[0]).attr("srcdoc"));
+  multcoproptaxIframe.remove();
+};
+
+const scrapeProperty = async (url, getInfoUrls, req) => {
   const body = window.$("body");
   const zillowIframe = window.$("<iframe id='zillowIframe' is='x-frame-bypass' sandbox='allow-same-origin allow-scripts allow-popups allow-forms'></iframe>");
 
@@ -282,8 +346,19 @@ const scrapeProperty = async (url, req) => {
       property.zillow_propertyId = parseInt(zillowData.zpid);
       property.zillow_path = zillowData.hdpUrl;
       property.zillow_url = "https://www.zillow.com" + property.zillow_path + "?fullpage=true";
-
       property.streetAddress = zillowData.streetAddress;
+
+      if (getInfoUrls) {
+        const getInfoUrlsRequest = propertyApi.getRequestVariables();
+        getInfoUrlsRequest.address = property.streetAddress;
+
+        const getInfoUrlsResponse = await propertyApi.getInfoUrls(apolloClient, getInfoUrlsRequest);
+        const getInfoUrls = getInfoUrlsResponse.data.getInfoUrls;
+
+        property.multcoproptax_url = getInfoUrls.multcoproptax_url;
+        property.portlandmaps_url = getInfoUrls.portlandmaps_url;
+      }
+
       property.city = zillowData.city;
       property.state = zillowData.state;
       property.zipcode = zillowData.zipcode;
@@ -441,7 +516,7 @@ export const actions = {
     let property = null;
 
     if (requestVariables.term.indexOf("www.zillow.com") > -1) {
-      property = await scrapeProperty(requestVariables.term);
+      property = await scrapeProperty(requestVariables.term, true);
     } else {
       const findProperty = await propertyApi.findProperty(apolloClient, requestVariables);
 
@@ -450,13 +525,17 @@ export const actions = {
       if (findPropertyResponse.property != null) {
         property = findPropertyResponse.property;
       } else {
-        property = await scrapeProperty(findPropertyResponse.url);
+        property = await scrapeProperty(findPropertyResponse.url, true);
       }
     }
 
     if (state.debugDealAnalysis) {
       property.propertyTaxesAnnually = 3500;
       property.insuranceAnnually = 600;
+    }
+
+    if (requestVariables.findAdditionalInfo) {
+      //await getAdditionalInfo(property.streetAddress);
     }
 
     commit("setItem", property);
@@ -654,7 +733,7 @@ export const actions = {
         if (findPropertyResponse.property != null) {
           comp = findPropertyResponse.property;
         } else {
-          comp = await scrapeProperty(findPropertyResponse.url, findPropertyRequest);
+          comp = await scrapeProperty(findPropertyResponse.url, false, findPropertyRequest);
         }
 
         if (
@@ -725,7 +804,7 @@ export const actions = {
       if (findPropertyResponse.property != null) {
         comp = findPropertyResponse.property;
       } else {
-        comp = await scrapeProperty(findPropertyResponse.url == null ? compAddresses[i] : findPropertyResponse.url, findPropertyRequest);
+        comp = await scrapeProperty(findPropertyResponse.url == null ? compAddresses[i] : findPropertyResponse.url, false, findPropertyRequest);
       }
 
       if (
@@ -901,7 +980,7 @@ export const actions = {
         if (findPropertyResponse.property != null) {
           comp = findPropertyResponse.property;
         } else {
-          comp = await scrapeProperty(findPropertyResponse.url, findPropertyRequest);
+          comp = await scrapeProperty(findPropertyResponse.url, false, findPropertyRequest);
         }
 
         if (
@@ -972,7 +1051,7 @@ export const actions = {
         if (findPropertyResponse.property != null) {
           comp = findPropertyResponse.property;
         } else {
-          comp = await scrapeProperty(findPropertyResponse.url);
+          comp = await scrapeProperty(findPropertyResponse.url, false);
         }
 
         commit("pushComp", comp);

@@ -78,12 +78,28 @@
                   {{ formatNumber(property.price_to_zestimate, { precision: 2 }) }}
                 </v-flex>
               </v-layout>
-              <v-layout row wrap>
+              <v-layout v-if="!mainProperty" row wrap>
                 <v-flex xs3 class="font-weight-medium">
                   Keywords
                 </v-flex>
                 <v-flex xs9>
                   {{ property.keywords.join(", ") }}
+                </v-flex>
+              </v-layout>
+              <v-layout v-if="mainProperty" row wrap>
+                <v-flex xs3 class="font-weight-medium">
+                  Links
+                </v-flex>
+                <v-flex xs9>
+                  <v-icon title="Zillow" class="pr-2" style="cursor: pointer;" color="purple darken-2" @click="openInfoUrl(property.zillow_url)"
+                    >open_in_new</v-icon
+                  >
+                  <!--                  <v-icon title="MultcoPropTax" class="pr-2" style="cursor: pointer;" color="green darken-2" @click="openInfoUrl(property.multcoproptax_url)"-->
+                  <!--                    >local_atm</v-icon-->
+                  <!--                  >-->
+                  <v-icon title="PortlandMaps" class="pr-2" style="cursor: pointer;" color="blue darken-2" @click="openInfoUrl(property.portlandmaps_url)"
+                    >map</v-icon
+                  >
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -119,6 +135,10 @@ export default {
     engagement: {
       type: Number,
       default: engagements.engagements.ANALYSIS.value
+    },
+    mainProperty: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -150,6 +170,10 @@ export default {
     },
     setLastIndex: function(lastIndex) {
       this.lastIndex = lastIndex;
+    },
+    openInfoUrl: function(infoUrl) {
+      console.log(infoUrl);
+      window.open(infoUrl);
     }
     // slideEnd: function({ index }) {
     //   this.lastIndex = index;

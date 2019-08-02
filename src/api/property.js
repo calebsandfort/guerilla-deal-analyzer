@@ -10,6 +10,8 @@ export const fragments = {
       zillow_propertyId
       zillow_path
       zillow_url
+      multcoproptax_url
+      portlandmaps_url
       streetAddress
       city
       state
@@ -57,6 +59,8 @@ export const fragments = {
         zillow_propertyId
         zillow_path
         zillow_url
+        multcoproptax_url
+        portlandmaps_url
         streetAddress
         city
         state
@@ -97,6 +101,12 @@ export const fragments = {
         insuranceMonthly
       }
       url
+    }
+  `,
+  infoUrlsResponse: gql`
+    fragment SimpleInfoUrlsResponse on InfoUrlsResponse {
+      multcoproptax_url
+      portlandmaps_url
     }
   `
 };
@@ -177,6 +187,15 @@ const ENCODE_IMAGE = gql`
   }
 `;
 
+const GET_INFO_URLS = gql`
+  query($address: String!) {
+    getInfoUrls(address: $address) {
+      ...SimpleInfoUrlsResponse
+    }
+  }
+  ${fragments.infoUrlsResponse}
+`;
+
 const CREATE = gql`
   mutation($input: PropertyInput!, $coord: CoordInput, $search_keywords: [String]) {
     createProperty(input: $input) {
@@ -224,6 +243,7 @@ export const getRequestVariables = () => {
     id: 0,
     term: "",
     terms: "",
+    address: "",
     search_keywords: [],
     query: null,
     input: {},
@@ -239,7 +259,8 @@ export const getRequestVariables = () => {
     compFilter: utilities.defaultCompFilter(),
     useCompCache: true,
     image_url: "",
-    scrapeComps: true
+    scrapeComps: true,
+    findAdditionalInfo: false
   };
 };
 
@@ -303,6 +324,14 @@ export const encodeImage = async (client, variables) =>
   client
     .query({
       query: ENCODE_IMAGE,
+      variables: variables
+    })
+    .catch(errorHandler);
+
+export const getInfoUrls = async (client, variables) =>
+  client
+    .query({
+      query: GET_INFO_URLS,
       variables: variables
     })
     .catch(errorHandler);
