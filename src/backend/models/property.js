@@ -228,12 +228,12 @@ const property = (sequelize, DataTypes) => {
       improvementsJson: {
         type: DataTypes.TEXT,
         allowNull: false,
-        defaultValue: '"[]"'
+        defaultValue: "[]"
       },
       permitsJson: {
         type: DataTypes.TEXT,
         allowNull: false,
-        defaultValue: '"[]"'
+        defaultValue: "[]"
       }
     },
     {

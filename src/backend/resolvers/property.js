@@ -275,12 +275,15 @@ export default {
       return [];
     },
     improvements: property => {
+      if (property.improvementsJson == 0 || property.improvementsJson == '"[]"') return [];
       return JSON.parse(property.improvementsJson);
     },
     permits: property => {
+      if (property.permitsJson == 0 || property.permitsJson == '"[]"') return [];
       return JSON.parse(property.permitsJson);
     },
     finishedSqft: property => {
+      if (property.improvementsJson == 0 || property.improvementsJson == '"[]"') return -1;
       let retVal = 0;
       const list = JSON.parse(property.improvementsJson);
 
@@ -298,6 +301,7 @@ export default {
       return retVal;
     },
     unfinishedSqft: property => {
+      if (property.improvementsJson == 0 || property.improvementsJson == '"[]"') return -1;
       let retVal = 0;
       const list = JSON.parse(property.improvementsJson);
 
