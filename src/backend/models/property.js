@@ -224,6 +224,16 @@ const property = (sequelize, DataTypes) => {
         type: DataTypes.FLOAT,
         allowNull: false,
         defaultValue: 0
+      },
+      improvementsJson: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        defaultValue: '"[]"'
+      },
+      permitsJson: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        defaultValue: '"[]"'
       }
     },
     {

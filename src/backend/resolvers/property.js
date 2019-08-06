@@ -273,6 +273,46 @@ export default {
       }
 
       return [];
+    },
+    improvements: property => {
+      return JSON.parse(property.improvementsJson);
+    },
+    permits: property => {
+      return JSON.parse(property.permitsJson);
+    },
+    finishedSqft: property => {
+      let retVal = 0;
+      const list = JSON.parse(property.improvementsJson);
+
+      if (list.length > 0) {
+        retVal = _.chain(list)
+          .filter(function(x) {
+            return x.segmentType == "MAIN" || x.segmentType.startsWith("FIN");
+          })
+          .sumBy(function(x) {
+            return x.sqft;
+          })
+          .value();
+      }
+
+      return retVal;
+    },
+    unfinishedSqft: property => {
+      let retVal = 0;
+      const list = JSON.parse(property.improvementsJson);
+
+      if (list.length > 0) {
+        retVal = _.chain(list)
+          .filter(function(x) {
+            return x.segmentType.startsWith("UNF");
+          })
+          .sumBy(function(x) {
+            return x.sqft;
+          })
+          .value();
+      }
+
+      return retVal;
     }
   }
 };

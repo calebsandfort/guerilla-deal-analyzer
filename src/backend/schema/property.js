@@ -27,6 +27,8 @@ export default gql`
   type InfoUrlsResponse {
     multcoproptax_url: String
     portlandmaps_url: String
+    improvementsJson: String
+    permitsJson: String
   }
 
   type Property {
@@ -78,6 +80,27 @@ export default gql`
     propertyTaxesMonthly: Float
     insuranceAnnually: Float
     insuranceMonthly: Float
+    improvementsJson: String
+    permitsJson: String
+    improvements: [Improvement]
+    permits: [Permit]
+    finishedSqft: Int
+    unfinishedSqft: Int
+  }
+  type Improvement {
+    key: String!
+    segmentType: String!
+    sqft: Int!
+  }
+  type Permit {
+    key: String!
+    application: PermitApplication!
+    permitType: String!
+    updated: String!
+  }
+  type PermitApplication {
+    number: String!
+    href: String!
   }
   input PropertyInput {
     zillow_propertyId: Int!
@@ -112,6 +135,8 @@ export default gql`
     propertyTaxesMonthly: Float
     insuranceAnnually: Float
     insuranceMonthly: Float
+    improvementsJson: String
+    permitsJson: String
   }
   input ExpandoPropertyUpdateInput {
     notes: String

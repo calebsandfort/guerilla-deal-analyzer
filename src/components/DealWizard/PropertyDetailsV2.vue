@@ -40,6 +40,18 @@
               </v-layout>
               <v-layout row wrap>
                 <v-flex xs3 class="font-weight-medium">
+                  FIN sqft
+                </v-flex>
+                <v-flex xs3>
+                  {{ formatNumber(property.finishedSqft, { precision: 0 }) }}
+                </v-flex>
+                <v-flex xs3 class="font-weight-medium">UNF sqft</v-flex>
+                <v-flex xs3>
+                  {{ formatNumber(property.unfinishedSqft, { precision: 0 }) }}
+                </v-flex>
+              </v-layout>
+              <v-layout row wrap>
+                <v-flex xs3 class="font-weight-medium">
                   Beds
                 </v-flex>
                 <v-flex xs3>
@@ -94,12 +106,11 @@
                   <v-icon title="Zillow" class="pr-2" style="cursor: pointer;" color="purple darken-2" @click="openInfoUrl(property.zillow_url)"
                     >open_in_new</v-icon
                   >
-                  <!--                  <v-icon title="MultcoPropTax" class="pr-2" style="cursor: pointer;" color="green darken-2" @click="openInfoUrl(property.multcoproptax_url)"-->
-                  <!--                    >local_atm</v-icon-->
+                  <improvements-dialog></improvements-dialog>
+                  <permits-dialog></permits-dialog>
+                  <!--                  <v-icon title="PortlandMaps" class="pr-2" style="cursor: pointer;" color="blue darken-2" @click="openInfoUrl(property.portlandmaps_url)"-->
+                  <!--                    >map</v-icon-->
                   <!--                  >-->
-                  <v-icon title="PortlandMaps" class="pr-2" style="cursor: pointer;" color="blue darken-2" @click="openInfoUrl(property.portlandmaps_url)"
-                    >map</v-icon
-                  >
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -121,10 +132,14 @@ import { mapState, mapActions } from "vuex";
 import formatMoney from "accounting-js/lib/formatMoney";
 import formatNumber from "accounting-js/lib/formatNumber";
 import * as engagements from "../../backend/enums/engagements";
+import ImprovementsDialog from "./CompPackage/ImprovementsDialog";
+import PermitsDialog from "./CompPackage/PermitsDialog";
 
 export default {
   name: "PropertyDetailsV2",
   components: {
+    ImprovementsDialog,
+    PermitsDialog
     // gallery: VueGallery
   },
   props: {

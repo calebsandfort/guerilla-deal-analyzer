@@ -1,6 +1,7 @@
 import { expect, use } from "chai";
 import chaiExclude from "chai-exclude";
 import * as multcoproptaxScraper from "./multcoproptax-scraper";
+import _ from "lodash";
 
 use(chaiExclude);
 
@@ -12,12 +13,14 @@ describe("multcoproptax-scraper", () => {
     this.timeout(10 * 60 * 1000);
 
     const expectedResult = {
-      multcoproptax: "https://multcoproptax.com/Property-Detail/PropertyQuickRefID/R134214/PartyQuickRefID/O1154676",
-      portlandmaps: "https://www.portlandmaps.com/detail/property/1203-SE-MALDEN-ST/R134214_did/"
+      multcoproptax_url: "https://multcoproptax.com/Property-Detail/PropertyQuickRefID/R134214/PartyQuickRefID/O1154676",
+      portlandmaps_url: "https://www.portlandmaps.com/detail/property/1203-SE-MALDEN-ST/R134214_did/"
     };
 
     return multcoproptaxScraper.scrape(ADDRESS).then(function(response) {
-      expect(response).to.eql(expectedResult);
+      expect(response)
+        .excluding(["improvements", "improvementsJson", "permits", "permitsJson"])
+        .to.eql(expectedResult);
     });
   });
 });

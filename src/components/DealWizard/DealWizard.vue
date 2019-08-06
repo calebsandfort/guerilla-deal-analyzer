@@ -127,7 +127,7 @@ export default {
   },
   data() {
     return {
-      address: "1240 SW Cardinell Way",
+      address: "1210 SE 51st",
       // address: "2032 n Schofield",
       activeGalleryRef: "",
       engagements: engagements,

@@ -357,6 +357,8 @@ const scrapeProperty = async (url, getInfoUrls, req) => {
 
         property.multcoproptax_url = getInfoUrls.multcoproptax_url;
         property.portlandmaps_url = getInfoUrls.portlandmaps_url;
+        property.improvementsJson = getInfoUrls.improvementsJson;
+        property.permitsJson = getInfoUrls.permitsJson;
       }
 
       property.city = zillowData.city;

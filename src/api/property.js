@@ -50,6 +50,16 @@ export const fragments = {
       propertyTaxesMonthly
       insuranceAnnually
       insuranceMonthly
+      improvementsJson
+      permitsJson
+      improvements {
+        ...SimpleImprovement
+      }
+      permits {
+        ...SimplePermit
+      }
+      finishedSqft
+      unfinishedSqft
     }
   `,
   findPropertyResponse: gql`
@@ -99,6 +109,16 @@ export const fragments = {
         propertyTaxesMonthly
         insuranceAnnually
         insuranceMonthly
+        improvementsJson
+        permitsJson
+        improvements {
+          ...SimpleImprovement
+        }
+        permits {
+          ...SimplePermit
+        }
+        finishedSqft
+        unfinishedSqft
       }
       url
     }
@@ -107,6 +127,31 @@ export const fragments = {
     fragment SimpleInfoUrlsResponse on InfoUrlsResponse {
       multcoproptax_url
       portlandmaps_url
+      improvementsJson
+      permitsJson
+    }
+  `,
+  simpleImprovement: gql`
+    fragment SimpleImprovement on Improvement {
+      key
+      segmentType
+      sqft
+    }
+  `,
+  simplePermitApplication: gql`
+    fragment SimplePermitApplication on PermitApplication {
+      number
+      href
+    }
+  `,
+  simplePermit: gql`
+    fragment SimplePermit on Permit {
+      key
+      application {
+        ...SimplePermitApplication
+      }
+      permitType
+      updated
     }
   `
 };
@@ -118,6 +163,9 @@ const GET = gql`
     }
   }
   ${fragments.simple}
+  ${fragments.simpleImprovement}
+  ${fragments.simplePermit}
+  ${fragments.simplePermitApplication}
 `;
 
 const GET_ALL = gql`
@@ -127,6 +175,9 @@ const GET_ALL = gql`
     }
   }
   ${fragments.simple}
+  ${fragments.simpleImprovement}
+  ${fragments.simplePermit}
+  ${fragments.simplePermitApplication}
 `;
 
 const GET_ALL_QUERYABLE = gql`
@@ -136,6 +187,9 @@ const GET_ALL_QUERYABLE = gql`
     }
   }
   ${fragments.simple}
+  ${fragments.simpleImprovement}
+  ${fragments.simplePermit}
+  ${fragments.simplePermitApplication}
 `;
 
 const FIND_PROPERTY = gql`
@@ -145,6 +199,9 @@ const FIND_PROPERTY = gql`
     }
   }
   ${fragments.findPropertyResponse}
+  ${fragments.simpleImprovement}
+  ${fragments.simplePermit}
+  ${fragments.simplePermitApplication}
 `;
 
 const FIND_PROPERTIES = gql`
@@ -154,6 +211,9 @@ const FIND_PROPERTIES = gql`
     }
   }
   ${fragments.findPropertyResponse}
+  ${fragments.simpleImprovement}
+  ${fragments.simplePermit}
+  ${fragments.simplePermitApplication}
 `;
 
 const FIND_COMPS = gql`
@@ -173,6 +233,9 @@ const FIND_COMPS = gql`
     }
   }
   ${fragments.simple}
+  ${fragments.simpleImprovement}
+  ${fragments.simplePermit}
+  ${fragments.simplePermitApplication}
 `;
 
 const FIND_COMP_ADDRESSES = gql`
@@ -203,6 +266,9 @@ const CREATE = gql`
     }
   }
   ${fragments.simple}
+  ${fragments.simpleImprovement}
+  ${fragments.simplePermit}
+  ${fragments.simplePermitApplication}
 `;
 
 const UPDATE = gql`
@@ -212,6 +278,9 @@ const UPDATE = gql`
     }
   }
   ${fragments.simple}
+  ${fragments.simpleImprovement}
+  ${fragments.simplePermit}
+  ${fragments.simplePermitApplication}
 `;
 
 const EXPANDO_UPDATE = gql`
@@ -221,6 +290,9 @@ const EXPANDO_UPDATE = gql`
     }
   }
   ${fragments.simple}
+  ${fragments.simpleImprovement}
+  ${fragments.simplePermit}
+  ${fragments.simplePermitApplication}
 `;
 
 const COMP_CACHE_UPDATE = gql`
@@ -230,6 +302,9 @@ const COMP_CACHE_UPDATE = gql`
     }
   }
   ${fragments.simple}
+  ${fragments.simpleImprovement}
+  ${fragments.simplePermit}
+  ${fragments.simplePermitApplication}
 `;
 
 const DELETE = gql`
