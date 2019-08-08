@@ -2,7 +2,7 @@
   <div class="d-inline-block">
     <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ on }">
-        <v-icon title="Improvements" class="pr-2" style="cursor: pointer;" color="green darken-2" v-on="on">local_atm</v-icon>
+        <v-icon title="Improvements" class="pr-2" style="cursor: pointer;" color="green darken-2" v-on="on">settings_ethernet</v-icon>
       </template>
       <v-card>
         <v-card-title class="headline primary py-3 white--text">

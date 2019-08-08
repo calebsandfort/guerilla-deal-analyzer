@@ -100,7 +100,7 @@
               </v-layout>
               <v-layout v-if="mainProperty" row wrap>
                 <v-flex xs3 class="font-weight-medium">
-                  Links
+                  More Info
                 </v-flex>
                 <v-flex xs9>
                   <v-icon title="Zillow" class="pr-2" style="cursor: pointer;" color="purple darken-2" @click="openInfoUrl(property.zillow_url)"

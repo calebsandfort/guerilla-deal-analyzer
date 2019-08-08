@@ -23,7 +23,11 @@
             :key="comp.id"
             v-for="comp in filteredComps"
             :position="{ lat: comp.latitude, lng: comp.longitude }"
-            :icon="`http://maps.google.com/mapfiles/ms/icons/${engagements.getMarkerColor(comp.engagement)}-dot.png`"
+            :icon="
+              `http://maps.google.com/mapfiles/ms/icons/${
+                comp.id == property.id ? engagements.getMarkerColor(engagements.engagements.ANALYSIS.value) : engagements.getMarkerColor(comp.engagement)
+              }-dot.png`
+            "
             :clickable="true"
             @click="compClicked(comp.id)"
             @mouseover="compMouseover(comp.id)"
@@ -230,7 +234,14 @@ export default {
       const that = this;
 
       let filteredList = _.map(this.localComps, function(property) {
-        return Object.assign({}, property);
+        const p = Object.assign({}, property);
+
+        // if (p.id == that.property.id) {
+        //   p.engagement = engagements.engagements.ANALYSIS;
+        //   console.log(p.engagement);
+        // }
+
+        return p;
       });
 
       if (this.onlyShowSelected && that.selectedComps.length > 0) {

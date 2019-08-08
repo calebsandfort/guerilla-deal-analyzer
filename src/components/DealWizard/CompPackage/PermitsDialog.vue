@@ -2,7 +2,7 @@
   <div class="d-inline-block">
     <v-dialog v-model="dialog" width="800">
       <template v-slot:activator="{ on }">
-        <v-icon title="Permits" class="pr-2" style="cursor: pointer;" color="blue darken-2" v-on="on">map</v-icon>
+        <v-icon title="Permits" class="pr-2" style="cursor: pointer;" color="blue darken-2" v-on="on">format_list_bulleted</v-icon>
       </template>
       <v-card>
         <v-card-title class="headline primary py-3 white--text">
