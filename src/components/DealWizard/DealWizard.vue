@@ -75,6 +75,7 @@
                       <v-flex xs12>
                         <div class="text-xs-center">
                           <v-btn color="success" @click="findCompsFromUrlsClick">Find</v-btn>
+                          <v-btn color="error" @click="clearCompLog">Clear</v-btn>
                         </div>
                       </v-flex>
                     </v-layout>
@@ -179,8 +180,9 @@ export default {
       setField: "dealWizard/setField",
       findCompsFromUrls: "dealWizard/findCompsFromUrls"
     }),
-    // ...mapMutations({
-    // }),
+    ...mapMutations({
+      clearCompLog: "dealWizard/clearCompLog"
+    }),
     findPropertyClick: function() {
       const request = propertyRequest();
       request.term = this.address;

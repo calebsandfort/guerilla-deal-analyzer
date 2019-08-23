@@ -2,15 +2,19 @@
   <v-layout row wrap>
     <v-flex xs12>
       <v-card>
-        <v-card-title
-          v-bind:class="{
-            'white--text py-2': true,
-            red: engagement == engagements.engagements.ANALYSIS.value,
-            blue: engagement == engagements.engagements.SPOTLIGHT.value
-          }"
-        >
-          <div class="headline">{{ property.streetAddress }}</div>
-        </v-card-title>
+        <v-toolbar :color="engagement == engagements.engagements.ANALYSIS.value ? 'red' : 'blue'" dark>
+          <v-layout row>
+            <v-flex grow align-self-center>
+              <v-toolbar-title>{{ property.streetAddress }}</v-toolbar-title>
+            </v-flex>
+
+            <v-flex v-if="mainProperty" shrink align-self-center>
+              <v-btn icon @click="clearProperty">
+                <v-icon>close</v-icon>
+              </v-btn>
+            </v-flex>
+          </v-layout>
+        </v-toolbar>
         <v-container fluid grid-list-sm class="pa-3">
           <v-layout row wrap>
             <v-flex xs5>
@@ -127,7 +131,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 // import VueGallery from "vue-gallery";
 import formatMoney from "accounting-js/lib/formatMoney";
 import formatNumber from "accounting-js/lib/formatNumber";
@@ -189,7 +193,10 @@ export default {
     openInfoUrl: function(infoUrl) {
       console.log(infoUrl);
       window.open(infoUrl);
-    }
+    },
+    ...mapMutations({
+      clearProperty: "dealWizard/clearProperty"
+    })
     // slideEnd: function({ index }) {
     //   this.lastIndex = index;
     // }

@@ -149,9 +149,16 @@ export const mutations = {
   },
   clearCompLog(state) {
     state.compLog = [];
+    state.findingComps = false;
   },
   setShowCompAddressBox(state, showCompAddressBox) {
     state.showCompAddressBox = showCompAddressBox;
+  },
+  clearProperty(state) {
+    state.item = null;
+    state.spotlightItem = null;
+    state.compLog = [];
+    state.findingComps = false;
   },
   //endregion
 
