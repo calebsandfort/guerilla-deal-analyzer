@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "npm run build:frontend && npm run build:backend",
     "lint": "vue-cli-service lint",
-    "deploy": "npm run test:all && npm run build && npm run deploy:frontend && npm run deploy:backend",
+    "deploy": "npm run build && npm run deploy:frontend && npm run deploy:backend",
     "babel-build:backend": "babel src/backend -d dist_backend/",
     "build:backend": "npm run remove:backend && npm run babel-build:backend && npm run copy:backend",
     "build:frontend": "vue-cli-service build",
