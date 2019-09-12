@@ -14,6 +14,7 @@
       <v-btn flat :to="'/deal-wizard'">Deal Wizard</v-btn>
       <v-btn flat :to="'/sandbox'">Sandbox</v-btn>
       <v-btn flat :to="'/research'">Research</v-btn>
+      <v-btn flat :to="'/active-projects'">Active Projects</v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>

@@ -45,6 +45,7 @@ export default {
 .condensed-table table.v-table tfoot th:first-child,
 .condensed-table table.v-table tfoot th:not(:first-child) {
   padding: 0 12px;
+  height: 36px;
 }
 
 .super-condensed-table table.v-table tbody td:first-child,
