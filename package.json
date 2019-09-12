@@ -11,7 +11,7 @@
     "build:backend": "npm run remove:backend && npm run babel-build:backend && npm run copy:backend",
     "build:frontend": "vue-cli-service build",
     "copy:backend": "cp package.json dist_backend/ && cp .env dist_backend/",
-    "deploy:backend": "pm2 deploy ecosystem.config.js production",
+    "deploy:backend": "pm2 deploy ecosystem.config.js production --force",
     "deploy:frontend": "vue-cli-service s3-deploy",
     "remove:backend": "rm -rf dist_backend/*",
     "rollup:backend": "npm run remove:backend && ./node_modules/.bin/rollup -c && npm run copy:backend",
