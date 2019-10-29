@@ -67,7 +67,7 @@
     "request-promise": "^4.2.4",
     "roboto-fontface": "*",
     "selenium-webdriver": "^4.0.0-alpha.1",
-    "sequelize": "^5.1.0",
+    "sequelize": "^5.15.1",
     "subscriptions-transport-ws": "^0.9.16",
     "then-jsonp": "^1.0.3",
     "tor-request": "^3.1.0",
