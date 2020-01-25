@@ -265,8 +265,6 @@ const getAdditionalInfo = async address => {
     whileCount += 1;
   }
 
-  debugger;
-
   if (foundData) {
     window
       .$(window.$(multcoproptaxIframe[0]).attr("srcdoc"))

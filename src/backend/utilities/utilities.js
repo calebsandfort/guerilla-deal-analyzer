@@ -2752,10 +2752,13 @@ export const getBounds = (property, compFilter) => {
 
 //region buildZillowCompUrl
 export const buildZillowCompUrl = (property, compFilter, currentPage) => {
-  let compUrl = "https://www.zillow.com/homes/?searchQueryState=";
+  let compUrl = `https://www.zillow.com/homes/recently_sold/house/${compFilter.minBeds}-${compFilter.maxBeds}_beds/${
+    compFilter.minBaths
+  }-_baths/?searchQueryState=`;
 
   const bounds = getBounds(property, compFilter);
   const searchQueryState = {
+    pagination: {},
     mapBounds: {
       west: bounds.minLon,
       east: bounds.maxLon,
@@ -2763,13 +2766,15 @@ export const buildZillowCompUrl = (property, compFilter, currentPage) => {
       north: bounds.maxLat
     },
     isListVisible: true,
+    isMapVisible: true,
+    mapZoom: 15,
     filterState: {
       doz: {
         value: "12m"
-      },
-      sortSelection: {
-        value: "days"
       }
+      // sortSelection: {
+      //   value: "days"
+      // }
     }
   };
 
@@ -2797,13 +2802,13 @@ export const buildZillowCompUrl = (property, compFilter, currentPage) => {
   addZillowMinMaxFilter(searchQueryState, "beds", compFilter.minBeds, compFilter.maxBeds);
 
   addZillowMinMaxFilter(searchQueryState, "baths", compFilter.minBaths, compFilter.maxBaths);
-
-  const sqftRandomOffset = 25;
-
+  //
+  // const sqftRandomOffset = 25;
+  //
   addZillowMinMaxFilter(searchQueryState, "sqft", compFilter.minSqft, compFilter.maxSqft);
-
-  addZillowMinMaxFilter(searchQueryState, "lotSize", compFilter.minLotSqft, compFilter.maxLotSqft);
-
+  //
+  // addZillowMinMaxFilter(searchQueryState, "lotSize", compFilter.minLotSqft, compFilter.maxLotSqft);
+  //
   addZillowMinMaxFilter(searchQueryState, "built", compFilter.minYearBuilt, compFilter.maxYearBuilt);
 
   compUrl += encodeURIComponent(JSON.stringify(searchQueryState));
