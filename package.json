@@ -54,7 +54,7 @@
     "jsonp": "^0.2.1",
     "jspdf": "^1.5.3",
     "lingallery": "^1.1.25",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "material-design-icons-iconfont": "^3.0.3",
     "mathjs": "^5.10.0",
     "moment": "^2.24.0",
