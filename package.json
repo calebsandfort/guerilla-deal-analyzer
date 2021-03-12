@@ -52,7 +52,7 @@
     "is-browser": "^2.1.0",
     "jquery": "^3.4.1",
     "jsonp": "^0.2.1",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.3.1",
     "lingallery": "^1.1.25",
     "lodash": "^4.17.11",
     "material-design-icons-iconfont": "^3.0.3",
